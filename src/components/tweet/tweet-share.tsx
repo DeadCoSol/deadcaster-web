@@ -43,13 +43,13 @@ export function TweetShare({
                 </Link>
               </span>
             )
-          : 'Tweet removed from your bookmarks'
+          : 'Fade removed from your bookmarks'
       );
     };
 
   const handleCopy = (closeMenu: () => void) => async (): Promise<void> => {
     closeMenu();
-    await navigator.clipboard.writeText(`${siteURL}/tweet/${tweetId}`);
+    await navigator.clipboard.writeText(`${siteURL}/fade/${tweetId}`);
     toast.success('Copied to clipboard');
   };
 

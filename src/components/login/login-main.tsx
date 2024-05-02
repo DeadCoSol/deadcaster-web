@@ -13,7 +13,7 @@ export function LoginMain(): JSX.Element {
           imgClassName='object-cover'
           blurClassName='bg-accent-blue'
           src='/assets/twitter-banner.png'
-          alt='Twitter banner'
+          alt='DeadCaster banner'
           layout='fill'
           useSkeleton
         />
@@ -34,7 +34,7 @@ export function LoginMain(): JSX.Element {
                        lg:text-6xl lg:before:content-["Happening_now"]'
           />
           <h2 className='hidden text-xl lg:block lg:text-3xl'>
-            Join Twitter today.
+            Join DeadCaster today.
           </h2>
         </div>
         <div className='flex max-w-xs flex-col gap-6 [&_button]:py-2'>
@@ -47,24 +47,12 @@ export function LoginMain(): JSX.Element {
             >
               <CustomIcon iconName='GoogleIcon' /> Sign up with Google
             </Button>
-            <Button
-              className='flex cursor-not-allowed justify-center gap-2 border border-light-line-reply font-bold text-light-primary
-                         transition hover:bg-[#e6e6e6] focus-visible:bg-[#e6e6e6] active:bg-[#cccccc] dark:border-0
-                         dark:bg-white dark:hover:brightness-90 dark:focus-visible:brightness-90 dark:active:brightness-75'
-            >
-              <CustomIcon iconName='AppleIcon' /> Sign up with Apple
-            </Button>
             <div className='grid w-full grid-cols-[1fr,auto,1fr] items-center gap-2'>
               <i className='border-b border-light-border dark:border-dark-border' />
               <p>or</p>
               <i className='border-b border-light-border dark:border-dark-border' />
             </div>
-            <Button
-              className='cursor-not-allowed bg-accent-blue text-white transition hover:brightness-90
-                         focus-visible:!ring-accent-blue/80 focus-visible:brightness-90 active:brightness-75'
-            >
-              Sign up with phone or email
-            </Button>
+            {/*TODO PUT Dynamic Wallet connector here and remove above*/}
             <p
               className='inner:custom-underline inner:custom-underline text-center text-xs
                          text-light-secondary inner:text-accent-blue dark:text-dark-secondary'

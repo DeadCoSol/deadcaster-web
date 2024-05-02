@@ -1,8 +1,9 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
-      return request.auth.uid == 'Twt0A27bx9YcG4vu3RTsR7ifJzf2';
+      return request.auth.uid == 'w0ZQdTzYveaArIURIxy0z7bdS7I2';
     }
 
     function isAuthorized(userId) {

@@ -56,7 +56,7 @@ export function ViewTweetStats({
 
   const allStats: Readonly<Stats[]> = [
     ['Reply', null, replyMove, currentReplies],
-    ['Retweet', 'retweets', tweetMove, currentTweets],
+    ['Refade', 'retweets', tweetMove, currentTweets],
     ['Like', 'likes', likeMove, currentLikes]
   ];
 
