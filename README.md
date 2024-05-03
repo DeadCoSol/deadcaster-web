@@ -1,34 +1,36 @@
+![deadcaster.png](public%2Fdeadcaster.png)
 <br />
 
-![](/.github/assets/presentation.png)
+<h1>
+  DeadCaster - Web3 for Grateful Dead fans.
+</h1>
 
-<p align="center">
-  Twitter clone built in Next.js + TypeScript + Tailwind CSS using Cloud Firestore and Storage
-</p>
-
-## Preview 🎬
-
-https://user-images.githubusercontent.com/55032197/201472767-9db0177a-79b5-4913-8666-1744102b0ad7.mp4
+## Vocabulary
+- DeadCaster - The decentralized Social Media app for Grateful Dead fans.
+- Fades - Twitter has tweets, Facebook has posts, DeadCaster has Fades (not fade away...)
 
 ## Features ✨
-
-- Authentication with Firebase Authentication
+- Authentication with Dynamic.xyz and your Solana wallet of choice
+- Streaming music from [Audius](https://audius.org)
+- Minting cNFTs with [Metaplex](https://www.metaplex.com/)
 - Strongly typed React components with TypeScript
-- Users can add tweets, like, retweet, and reply
-- Users can delete tweets, add a tweet to bookmarks, and pin their tweet
-- Users can add images and GIFs to tweet
+- Users can add fades, like, refade, and reply
+- Users can delete fades, add a fades to bookmarks, and pin their tweet
+- Users can add images and GIFs to fade
 - Users can follow and unfollow other users
 - Users can see their and other followers and the following list
 - Users can see all users and the trending list
-- Realtime update likes, retweets, and user profile
-- Realtime trending data from Twitter API
+- Realtime update likes, refades, and user profile
 - User can edit their profile
 - Responsive design for mobile, tablet, and desktop
 - Users can customize the site color scheme and color background
-- All images uploads are stored on Firebase Cloud Storage
 
 ## Tech 🛠
-
+- [Solana](https://solana.com/)
+- [DeadCoin](https://twitter.com/DeadCoSol)
+- [Dynamic](https://www.dynamic.xyz/)
+- [Audius](https://audius.org/)
+- [Metaplex](https://www.metaplex.com/)
 - [Next.js](https://nextjs.org)
 - [TypeScript](https://www.typescriptlang.org)
 - [Tailwind CSS](https://tailwindcss.com)
@@ -45,7 +47,7 @@ Here are the steps to run the project locally.
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/ccrsxx/twitter-clone.git
+   git clone https://github.com/DeadCoSol/deadcaster-web.git
    ```
 
 1. Install dependencies
@@ -60,9 +62,9 @@ Here are the steps to run the project locally.
 
 1. Make sure you have enabled the following Firebase services:
 
-   - Authentication. Enable the Google sign-in method.
-   - Cloud Firestore. Create a database and set its location to your nearest region.
-   - Cloud Storage. Create a storage bucket.
+   - Authentication. Enable the Google sign-in method. (This will be swapped soon for dynamic.xyz for Solana Wallets)
+   - Cloud Firestore. Create a database and set its location to your nearest region. (This will be a cache while we commt to the Solana blockchain)
+   - Cloud Storage. Create a storage bucket. (We will hold images here temporarily until we upload to metaplex)
 
 1. Install Firebase CLI globally
 
@@ -117,8 +119,3 @@ Here are the steps to run the project locally.
          ```
 
 > **_Note_**: When you deploy Firestore indexes rules, it might take a few minutes to complete. So before the indexes are enabled, you will get an error when you fetch the data from Firestore.<br><br>You can check the status of your Firestore indexes with the link below, replace `your-project-id` with your project ID: https://console.firebase.google.com/u/0/project/your-project-id/firestore/indexes
-
-Optional:
-
-- If you want to get trending data from Twitter API, you need to create a Twitter developer account and get your API keys. Then add your API keys to `.env.development`. I hope Elon Musk doesn't make this API paid 😅.
-- If you want to make the user stats synced with the deleted tweets, you need to enable the Cloud Functions for Firebase. Then deploy the Cloud Functions.
