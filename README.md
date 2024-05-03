@@ -5,7 +5,8 @@
   DeadCaster - Web3 for Grateful Dead fans.
 </h1>
 
-<h2>Important!</h2>
+## Important! 
+### Branching strategy to support the prototype and active development
 - The main branch is for our v0 prototype to express the functionality
 - The web3 branch is for the changes to move this to the Solana blockchain app (once significant integration we will take over main)
 
