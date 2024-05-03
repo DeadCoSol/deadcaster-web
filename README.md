@@ -5,6 +5,10 @@
   DeadCaster - Web3 for Grateful Dead fans.
 </h1>
 
+<h2>Important!</h2>
+- The main branch is for our v0 prototype to express the functionality
+- The web3 branch is for the changes to move this to the Solana blockchain app (once significant integration we will take over main)
+
 ## Vocabulary
 - DeadCaster - The decentralized Social Media app for Grateful Dead fans.
 - Fades - Twitter has tweets, Facebook has posts, DeadCaster has Fades (not fade away...)
