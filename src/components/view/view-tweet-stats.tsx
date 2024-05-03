@@ -19,7 +19,7 @@ type viewTweetStats = Pick<Tweet, 'userRetweets' | 'userLikes'> & {
   isStatsVisible: boolean;
 };
 
-export type StatsType = 'retweets' | 'likes';
+export type StatsType = 'refades' | 'likes';
 
 type Stats = [string, StatsType | null, number, number];
 

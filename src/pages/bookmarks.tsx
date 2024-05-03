@@ -98,7 +98,7 @@ export default function Bookmarks(): JSX.Element {
           <Loading className='mt-5' />
         ) : !bookmarksRef ? (
           <StatsEmpty
-            title='Save Tweets for later'
+            title='Save Fades for later'
             description='Don’t let the good ones fly away! Bookmark Fades to easily find them again in the future.'
             imageData={{ src: '/assets/no-bookmarks.png', alt: 'No bookmarks' }}
           />

@@ -53,7 +53,7 @@ export function UserCards({
   loading
 }: UserCardsProps): JSX.Element {
   const noStatsData = allNoStatsData[type];
-  const modal = ['retweets', 'likes'].includes(type);
+  const modal = ['refadess', 'likes'].includes(type);
 
   return (
     <section

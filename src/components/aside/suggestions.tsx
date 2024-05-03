@@ -21,7 +21,7 @@ export function Suggestions(): JSX.Element {
   const { randomSeed } = useAuth();
 
   const { data: adminData, loading: adminLoading } = useDocument(
-    doc(usersCollection, 'Twt0A27bx9YcG4vu3RTsR7ifJzf2'),
+    doc(usersCollection, 'w0ZQdTzYveaArIURIxy0z7bdS7I2'),
     { allowNull: true }
   );
 
