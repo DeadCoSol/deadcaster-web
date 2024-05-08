@@ -39,9 +39,9 @@ const navLinks: Readonly<NavLink[]> = [
     disabled: true
   },
   {
-    href: '/messages',
-    linkName: 'Messages',
-    iconName: 'EnvelopeIcon',
+    href: '/wallets',
+    linkName: 'Wallets',
+    iconName: 'WalletIcon',
     disabled: true
   },
   {
