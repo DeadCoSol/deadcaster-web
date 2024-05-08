@@ -9,7 +9,7 @@ export default function Login(): JSX.Element {
     <div className='grid min-h-screen grid-rows-[1fr,auto]'>
       <SEO
         title='DeadCaster - It’s what’s happening'
-        description='From breaking news and entertainment to sports and politics, get the full story with all the live commentary.'
+        description='Everything Grateful Dead by fans and for fans.'
       />
       <LoginMain />
       <LoginFooter />

@@ -6,7 +6,7 @@ export function Placeholder(): JSX.Element {
     <main className='flex min-h-screen items-center justify-center'>
       <SEO
         title='DeadCaster'
-        description='From breaking news and entertainment to sports and politics, get the full story with all the live commentary.'
+        description='Everything Grateful Dead by fans and for fans.'
         image='/home.png'
       />
       <i>
