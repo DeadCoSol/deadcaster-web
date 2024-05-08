@@ -22,7 +22,7 @@ type UserCardsProps = {
 type NoStatsData = Record<CombinedTypes, StatsEmptyProps>;
 
 const allNoStatsData: Readonly<NoStatsData> = {
-  retweets: {
+  refades: {
     title: 'Amplify Fades you like',
     imageData: { src: '/assets/no-retweets.png', alt: 'No refades' },
     description:
@@ -53,7 +53,7 @@ export function UserCards({
   loading
 }: UserCardsProps): JSX.Element {
   const noStatsData = allNoStatsData[type];
-  const modal = ['refadess', 'likes'].includes(type);
+  const modal = ['refades', 'likes'].includes(type);
 
   return (
     <section
