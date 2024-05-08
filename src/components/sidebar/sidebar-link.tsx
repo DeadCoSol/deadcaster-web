@@ -43,7 +43,7 @@ export function SidebarLink({
             className={cn(
               'h-7 w-7',
               isActive &&
-                ['Explore', 'Lists'].includes(linkName) &&
+                ['Explore', 'Streets'].includes(linkName) &&
                 'stroke-white'
             )}
             iconName={iconName}

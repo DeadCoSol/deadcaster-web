@@ -51,8 +51,8 @@ const navLinks: Readonly<NavLink[]> = [
     canBeHidden: true
   },
   {
-    href: '/lists',
-    linkName: 'Lists',
+    href: '/streets',
+    linkName: 'Streets',
     iconName: 'Bars3BottomLeftIcon',
     disabled: true,
     canBeHidden: true
