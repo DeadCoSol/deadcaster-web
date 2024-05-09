@@ -12,14 +12,11 @@ export function LoginMain(): JSX.Element {
         <NextImage
           imgClassName='object-cover'
           blurClassName='bg-accent-blue'
-          src='/assets/twitter-banner.png'
+          src='/assets/deadcaster-banner.jpeg'
           alt='DeadCaster banner'
           layout='fill'
           useSkeleton
         />
-        <i className='absolute'>
-          <CustomIcon className='h-96 w-96 text-white' iconName='TwitterIcon' />
-        </i>
       </div>
       <div className='flex flex-col items-center justify-between gap-6 p-8 lg:items-start lg:justify-center'>
         <i className='mb-0 self-center lg:mb-10 lg:self-auto'>
@@ -31,10 +28,10 @@ export function LoginMain(): JSX.Element {
         <div className='flex max-w-xs flex-col gap-4 font-twitter-chirp-extended lg:max-w-none lg:gap-16'>
           <h1
             className='text-3xl before:content-["See_what’s_happening_in_the_world_right_now."] 
-                       lg:text-6xl lg:before:content-["Happening_now"]'
+                       lg:text-6xl lg:before:content-["DeadCaster"]'
           />
           <h2 className='hidden text-xl lg:block lg:text-3xl'>
-            Join DeadCaster today.
+            Join today.
           </h2>
         </div>
         <div className='flex max-w-xs flex-col gap-6 [&_button]:py-2'>
@@ -59,7 +56,7 @@ export function LoginMain(): JSX.Element {
             >
               By signing up, you agree to the{' '}
               <a
-                href='https://twitter.com/tos'
+                href='https://deadcaster.xyz/tos'
                 target='_blank'
                 rel='noreferrer'
               >
@@ -67,7 +64,7 @@ export function LoginMain(): JSX.Element {
               </a>{' '}
               and{' '}
               <a
-                href='https://twitter.com/privacy'
+                href='https://deadcaster.xyz/privacy'
                 target='_blank'
                 rel='noreferrer'
               >

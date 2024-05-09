@@ -10,7 +10,6 @@ type MainLayoutProps = {
 
 export function SEO({
   title,
-  image,
   description
 }: MainLayoutProps): JSX.Element {
   const { asPath } = useRouter();
@@ -21,7 +20,6 @@ export function SEO({
       <meta name='og:title' content={title} />
       {description && <meta name='description' content={description} />}
       {description && <meta name='og:description' content={description} />}
-      {image && <meta property='og:image' content={image} />}
       <meta
         name='og:url'
         content={`${siteURL}${asPath === '/' ? '' : asPath}`}
