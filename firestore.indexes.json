@@ -5,6 +5,20 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "notifications",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tweets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "createdBy",
           "order": "ASCENDING"
         },

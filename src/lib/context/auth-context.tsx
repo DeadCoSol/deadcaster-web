@@ -16,7 +16,7 @@ import { auth } from '@lib/firebase/app';
 import {
   usersCollection,
   userStatsCollection,
-  userBookmarksCollection
+  userBookmarksCollection, userNotificationsCollection
 } from '@lib/firebase/collections';
 import { getRandomId, getRandomInt } from '@lib/random';
 import { checkUsernameAvailability } from '@lib/firebase/utils';
@@ -26,6 +26,8 @@ import type { WithFieldValue } from 'firebase/firestore';
 import type { User } from '@lib/types/user';
 import type { Bookmark } from '@lib/types/bookmark';
 import type { Stats } from '@lib/types/stats';
+import type { Notifications } from '@lib/types/notifications';
+
 
 type AuthContext = {
   user: User | null;
@@ -34,6 +36,7 @@ type AuthContext = {
   isAdmin: boolean;
   randomSeed: string;
   userBookmarks: Bookmark[] | null;
+  notifications: Notifications[] | null;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
 };
@@ -49,6 +52,7 @@ export function AuthContextProvider({
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(null);
   const [userBookmarks, setUserBookmarks] = useState<Bookmark[] | null>(null);
+  const [notifications, setNotifications] = useState<Notifications[] | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -93,7 +97,8 @@ export function AuthContextProvider({
           totalTweets: 0,
           totalPhotos: 0,
           pinnedTweet: null,
-          coverPhotoURL: null
+          coverPhotoURL: null,
+          notifications: false
         };
 
         const userStatsData: WithFieldValue<Stats> = {
@@ -151,9 +156,18 @@ export function AuthContextProvider({
       }
     );
 
+    const unsubscribeNotifications = onSnapshot(
+        userNotificationsCollection(id),
+        (snapshot) => {
+          const userNotification = snapshot.docs.map((doc) => doc.data());
+          setNotifications(userNotification);
+        }
+    );
+
     return () => {
       unsubscribeUser();
       unsubscribeBookmarks();
+      unsubscribeNotifications();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
@@ -185,6 +199,7 @@ export function AuthContextProvider({
     isAdmin,
     randomSeed,
     userBookmarks,
+    notifications,
     signOut,
     signInWithGoogle
   };

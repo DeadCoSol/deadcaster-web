@@ -17,6 +17,7 @@ export type NavLink = {
   iconName: IconName;
   disabled?: boolean;
   canBeHidden?: boolean;
+  hasNotifications?: boolean;
 };
 
 const navLinks: Readonly<NavLink[]> = [
@@ -35,7 +36,8 @@ const navLinks: Readonly<NavLink[]> = [
     href: '/notifications',
     linkName: 'Notifications',
     iconName: 'BellIcon',
-    disabled: true
+    disabled: false,
+    hasNotifications: true
   },
   {
     href: '/wallets',

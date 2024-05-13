@@ -14,9 +14,7 @@ import { Button } from '@components/ui/button';
 import { ToolTip } from '@components/ui/tooltip';
 import { HeroIcon } from '@components/ui/hero-icon';
 import type { ReactElement, ReactNode } from 'react';
-import {
-    DynamicWidget,
-} from "@dynamic-labs/sdk-react-core";
+
 
 export default function Wallets(): JSX.Element {
     const { user } = useAuth();
@@ -49,7 +47,7 @@ export default function Wallets(): JSX.Element {
                 </Button>
             </MainHeader>
             <section className='mt-0.5'>
-                <DynamicWidget />
+                Add Burner Wallet details here...
             </section>
         </MainContainer>
     );
