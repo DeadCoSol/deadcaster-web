@@ -26,10 +26,9 @@ const navLinks: Readonly<NavLink[]> = [
     iconName: 'HomeIcon'
   },
   {
-    href: '/explore',
-    linkName: 'Explore',
-    iconName: 'HashtagIcon',
-    disabled: true,
+    href: '/people',
+    linkName: 'DeadCasters',
+    iconName: 'UserGroupIcon',
     canBeHidden: true
   },
   {
@@ -45,18 +44,19 @@ const navLinks: Readonly<NavLink[]> = [
     disabled: true,
   },
   {
-    href: '/bookmarks',
-    linkName: 'Bookmarks',
-    iconName: 'BookmarkIcon',
-    canBeHidden: true
-  },
-  {
     href: '/rambles',
     linkName: 'Rambles',
     iconName: 'Bars3BottomLeftIcon',
     disabled: true,
     canBeHidden: true
-  }
+  },
+  {
+    href: '/explore',
+    linkName: 'Explore',
+    iconName: 'HashtagIcon',
+    disabled: true,
+    canBeHidden: true
+  },
 ];
 
 export function Sidebar(): JSX.Element {
