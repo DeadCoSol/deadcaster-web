@@ -29,14 +29,14 @@ const topNavLinks: Readonly<MobileNavLink[]> = [
     iconName: 'BookmarkIcon'
   },
   {
-    href: '/streets',
-    linkName: 'Streets',
+    href: '/rambles',
+    linkName: 'Rambles',
     iconName: 'Bars3BottomLeftIcon',
     disabled: true
   },
   {
     href: '/people',
-    linkName: 'DeadCaster Circle',
+    linkName: 'DeadCasters',
     iconName: 'UserGroupIcon'
   }
 ];

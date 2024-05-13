@@ -42,7 +42,7 @@ const navLinks: Readonly<NavLink[]> = [
     href: '/wallets',
     linkName: 'Wallets',
     iconName: 'WalletIcon',
-    disabled: true
+    disabled: true,
   },
   {
     href: '/bookmarks',
@@ -51,8 +51,8 @@ const navLinks: Readonly<NavLink[]> = [
     canBeHidden: true
   },
   {
-    href: '/streets',
-    linkName: 'Streets',
+    href: '/rambles',
+    linkName: 'Rambles',
     iconName: 'Bars3BottomLeftIcon',
     disabled: true,
     canBeHidden: true

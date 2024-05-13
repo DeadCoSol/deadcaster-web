@@ -49,7 +49,6 @@ export function LoginMain(): JSX.Element {
               <p>or</p>
               <i className='border-b border-light-border dark:border-dark-border' />
             </div>
-            {/*TODO PUT Dynamic Wallet connector here and remove above*/}
             <p
               className='inner:custom-underline inner:custom-underline text-center text-xs
                          text-light-secondary inner:text-accent-blue dark:text-dark-secondary'

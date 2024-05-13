@@ -117,7 +117,7 @@ Here are the steps to run the project locally.
 
       1. Set the environment variable `NEXT_PUBLIC_USE_EMULATOR` to `true` in `.env.development`. This will make the app use the emulators instead of the cloud backend.
 
-      1. At this point, you can run the following command to have a fully functional Twitter clone running locally:
+      1. At this point, you can run the following command to have a fully functional DeadCaster running locally:
 
          ```bash
          npm run dev:emulators

@@ -171,19 +171,6 @@ export function EditProfileModal({
             </div>
           </div>
           {children}
-          <Button
-            className='accent-tab -mx-4 mb-4 flex cursor-not-allowed items-center justify-between rounded-none
-                       py-2 hover:bg-light-primary/10 active:bg-light-primary/20 disabled:brightness-100
-                       dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
-          >
-            <span className='mx-2 text-xl'>Switch to professional</span>
-            <i>
-              <HeroIcon
-                className='h-6 w-6 text-light-secondary dark:text-dark-secondary'
-                iconName='ChevronRightIcon'
-              />
-            </i>
-          </Button>
         </div>
       </section>
     </>

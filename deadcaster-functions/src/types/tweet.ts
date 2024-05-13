@@ -1,7 +1,7 @@
 import type {
   Timestamp,
-  FirestoreDataConverter
-} from 'firebase-admin/firestore';
+  FirestoreDataConverter,
+} from "firebase-admin/firestore";
 
 export type ImageData = {
   src: string;
@@ -26,11 +26,11 @@ export type Tweet = {
 
 export const tweetConverter: FirestoreDataConverter<Tweet> = {
   toFirestore(tweet) {
-    return { ...tweet };
+    return {...tweet};
   },
   fromFirestore(snapshot) {
     const data = snapshot.data();
 
-    return { ...data } as Tweet;
-  }
+    return {...data} as Tweet;
+  },
 };
