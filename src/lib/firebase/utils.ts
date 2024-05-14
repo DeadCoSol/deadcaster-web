@@ -74,6 +74,16 @@ export async function updateUsername(
   });
 }
 
+export async function updateNotifications(
+    userId: string
+): Promise<void> {
+  const userRef = doc(usersCollection, userId);
+  await updateDoc(userRef, {
+    notifications: false,
+    updatedAt: serverTimestamp()
+  });
+}
+
 export async function managePinnedTweet(
   type: 'pin' | 'unpin',
   userId: string,

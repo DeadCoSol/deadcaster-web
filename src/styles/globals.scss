@@ -92,4 +92,20 @@
            [box-shadow:#65778633_0px_0px_15px,_#65778626_0px_0px_3px_1px] 
            dark:[box-shadow:#ffffff33_0px_0px_15px,_#ffffff26_0px_0px_3px_1px];
   }
+
+  // SidebarLink component
+    .notification-dot {
+      position: relative;
+      top: -2px; // Adjust as needed
+      right: 30px; // Adjust as needed
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      border: 1px solid white; // Helps the dot stand out
+
+      // Adjusting dot position for exact alignment
+      transform: translate(50%, -50%);
+    }
+
 }

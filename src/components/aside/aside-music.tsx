@@ -4,6 +4,7 @@ import { variants } from "@components/aside/aside-trends";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import React, { useEffect, useState } from "react";
+import {UserAvatar} from '@components/user/user-avatar';
 
 interface Song {
     src: string;
@@ -59,10 +60,13 @@ export function MusicPlayer(): JSX.Element {
     return (
         <section className="hover-animation rounded-2xl bg-main-sidebar-background">
             <motion.div className="inner:px-4 inner:py-3" {...variants}>
-                <h2 className="text-xl font-bold">Streaming Now</h2>
+                <h2 className="text-xl font-bold">
+                    <UserAvatar src='/assets/radio.png' alt='Fade' />
+                    Streaming Now
+                </h2>
                 {playlist.length > 0 ? (
                     <>
-                        <div className="flex items-center gap-1 text-light-secondary dark:text-dark-secondary">
+                        <div className="text-light-primary dark:text-dark-primary">
                             {playlist[currentTrack]?.title} {/* Display the current track's title */}
                         </div>
                         <AudioPlayer
@@ -76,7 +80,7 @@ export function MusicPlayer(): JSX.Element {
                 ) : (
                     <Loading />
                 )}
-                <div className="flex items-center gap-1 text-light-secondary dark:text-dark-secondary">
+                <div className="text-light-primary dark:text-dark-primary">
                     From our @DeadCaster Audius archive
                 </div>
             </motion.div>

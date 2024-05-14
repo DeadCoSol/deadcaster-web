@@ -5,45 +5,27 @@
   DeadCaster - Web3 for Grateful Dead fans.
 </h1>
 
-## Important! 
-### Branching strategy to support the prototype and active development
-- The main branch is for our v0 prototype to express the functionality
-- The web3 branch is for the changes to move this to the Solana blockchain app (once significant integration we will take over main)
-
 ## Vocabulary
 - DeadCaster - The decentralized Social Media app for Grateful Dead fans.
 - Fades - Twitter has tweets, Facebook has posts, DeadCaster has Fades (not fade away...)
 
 ## Features ✨
-- Authentication with Dynamic.xyz and your Solana wallet of choice
-- Streaming music from [Audius](https://audius.org)
-- Minting cNFTs with [Metaplex](https://www.metaplex.com/)
-- Strongly typed React components with TypeScript
-- Users can add fades, like, refade, and reply
-- Users can delete fades, add a fades to bookmarks, and pin their tweet
-- Users can add images and GIFs to fade
-- Users can follow and unfollow other users
-- Users can see their and other followers and the following list
-- Users can see all users and the trending list
-- Realtime update likes, refades, and user profile
-- User can edit their profile
-- Responsive design for mobile, tablet, and desktop
-- Users can customize the site color scheme and color background
+- Sufficiently Decentralized, your data is OWNED by your wallet.
+- All Social Media Primitives are saved on Solana.
+- Streaming the Grateful Dead Archive from our [Audius](https://audius.org) DeadCaster account.
+- Minting cNFTs with [Metaplex](https://www.metaplex.com/) and the Candy Machine.  Dead art is the best!
+- Our memecoin "DeadCoin" ($deadco) unlocks special features for holders of the coin in their wallet.
 
 ## Tech 🛠
 - [Solana](https://solana.com/)
+- [Firebase](https://firebase.google.com)
 - [DeadCoin](https://twitter.com/DeadCoSol)
-- [Dynamic](https://www.dynamic.xyz/)
 - [Audius](https://audius.org/)
 - [Metaplex](https://www.metaplex.com/)
 - [Next.js](https://nextjs.org)
 - [TypeScript](https://www.typescriptlang.org)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Firebase](https://firebase.google.com)
-- [SWR](https://swr.vercel.app)
-- [Headless UI](https://headlessui.com)
-- [React Hot Toast](https://react-hot-toast.com)
-- [Framer Motion](https://framer.com)
+- Web3.js
+
 
 ## Development 💻
 
@@ -67,9 +49,9 @@ Here are the steps to run the project locally.
 
 1. Make sure you have enabled the following Firebase services:
 
-   - Authentication. Enable the Google sign-in method. (This will be swapped soon for dynamic.xyz for Solana Wallets)
-   - Cloud Firestore. Create a database and set its location to your nearest region. (This will be a cache while we commt to the Solana blockchain)
-   - Cloud Storage. Create a storage bucket. (We will hold images here temporarily until we upload to metaplex)
+   - Authentication. Enable the Google sign-in method.
+   - Cloud Firestore. Create a database and set its location to your nearest region. 
+   - Cloud Storage. Create a storage bucket.
 
 1. Install Firebase CLI globally
 

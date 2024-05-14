@@ -33,13 +33,6 @@ const navLinks: Readonly<NavLink[]> = [
     canBeHidden: true
   },
   {
-    href: '/notifications',
-    linkName: 'Notifications',
-    iconName: 'BellIcon',
-    disabled: false,
-    hasNotifications: true
-  },
-  {
     href: '/wallets',
     linkName: 'Wallets',
     iconName: 'WalletIcon',
@@ -69,6 +62,7 @@ export function Sidebar(): JSX.Element {
 
   const username = user?.username as string;
 
+
   return (
     <header
       id='sidebar'
@@ -90,14 +84,14 @@ export function Sidebar(): JSX.Element {
       >
         <section className='flex flex-col justify-center gap-2 xs:items-center xl:items-stretch'>
           <h1 className='hidden xs:flex'>
-            <Link href='/home'>
-              <a
-                className='custom-button main-tab text-accent-blue transition hover:bg-light-primary/10 
-                           focus-visible:bg-accent-blue/10 focus-visible:!ring-accent-blue/80
-                           dark:text-twitter-icon dark:hover:bg-dark-primary/10'
-              >
-                <CustomIcon className='h-7 w-7' iconName='TwitterIcon' />
-              </a>
+            <Link
+              href='/home'
+              className='custom-button main-tab text-accent-blue transition hover:bg-light-primary/10 
+                         focus-visible:bg-accent-blue/10 focus-visible:!ring-accent-blue/80
+                         dark:text-twitter-icon dark:hover:bg-dark-primary/10'>
+
+              <CustomIcon className='h-7 w-7' iconName='TwitterIcon' />
+
             </Link>
           </h1>
           <nav className='flex items-center justify-around xs:flex-col xs:justify-center xl:block'>
@@ -109,6 +103,12 @@ export function Sidebar(): JSX.Element {
               username={username}
               linkName='Profile'
               iconName='UserIcon'
+            />
+            <SidebarLink
+                href={`/notifications`}
+                linkName='Notifications'
+                iconName='BellIcon'
+                hasNotifications={user?.notifications}
             />
             {!isMobile && <MoreSettings />}
           </nav>

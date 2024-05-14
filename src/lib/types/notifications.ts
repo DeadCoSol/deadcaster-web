@@ -1,6 +1,7 @@
 import type { Timestamp, FirestoreDataConverter } from 'firebase/firestore';
 
 export type Notifications = {
+    id: string;
     type: string;
     tweetId: string;
     actorId: string;
