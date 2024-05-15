@@ -63,7 +63,7 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                         )}
 
                         {reply && (
-                            <UserAvatar src='/assets/skull.png' alt='Comment' />
+                            <UserAvatar src='/assets/skull-comment.png' alt='Comment' />
                         )}
                     </div>
                     <div className='flex flex-col items-start gap-2'>
