@@ -96,7 +96,8 @@ export function AuthContextProvider({
           pinnedTweet: null,
           coverPhotoURL: null,
           notifications: false,
-          walletNotifications: false
+          walletNotifications: false,
+          wallet: null
         };
 
         const userStatsData: WithFieldValue<Stats> = {
