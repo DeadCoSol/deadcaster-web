@@ -24,18 +24,6 @@ const topNavLinks: Readonly<MobileNavLink[]> = [
     iconName: 'UserGroupIcon',
   },
   {
-    href: '/wallets',
-    linkName: 'Wallets',
-    iconName: 'WalletIcon',
-    disabled: true,
-  },
-  {
-    href: '/rambles',
-    linkName: 'Rambles',
-    iconName: 'Bars3BottomLeftIcon',
-    disabled: true,
-  },
-  {
     href: '/explore',
     linkName: 'Explore',
     iconName: 'HashtagIcon',
@@ -190,6 +178,12 @@ export function MobileSidebarModal({
             href={`/user/${username}`}
             iconName='UserIcon'
             linkName='Profile'
+          />
+          <MobileSidebarLink
+              href={`/wallets`}
+              iconName='WalletIcon'
+              linkName='My Wallet'
+              hasNotifications={user?.walletNotifications}
           />
           <MobileSidebarLink
               href={`/notifications`}

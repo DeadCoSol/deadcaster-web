@@ -14,7 +14,8 @@ export function MobileSidebarLink({
   linkName,
   iconName,
   disabled,
-  hasNotifications
+  hasNotifications,
+  walletNotifications,
 }: MobileSidebarLinkProps): JSX.Element {
   return (
     (<Link
@@ -24,7 +25,7 @@ export function MobileSidebarLink({
         `custom-button accent-tab accent-bg-tab flex items-center rounded-md font-bold 
          transition hover:bg-light-primary/10 focus-visible:ring-2 first:focus-visible:ring-[#878a8c]
          dark:hover:bg-dark-primary/10 dark:focus-visible:ring-white`,
-        bottom ? 'gap-2 p-1.5 text-base' : `${(linkName === 'Notifications' && hasNotifications) ? '' : 'gap-4'} p-2 text-xl'`,
+        bottom ? 'gap-2 p-1.5 text-base' : `${((linkName === 'Notifications' && hasNotifications) || (linkName === 'My Wallet' && walletNotifications)) ? '' : 'gap-4'} p-2 text-xl'`,
         disabled && 'cursor-not-allowed'
       )}
       onClick={disabled ? preventBubbling() : undefined}>
@@ -33,7 +34,7 @@ export function MobileSidebarLink({
         className={bottom ? 'h-5 w-5' : 'h-7 w-7'}
         iconName={iconName}
       />
-     {linkName === 'Notifications' && hasNotifications && (
+     {((linkName === 'Notifications' && hasNotifications) || (linkName === 'My Wallet' && walletNotifications)) && (
          <span className="notification-dot"></span>
      )}
       {linkName}

@@ -1,5 +1,6 @@
 import type { Theme, Accent } from './theme';
 import type { Timestamp, FirestoreDataConverter } from 'firebase/firestore';
+import {Wallet} from '@lib/types/wallet';
 
 export type User = {
   id: string;
@@ -21,6 +22,8 @@ export type User = {
   pinnedTweet: string | null;
   coverPhotoURL: string | null;
   notifications: boolean;
+  wallet: Wallet | null;
+  walletNotifications: boolean;
 };
 
 export type EditableData = Extract<

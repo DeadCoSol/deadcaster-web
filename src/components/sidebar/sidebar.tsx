@@ -18,6 +18,7 @@ export type NavLink = {
   disabled?: boolean;
   canBeHidden?: boolean;
   hasNotifications?: boolean;
+  walletNotifications?: boolean;
 };
 
 const navLinks: Readonly<NavLink[]> = [
@@ -30,19 +31,6 @@ const navLinks: Readonly<NavLink[]> = [
     href: '/people',
     linkName: 'DeadCasters',
     iconName: 'UserGroupIcon',
-    canBeHidden: true
-  },
-  {
-    href: '/wallets',
-    linkName: 'Wallets',
-    iconName: 'WalletIcon',
-    disabled: true,
-  },
-  {
-    href: '/rambles',
-    linkName: 'Rambles',
-    iconName: 'Bars3BottomLeftIcon',
-    disabled: true,
     canBeHidden: true
   },
   {
@@ -103,6 +91,12 @@ export function Sidebar(): JSX.Element {
               username={username}
               linkName='Profile'
               iconName='UserIcon'
+            />
+            <SidebarLink
+                href={`/wallets`}
+                linkName='My Wallet'
+                iconName='WalletIcon'
+                walletNotifications={user?.walletNotifications}
             />
             <SidebarLink
                 href={`/notifications`}

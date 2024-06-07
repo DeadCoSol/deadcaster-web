@@ -63,3 +63,15 @@ export function PeopleLayout({ children }: LayoutProps): JSX.Element {
     </>
   );
 }
+
+export function WalletLayout({ children }: LayoutProps): JSX.Element {
+    return (
+        <>
+            {children}
+            <Aside>
+                <Suggestions />
+                <MusicPlayer />
+            </Aside>
+        </>
+    );
+}
