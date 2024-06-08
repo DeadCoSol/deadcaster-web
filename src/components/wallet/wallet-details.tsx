@@ -4,24 +4,36 @@ import TokenRow from './token-row';
 import { FaCopy } from 'react-icons/fa';
 import type { User } from '@lib/types/user';
 import { trimAddress } from '@lib/utils';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getTokenBalance } from '@lib/solana'; // Import the utility function
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
-function formatNumber(number: number) {
+const DEADCOIN_MINT_ADDRESS = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
+
+function formatNumber(number: number): string {
     if (number >= 1000000) {
         return (number / 1000000).toFixed(0) + 'M'; // Converts to millions and appends 'M'
     } else if (number >= 1000) {
         return (number / 1000).toFixed(0) + 'K'; // Converts to thousands and appends 'K'
     } else {
-        return number.toString(); // Returns the number as is if less than 1000
+        return number.toFixed(9); // Returns the number with 9 decimal places
     }
 }
 
-export function WalletDetails({
-                                  wallet,
-                                  createdAt
-                              }: UserDetailsProps): JSX.Element {
+export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
+    const [balance, setBalance] = useState<number | null>(null);
+
+    useEffect(() => {
+        if (wallet && wallet.publicKey) {
+            getTokenBalance(wallet.publicKey, DEADCOIN_MINT_ADDRESS)
+                .then(setBalance)
+                .catch((error) => {
+                    console.error('Failed to fetch balance:', error);
+                });
+        }
+    }, [wallet]);
+
     // Function to copy the address to clipboard
     const copyToClipboard = (address: string) => {
         navigator.clipboard.writeText(address)
@@ -41,7 +53,7 @@ export function WalletDetails({
             <div>
                 <UserName
                     className="-mb-1 text-xl"
-                    name={wallet ? 'DeadCoin: ' + formatNumber(wallet?.balance) : 'DeadCoin: 0'}
+                    name={balance !== null ? `DeadCoin: ${formatNumber(balance)}` : 'DeadCoin: 0'}
                     iconClassName="w-6 h-6"
                     verified={false}
                 />
