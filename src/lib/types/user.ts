@@ -24,6 +24,7 @@ export type User = {
   notifications: boolean;
   wallet: Wallet | null;
   walletNotifications: boolean;
+  secretViewed: boolean;
 };
 
 export type EditableData = Extract<

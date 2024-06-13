@@ -1,78 +1,87 @@
-import { useRef, useState } from 'react';
 import cn from 'clsx';
-import { MainHeader } from '@components/home/main-header';
+import { useUser } from '@lib/context/user-context';
+import { useModal } from '@lib/hooks/useModal';
+import { Modal } from '@components/modal/modal';
 import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { NextImage } from '@components/ui/next-image';
-import { ToolTip } from '@components/ui/tooltip';
-import type { ReactNode, ChangeEvent } from 'react';
-import type { User } from '@lib/types/user';
+import {WrappedBuyDeadCoinModal} from '@components/modal/WrappedBuyDeadCoinModal';
+import {useState} from 'react';
 
-type BuyDeadcoinModalProps = Pick<
-    User,
-    'id'
-> & {
-  closeModal: () => void;
+type BuyProps = {
+    hide?: boolean;
 };
 
-export function BuyDeadCoinModal({
-                                   id,
-                                   closeModal,
-                                 }: BuyDeadcoinModalProps): JSX.Element {
-  const [selectedOption, setSelectedOption] = useState('');
+export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
+    const { user } = useUser();
+    const { open, openModal, closeModal } = useModal();
+    const [amount, setAmount] = useState<number | null>(null);
 
-  const handleOptionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
+    const createPaymentIntent = async (amount: number) => {
+        try {
+            const response = await fetch('/api/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount }),
+            });
 
-  const handleBuyNowClick = () => {
-    if (selectedOption) {
-      alert('Buying coming soon!');
-    }
-  };
+            const data = await response.json();
+            return data.clientSecret;
+        } catch (error) {
+            console.error('Error creating payment intent:', error);
+            return null;
+        }
+    };
 
-  return (
-      <>
-        <MainHeader
-            useActionButton
-            disableSticky
-            iconName='XMarkIcon'
-            tip='Close'
-            className='absolute flex w-full items-center gap-6 rounded-tl-2xl'
-            title='Buy DeadCoin on CoinBase'
-            action={closeModal}
-        >
-        </MainHeader>
-        <section className='p-6'>
-          <NextImage
-              src='logo512.jpeg'
-              alt='DeadCoin'
-              width={500}
-              height={300}
-              className='mb-4 mx-auto max-w-full'
-          />
-          <p className='mb-4'>Select an option to buy DeadCoin:</p>
-          <select
-              className='w-full mb-4 p-2 border rounded text-black font-bold'
-              value={selectedOption}
-              onChange={handleOptionChange}
-          >
-            <option value='' disabled>Select an option</option>
-            <option value='10000-5'>10,000 DeadCoin for $5</option>
-            <option value='20000-10'>20,000 DeadCoin for $10</option>
-            <option value='40000-20'>40,000 DeadCoin for $20</option>
-          </select>
-          <Button
-              className='bg-light-primary py-1 px-4 font-bold text-white focus-visible:bg-light-primary/90
-                       enabled:hover:bg-light-primary/90 enabled:active:bg-light-primary/80 disabled:brightness-75
-                       dark:bg-light-border dark:text-light-primary dark:focus-visible:bg-light-border/90
-                       dark:enabled:hover:bg-light-border/90 dark:enabled:active:bg-light-border/75'
-              onClick={handleBuyNowClick}
-              disabled={!selectedOption}
-          >
-            Buy Now
-          </Button>
-        </section>
-      </>
-  );
+    const handleButtonClick = async (amount: number) => {
+        const clientSecret = await createPaymentIntent(amount);
+        if (clientSecret) {
+            setAmount(amount);
+            openModal();
+        }
+    };
+
+    return (
+        <form className={cn(hide && 'hidden md:block')}>
+            <Modal
+                modalClassName='relative bg-main-background rounded-2xl max-w-xl w-full h-[672px] overflow-hidden'
+                open={open}
+                closeModal={closeModal}
+            >
+                {amount && (
+                    <WrappedBuyDeadCoinModal
+                        id={user ? user.id : ''}
+                        name={user ? user.name : 'User Name Unknown'}
+                        closeModal={closeModal}
+                        amount={amount}
+                    />
+                )}
+            </Modal>
+            <label className="mr-2">Buy DeadCoin:</label>
+            <Button
+                className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                   hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                   dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                onClick={() => handleButtonClick(5)}
+            >
+                $5
+            </Button>
+            <Button
+                className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                   hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                   dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                onClick={() => handleButtonClick(10)}
+            >
+                $10
+            </Button>
+            <Button
+                className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                   hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                   dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                onClick={() => handleButtonClick(20)}
+            >
+                $20
+            </Button>
+        </form>
+    );
 }

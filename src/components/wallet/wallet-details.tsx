@@ -1,11 +1,15 @@
 import { UserName } from '../user/user-name';
 import Tabs from '../ui/tabs';
 import TokenRow from './token-row';
-import { FaCopy } from 'react-icons/fa';
+import {FaCopy, FaEye} from 'react-icons/fa';
 import type { User } from '@lib/types/user';
 import { trimAddress } from '@lib/utils';
 import React, { useEffect, useState } from 'react';
-import { getTokenBalance } from '@lib/solana'; // Import the utility function
+import { getTokenBalance } from '@lib/solana';
+import axios from 'axios';
+import {getToken} from '@lib/firebase/utils';
+import {useUser} from '@lib/context/user-context';
+import {toast} from 'react-hot-toast';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -17,15 +21,22 @@ function formatNumber(number: number): string {
     } else if (number >= 1000) {
         return (number / 1000).toFixed(0) + 'K'; // Converts to thousands and appends 'K'
     } else {
-        return number.toFixed(9); // Returns the number with 9 decimal places
+        return number.toFixed(2); // Returns the number with 9 decimal places
     }
 }
 
 export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
+    const { user } = useUser();
     const [balance, setBalance] = useState<number | null>(null);
+    const [privateKey, setPrivateKey] = useState<string | null>(null);
+    const [mnemonic, setMnemonic] = useState<string | null>(null);
+    const [showKey, setShowKey] = useState<boolean>(false);
+
 
     useEffect(() => {
         if (wallet && wallet.publicKey) {
+            fetchPrivateKey();
+
             getTokenBalance(wallet.publicKey, DEADCOIN_MINT_ADDRESS)
                 .then(setBalance)
                 .catch((error) => {
@@ -34,7 +45,21 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         }
     }, [wallet]);
 
-    // Function to copy the address to clipboard
+    const fetchPrivateKey = async () => {
+        try {
+            const token = await getToken();
+            const response = await axios.post('/api/handle-secret', { userId: user?.id, token });
+            if (response.data.success) {
+                setPrivateKey(response.data.privateKey);
+                setMnemonic(response.data.mnemonic);
+            } else {
+                toast.error("error fetching wallet key and mnemonic");
+            }
+        } catch (error) {
+            console.error('Failed to fetch private key:', error);
+        }
+    };
+
     const copyToClipboard = (address: string) => {
         navigator.clipboard.writeText(address)
             .then(() => {
@@ -73,6 +98,49 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                         </div>
                     </div>
                 </div>
+                {showKey ? (
+                    <div className="mt-2">
+                        <span>Do NOT share this with anyone!</span>
+                        <div className="flex items-center">
+                            <FaEye
+                                className="mr-2 cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => setShowKey(false)}
+                                title="Show private key"
+                            />
+                            <span className="mr-2">Private Key - {trimAddress(privateKey ? privateKey : 'not available')}</span>
+                            <FaCopy
+                                className="cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => copyToClipboard(privateKey ? privateKey : 'not available')}
+                                title="Copy private key"
+                            />
+                        </div>
+                        <div className="flex items-center">
+                            <FaEye
+                                className="mr-2 cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => setShowKey(false)}
+                                title="Show private key"
+                            />
+                            <span className="mr-2">Mnemonic - {trimAddress(mnemonic ? mnemonic : 'not available')}</span>
+                            <FaCopy
+                                className="cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => copyToClipboard(mnemonic ? mnemonic : 'not available')}
+                                title="Copy private key"
+                            />
+                        </div>
+                    </div>
+                ) : (
+                    <div className="mt-2">
+                        <span>Private Keys:</span>
+                        <div className="flex items-center">
+                            <span className="mr-2">****************</span>
+                            <FaEye
+                                className="cursor-pointer text-gray-500 hover:text-gray-700"
+                                onClick={() => setShowKey(true)}
+                                title="Show private key"
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
 
             <Tabs tabs={['Tokens', 'NFTs']}>

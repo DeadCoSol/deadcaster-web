@@ -3,7 +3,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
-  signOut as signOutFirebase
+  signOut as signOutFirebase,
 } from 'firebase/auth';
 import {
   doc,
@@ -97,7 +97,8 @@ export function AuthContextProvider({
           coverPhotoURL: null,
           notifications: false,
           walletNotifications: false,
-          wallet: null
+          wallet: null,
+          secretViewed: false
         };
 
         const userStatsData: WithFieldValue<Stats> = {

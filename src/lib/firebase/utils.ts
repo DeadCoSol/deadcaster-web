@@ -15,7 +15,7 @@ import {
   getCountFromServer
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { db, storage } from './app';
+import { db, storage, auth } from './app';
 import {
   usersCollection,
   tweetsCollection,
@@ -35,6 +35,10 @@ export async function checkUsernameAvailability(
     query(usersCollection, where('username', '==', username), limit(1))
   );
   return empty;
+}
+
+export async function getToken(){
+  return auth.currentUser?.getIdToken();
 }
 
 export async function getCollectionCount<T>(

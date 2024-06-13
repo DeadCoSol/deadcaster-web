@@ -1,15 +1,16 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import * as logger from "firebase-functions/logger";
-import * as nacl from 'tweetnacl';
-import * as crypto from 'crypto-js';
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import * as logger from 'firebase-functions/logger';
+import * as crypto from 'crypto';
 import * as bs58 from 'bs58';
+import {Connection, Keypair, PublicKey} from '@solana/web3.js';
+import {createAssociatedTokenAccountIdempotent} from '@solana/spl-token';
+import type {Tweet} from './types';
+import {bookmarkConverter, tweetConverter, userConverter} from './types';
+import {mnemonicToSeedSync, generateMnemonic} from 'bip39';
+import {derivePath} from 'ed25519-hd-key';
 
-import { PublicKey, Keypair, Connection } from "@solana/web3.js";
-import { createAssociatedTokenAccountIdempotent } from "@solana/spl-token";
-
-import { bookmarkConverter, tweetConverter, userConverter } from './types';
-import type { Tweet } from "./types";
+const Bip39 = {mnemonicToSeedSync,generateMnemonic};
 
 // Ensure Firebase is initialized
 if (admin.apps.length === 0) {
@@ -21,42 +22,29 @@ const firestore = admin.firestore();
 // Use QuickNode server and secret key stored in environment variables
 const quickNodeUrl = functions.config().solana.quicknode_url;
 const secretKeyBase58 = functions.config().solana.secret_key;
-const secretKey = bs58.decode(secretKeyBase58);
+const secretKey = bs58.decode(secretKeyBase58);//deadco community wallet secret key
 
-const connection = new Connection(quickNodeUrl, 'finalized');
+const connection = new Connection(quickNodeUrl, 'confirmed');
 const keypair = Keypair.fromSecretKey(secretKey);
 
-// Generate Solana key pair
-const generateKeyPair = () => {
-    const keyPair = nacl.sign.keyPair();
-    const publicKey = bs58.encode(Buffer.from(keyPair.publicKey));
-    const privateKey = bs58.encode(Buffer.from(keyPair.secretKey));
-    return { publicKey, privateKey };
-};
-
-// Encrypt private key
-const encryptPrivateKey = (privateKey: string, secret: string) => {
-    return crypto.AES.encrypt(privateKey, secret).toString();
-};
-
 // Get encryption secret from environment variables
-const encryptionSecret = functions.config().encryption.secret;
+const encryptionKey = crypto.createHash('sha256').update(functions.config().encryption.secret).digest('hex');
+
 
 // Function to create the associated token account with retry logic
 // @ts-ignore
 const createAssociatedTokenAccountWithRetry = async (payer, mint, owner) => {
     for (let attempt = 0; attempt < 3; attempt++) {
         try {
-            const associatedTokenAccount = await createAssociatedTokenAccountIdempotent(
+            return await createAssociatedTokenAccountIdempotent(
                 connection,
                 payer,
                 mint,
                 owner
             );
-            return associatedTokenAccount;
         } catch (error) {
             // @ts-ignore
-            if (attempt === 2 || error.name !== 'TransactionExpiredBlockheightExceededError') {
+            if (attempt === 2) {
                 throw error;
             }
             // Retry logic with a delay
@@ -65,20 +53,52 @@ const createAssociatedTokenAccountWithRetry = async (payer, mint, owner) => {
     }
 };
 
+
+const generateKeyPairFromMnemonic = (mnemonic: string) => {
+    const seed = Bip39.mnemonicToSeedSync(mnemonic);
+// Derive the key pair using the path for Solana
+    const derivationPath = "m/44'/501'/0'/0'"; // Standard derivation path for Solana
+    const derivedSeed = derivePath(derivationPath, seed.toString('hex')).key;
+    const keypair = Keypair.fromSeed(derivedSeed);
+
+// Get the private and public keys
+    const privateKey = Array.from(keypair.secretKey);
+    const publicKey = keypair.publicKey.toBase58();
+    return { publicKey, privateKey };
+};
+
+function trimAddress (address: string): string {
+    if (!address) return '';
+    const start = address.slice(0, 4);
+    const end = address.slice(-4);
+    return `${start}...${end}`;
+};
+
+const encrypt = (text: string, key: string) => {
+    console.log(`encrypting ${trimAddress(text)} with key ${trimAddress(key)}`);
+
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+    let encrypted = cipher.update(text);
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return iv.toString('hex') + ':' + encrypted.toString('hex');
+};
+
 // Cloud Function to add wallet on user creation
 export const addWalletOnUserCreate = functions.runWith({
     timeoutSeconds: 540,
+    failurePolicy: true,
 }).firestore
     .document('users/{userId}')
     .onCreate(async (snap, context) => {
         const userId = context.params.userId;
         const userRef = firestore.collection('users').doc(userId);
 
-        // Generate a Solana wallet for our user
-        const { publicKey, privateKey } = generateKeyPair();
-
-        // Encrypt their private key for storing
-        const encryptedPrivateKey = encryptPrivateKey(privateKey, encryptionSecret);
+        // Generate mnemonic and key pair
+        const mnemonic = Bip39.generateMnemonic();
+        const { publicKey, privateKey } = generateKeyPairFromMnemonic(mnemonic);
+        const encryptedPrivateKey = encrypt(JSON.stringify(privateKey), encryptionKey);
+        const encryptedMnemonic = encrypt(mnemonic, encryptionKey);
 
         // Deadco pays for the creation of the account
         const deadcoMint = new PublicKey('r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh');
@@ -86,6 +106,15 @@ export const addWalletOnUserCreate = functions.runWith({
         const owner = new PublicKey(publicKey); // The new wallet we created for the user
 
         try {
+            //best effort to ensure we aren't double creating
+            const userSnap = await userRef.get();
+            const userData = userSnap.data();
+
+            //in the case where more than one event gets emitted
+            if (userData && userData.wallet && userData.wallet.publicKey) {
+                return;
+            }
+
             // Create the associated token account with retry logic
             const associatedTokenAccount = await createAssociatedTokenAccountWithRetry(
                 payer,
@@ -93,12 +122,12 @@ export const addWalletOnUserCreate = functions.runWith({
                 owner
             );
 
-            // Solana wallet, Deadco Metaplex details and associated token account information stored on the user
+            // Solana wallet, Deadco details and associated token account information stored on the user
             await userRef.update({
                 wallet: {
                     publicKey,
                     privateKey: encryptedPrivateKey,
-                    balance: 0,
+                    mnemonic: encryptedMnemonic,
                     tokens: admin.firestore.FieldValue.arrayUnion({
                         associatedAccount: associatedTokenAccount?.toBase58(),
                         name: 'DeadCoin',
@@ -111,6 +140,61 @@ export const addWalletOnUserCreate = functions.runWith({
             logger.info(`Wallet and associated account added for user ${userId}`);
         } catch (error) {
             logger.error('Error adding wallet:', error);
+        }
+    });
+
+// Cloud Function to process transaction on transaction creation
+export const processTransactionOnCreate = functions.runWith({
+    timeoutSeconds: 540,
+    failurePolicy: true,
+}).firestore
+    .document('users/{userId}/transactions/{transactionId}')
+    .onCreate(async (snap, context) => {
+        const userId = context.params.userId;
+        const transactionId = context.params.transactionId;
+        const transactionData = snap.data();
+        const userRef = firestore.collection('users').doc(userId);
+        const transactionRef = userRef.collection('transactions').doc(transactionId);
+
+        const { amount, paymentId } = transactionData;
+
+        // Get DeadCoin price (you should replace this with your actual price retrieval logic)
+        const deadCoinPrice = 0.0000132010225; // Example price, replace with actual
+
+        const deadCoinAmount = ((amount - amount * 0.039 - 0.40) / deadCoinPrice) * 10 ** 9;
+
+        try {
+            const userDoc = await userRef.get();
+            const userData = userDoc.data();
+
+            if (!userData || !userData.wallet || !userData.wallet.publicKey) {
+                throw new Error('User wallet not found');
+            }
+
+            const owner = new PublicKey(userData.wallet.publicKey);
+
+            // Create a transaction - TODO send DEADCO on Solana
+
+            console.log(`Sending DEADCO to ${userData.name} with id (${userData.id}) for payment id (${paymentId}) 
+            current deadco price is ${deadCoinPrice} amount sending ${deadCoinAmount} to address ${owner.toString()}`)
+
+            // Update transaction status
+            await transactionRef.update({
+                status: 'COMPLETE',
+                received: deadCoinAmount,
+                processedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+
+            logger.info(`Transaction ${transactionId} processed for user ${userId}`);
+
+        } catch (error) {
+            logger.error('Error processing transaction:', error);
+            // @ts-ignore
+            const message = error.message;
+            await transactionRef.update({
+                status: 'ERROR',
+                errorMessage: message
+            });
         }
     });
 
@@ -152,6 +236,7 @@ export const normalizeStats = functions.firestore
 
         logger.info(`Deleting ${docsSnap.size} bookmarks`);
 
+        // @ts-ignore
         docsSnap.docs.forEach(({ id, ref }) => {
             logger.info(`Deleting bookmark ${id}`);
             batch.delete(ref);
@@ -164,6 +249,7 @@ export const normalizeStats = functions.firestore
 
         const commentsSnap = await commentQuery.get();
 
+        // @ts-ignore
         commentsSnap.docs.forEach((doc) => {
             logger.info(`Deleting comment ${doc.id}`);
             batch.delete(doc.ref);
@@ -188,6 +274,7 @@ export const sendNotifications = functions.firestore
 
         // Send a Fade notification if its parent is null
         if (followers && followers.length && tweetData.parent === null) {
+            // @ts-ignore
             followers.forEach(followerId => {
                 createNotification(followerId, tweetId, 'FADE');
             });
@@ -216,6 +303,7 @@ async function createNotification(sendToUserId: string, tweetId: string, activit
     };
 
     try {
+        // @ts-ignore
         await firestore.runTransaction(async (transaction) => {
             // Create the notification in the subcollection
             transaction.set(notificationRef.doc(), notification);
@@ -243,8 +331,7 @@ async function fetchUserById(userId: string) {
             console.log("No such user!");
             return null;
         }
-        const user = userSnap.data();
-        return user;  // Return the user data as a User class instance or the specified format
+        return userSnap.data();  // Return the user data as a User class instance or the specified format
     } catch (error) {
         console.error("Error fetching user:", error);
         throw error;

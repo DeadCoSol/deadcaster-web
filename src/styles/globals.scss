@@ -108,4 +108,17 @@
     transform: translate(50%, -50%);
   }
 
+  .StripeElement {
+    color: white;
+
+    &--focus {
+      border-color: #4a90e2;
+      box-shadow: 0 1px 3px 0 #4a90e2;
+    }
+
+    &--invalid {
+      border-color: #fa755a;
+    }
+  }
+
 }
