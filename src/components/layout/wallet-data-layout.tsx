@@ -20,11 +20,11 @@ export function WalletDataLayout({ children }: LayoutProps): JSX.Element {
     const loading = false;
 
   return (
-      <UserContextProvider value={{ user, loading }}>
+      <UserContextProvider value={{ user, loading }} key={"WalletContext"}>
         {!user && !loading && <SEO title='User not found / DeadCaster' />}
-        <MainContainer>
-          <MainHeader useActionButton action={back}>
-            <WalletHeader />
+        <MainContainer key={"WalletContextMain"}>
+          <MainHeader useActionButton action={back} key={"WalletContextHeader"}>
+            <WalletHeader key={"WalletContextWalletHeader"}/>
           </MainHeader>
           {children}
         </MainContainer>

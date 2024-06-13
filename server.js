@@ -24,11 +24,12 @@ app.prepare().then(() => {
             contentSecurityPolicy: {
                 directives: {
                     defaultSrc: ["*"],
-                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
-                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com"],
-                    imgSrc: ["'self'", "data:", "https://*.arweave.net", "https://arweave.net", "https://*.google.com", "https://*.stripe.com", "https://chris.deadcaster.xyz", "https://firebasestorage.googleapis.com", "https://lh3.googleusercontent.com"],
+                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcaster-web-deadcaster.vercel.app"],
+                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com https://deadcaster-web-deadcaster.vercel.app"],
+                    imgSrc: ["'self'", "data:", "https://deadcaster-web-deadcaster.vercel.app", "https://*.arweave.net", "https://arweave.net", "https://*.google.com", "https://*.stripe.com", "https://chris.deadcaster.xyz", "https://firebasestorage.googleapis.com", "https://lh3.googleusercontent.com"],
                     connectSrc: [
                         "'self'",
+                        "https://deadcaster-web-deadcaster.vercel.app",
                         "https://*.jup.ag",
                         "https://*.google.com",
                         "https://stripe.com",
@@ -42,7 +43,7 @@ app.prepare().then(() => {
                         "https://identitytoolkit.googleapis.com",
                         "https://firebasestorage.googleapis.com",
                     ],
-                    frameSrc: ["https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
+                    frameSrc: ["https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
                     objectSrc: ["'none'"],
                     upgradeInsecureRequests: [],
                 },

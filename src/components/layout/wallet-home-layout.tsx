@@ -19,9 +19,7 @@ export function WalletHomeLayout({ children }: LayoutProps): JSX.Element {
     query: { id }
   } = useRouter();
 
-  const coverData = userData?.coverPhotoURL
-    ? { src: '/logo512.jpeg', alt: 'DeadCoin Logo' }
-    : null;
+  const coverData = { src: '/logo512.jpeg', alt: 'DeadCoin Logo' };
 
   const profileData = userData
     ? { src: '/wallet.png', alt: 'Wallet Icon' }
@@ -43,10 +41,10 @@ export function WalletHomeLayout({ children }: LayoutProps): JSX.Element {
           <Loading className='mt-5' />
         ) : !userData || !isOwner ? (
           <>
-            <UserHomeCover />
+            <UserHomeCover key={"WalletHomeCover"} />
             <div className='flex flex-col gap-8'>
               <div className='relative flex flex-col gap-3 px-4 py-3'>
-                <UserHomeAvatar />
+                <UserHomeAvatar key={"WalletHomeAvatar"}/>
                 <p className='text-xl font-bold'>@{id}</p>
               </div>
               <div className='p-8 text-center'>
@@ -59,13 +57,13 @@ export function WalletHomeLayout({ children }: LayoutProps): JSX.Element {
           </>
         ) : (
           <>
-            <UserHomeCover coverData={coverData} />
+            <UserHomeCover coverData={coverData} key={"WalletHomeCoverLower"} />
             <div className='relative flex flex-col gap-3 px-4 py-3'>
               <div className='flex justify-between'>
-                <UserHomeAvatar profileData={profileData} />
+                <UserHomeAvatar profileData={profileData} key={"WalletHomeAvatarLower"}/>
                   <BuyDeadCoin />
               </div>
-              <WalletDetails {...userData} />
+              <WalletDetails {...userData} key={"WalletDetails"}/>
             </div>
           </>
         )}

@@ -111,7 +111,8 @@ export const addWalletOnUserCreate = functions.runWith({
             const userData = userSnap.data();
 
             //in the case where more than one event gets emitted
-            if (userData && userData.wallet && userData.wallet.publicKey) {
+            if (userData && userData.wallet && userData.wallet.tokens) {
+                console.log(`This user (${userId}) already has a wallet in the onCreate, they shouldn't... returning`);
                 return;
             }
 
@@ -140,6 +141,7 @@ export const addWalletOnUserCreate = functions.runWith({
             logger.info(`Wallet and associated account added for user ${userId}`);
         } catch (error) {
             logger.error('Error adding wallet:', error);
+            throw new Error(`Error adding wallet for user ${userId}: ${error}`);
         }
     });
 
@@ -195,6 +197,9 @@ export const processTransactionOnCreate = functions.runWith({
                 status: 'ERROR',
                 errorMessage: message
             });
+
+            throw new Error(`Error processing transaction for user ${userId}: ${error}`);
+
         }
     });
 
@@ -316,6 +321,7 @@ async function createNotification(sendToUserId: string, tweetId: string, activit
         console.log(`Notification created and user ${sendToUserId} updated`);
     } catch (error) {
         console.error(`Error creating notification or updating user ${sendToUserId}:`, error);
+        throw new Error(`Error creating notification or updating user for user ${sendToUserId}: ${error}`);
     }
 }
 
