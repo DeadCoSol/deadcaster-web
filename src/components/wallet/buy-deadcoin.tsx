@@ -51,7 +51,7 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                     </Elements>
                 )}
             </Modal>
-            <div className="flex items-center">
+            <div className="flex items-center hidden">
                 <span>Buy DeadCoin:</span>
                 <Button
                     className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
