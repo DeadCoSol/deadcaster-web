@@ -51,10 +51,10 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                     </Elements>
                 )}
             </Modal>
-            <div className="flex items-center hidden">
+            <div className="flex items-center">
                 <span>Buy DeadCoin:</span>
                 <Button
-                    className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
                      hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
                      dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
                     onClick={() => handleOpenModal(5)}
@@ -62,7 +62,7 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                     $5
                 </Button>
                 <Button
-                    className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
                      hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
                      dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
                     onClick={() => handleOpenModal(10)}
@@ -70,7 +70,7 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                     $10
                 </Button>
                 <Button
-                    className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
                      hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
                      dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
                     onClick={() => handleOpenModal(20)}

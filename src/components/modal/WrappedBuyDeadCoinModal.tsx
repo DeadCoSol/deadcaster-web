@@ -72,7 +72,7 @@ export function WrappedBuyDeadCoinModal({
                     <p>You are purchasing ${amount} of DeadCoin to use in DeadCaster</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <PaymentElement/>
+                    <PaymentElement />
                     {error && <p className="text-red-500 mt-2">{error}</p>}
                     <div className="pt-4">
                         <Button

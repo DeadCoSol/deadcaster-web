@@ -25,7 +25,7 @@ function setInitialTheme(): Theme {
   const savedTheme = localStorage.getItem('theme') as Theme | null;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  return savedTheme ?? (prefersDark ? 'dark' : 'light');
+  return savedTheme ?? (prefersDark ? 'dark' : 'dim');
 }
 
 function setInitialAccent(): Accent {
