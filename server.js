@@ -26,7 +26,7 @@ app.prepare().then(() => {
                     defaultSrc: ["*"],
                     scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcaster-web-deadcaster.vercel.app"],
                     styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com https://deadcaster-web-deadcaster.vercel.app"],
-                    imgSrc: ["'self'", "data:", "https://deadcaster-web-deadcaster.vercel.app", "https://*.arweave.net", "https://arweave.net", "https://*.google.com", "https://*.stripe.com", "https://chris.deadcaster.xyz", "https://firebasestorage.googleapis.com", "https://lh3.googleusercontent.com"],
+                    imgSrc: ["'self'", "blob:", "data:", "https:"],
                     connectSrc: [
                         "'self'",
                         "https://deadcaster-web-deadcaster.vercel.app",
