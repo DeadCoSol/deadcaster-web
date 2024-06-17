@@ -29,6 +29,7 @@ export function UserHomeCover({ coverData }: UserHomeCoverProps): JSX.Element {
             src={coverData.src}
             alt={coverData.alt}
             key={coverData.src}
+            priority={true}
           />
         </Button>
       ) : (
