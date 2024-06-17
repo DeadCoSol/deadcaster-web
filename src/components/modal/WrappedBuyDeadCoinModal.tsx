@@ -79,8 +79,7 @@ export function WrappedBuyDeadCoinModal({
                             enabled:hover:bg-light-primary/90 enabled:active:bg-light-primary/80 disabled:brightness-75
                             dark:bg-light-border dark:text-light-primary dark:focus-visible:bg-light-border/90
                             dark:enabled:hover:bg-light-border/90 dark:enabled:active:bg-light-border/75"
-                            //type="submit"
-                            onClick={() => alert('coming soon!')}
+                            type="submit"
                             disabled={loading || !stripe}
                         >
                             {loading ? 'Processing...' : 'Pay Now'}

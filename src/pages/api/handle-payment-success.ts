@@ -20,25 +20,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const userDocRef = adminDb.collection('users').doc(userId);
             const transactionRef = userDocRef.collection('transactions');
 
-            const userTransaction = {
-                userId,  // userId that caused the notification, yes we have it from the owning user as well
-                type: 'ONLINE_PURCHASE',  // Online purchase
-                paymentId,
-                amount,
-                createdAt: firebaseAdmin.firestore.FieldValue.serverTimestamp(),
-                status: 'PENDING' //PENDING, PROCESSING, ERROR, COMPLETE
-            };
-
-            await adminDb.runTransaction(async (transaction) => {
-                // Create the transaction in the subcollection
-                transaction.set(transactionRef.doc(), userTransaction);
-
-                // Update the main document field
-                transaction.update(userDocRef, {
-                    walletNotifications: true
-                });
-            });
-            console.log(`User transaction created ${userTransaction} created. Update function will process it.`);
+            // const userTransaction = {
+            //     userId,  // userId that caused the notification, yes we have it from the owning user as well
+            //     type: 'ONLINE_PURCHASE',  // Online purchase
+            //     paymentId,
+            //     amount,
+            //     createdAt: firebaseAdmin.firestore.FieldValue.serverTimestamp(),
+            //     status: 'PENDING' //PENDING, PROCESSING, ERROR, COMPLETE
+            // };
+            //
+            // await adminDb.runTransaction(async (transaction) => {
+            //     // Create the transaction in the subcollection
+            //     transaction.set(transactionRef.doc(), userTransaction);
+            //
+            //     // Update the main document field
+            //     transaction.update(userDocRef, {
+            //         walletNotifications: true
+            //     });
+            // });
+            console.log(`User transaction created ${userId} created. Update function will process it.`);
 
             res.status(200).json({ success: true });
         } catch (error) {
