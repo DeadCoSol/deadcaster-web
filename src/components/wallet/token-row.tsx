@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { FaCopy, FaPaperPlane, FaArrowDown } from 'react-icons/fa';
 import {trimAddress} from '@lib/utils';
+import {getTokenBalance} from '@lib/solana';
+
+const DEADCOIN_MINT_ADDRESS = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
 
 interface TokenRowProps {
     token: {
@@ -12,6 +15,8 @@ interface TokenRowProps {
 }
 
 const TokenRow = ({ token }: TokenRowProps) => {
+    const [balance, setBalance] = useState<number | null>(null);
+
     // Function to copy the address to clipboard
     const copyToClipboard = (address: string) => {
         navigator.clipboard.writeText(address)
@@ -22,6 +27,14 @@ const TokenRow = ({ token }: TokenRowProps) => {
                 console.error('Failed to copy: ', err);
             });
     };
+
+    useEffect(() => {
+        getTokenBalance(token.associatedAccount, DEADCOIN_MINT_ADDRESS)
+                .then(setBalance)
+                .catch((error) => {
+                    console.error('Failed to fetch balance:', error);
+                });
+    }, []);
 
     return (
         <div className="flex justify-between items-center p-2 border-b">
@@ -38,14 +51,7 @@ const TokenRow = ({ token }: TokenRowProps) => {
                 />
             </div>
             <div className="flex gap-10 w-1/3 justify-end"> {/* Adjusted gap to 4 for more spacing */}
-                <FaPaperPlane
-                    className="cursor-pointer text-gray-500 hover:text-gray-700"
-                    title="Send"
-                />
-                <FaArrowDown
-                    className="cursor-pointer text-gray-500 hover:text-gray-700"
-                    title="Receive"
-                />
+                <span className="mr-2">Balance: {balance}</span>
             </div>
         </div>
     );

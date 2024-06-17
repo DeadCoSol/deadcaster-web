@@ -4,20 +4,13 @@ import { getAccount, TokenAccountNotFoundError } from '@solana/spl-token';
 export async function getTokenBalance(publicKey: string, tokenMintAddress: string): Promise<number> {
     try {
         const connection = new Connection(process.env.NEXT_PUBLIC_QUICK_NODE_URL as string, 'confirmed');
-        const publicKeyObj = new PublicKey(publicKey);
+        const tokenAccount = new PublicKey(publicKey);
         const tokenMint = new PublicKey(tokenMintAddress);
 
-        // Fetch the associated token account for the given mint and owner
-        const tokenAccounts = await connection.getTokenAccountsByOwner(publicKeyObj, {
-            mint: tokenMint,
-        });
-
-        if (tokenAccounts.value.length === 0) {
-            throw new TokenAccountNotFoundError();
-        }
-
-        const tokenAccount = await getAccount(connection, new PublicKey(tokenAccounts.value[0].pubkey));
-        return Number(tokenAccount.amount) / 1e9; // Convert from token's smallest unit to actual token amount
+        const info = await connection.getTokenAccountBalance(tokenAccount);
+        if (info.value.uiAmount == null) throw new Error('No balance found');
+        console.log('Balance (using Solana-Web3.js): ', info.value.uiAmount);
+        return info.value.uiAmount;
     } catch (error) {
         console.error('Error fetching token balance:', error);
         throw error;

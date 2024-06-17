@@ -1,9 +1,8 @@
-// components/modal/WrappedBuyDeadCoinModal.tsx
 import { useState } from 'react';
 import { MainHeader } from '@components/home/main-header';
 import { Button } from '@components/ui/button';
 import { NextImage } from '@components/ui/next-image';
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+import {useStripe, useElements, PaymentElement, AddressElement} from '@stripe/react-stripe-js';
 import { useDeadCoinPrice } from '@lib/hooks/useDeadCoinPrice';
 import type { User } from '@lib/types/user';
 
@@ -36,7 +35,7 @@ export function WrappedBuyDeadCoinModal({
         const { error: stripeError } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/payment-success`,
+                return_url: `${window.location.origin}/handle-payment-success`,
             },
         });
 
@@ -60,7 +59,7 @@ export function WrappedBuyDeadCoinModal({
                 title="Checkout"
                 action={closeModal}
             />
-            <section className="p-6">
+            <section className="p-6 scroll">
                 <NextImage
                     src="logo512.jpeg"
                     alt="DeadCoin"
@@ -69,7 +68,7 @@ export function WrappedBuyDeadCoinModal({
                     className="mb-4 mx-auto max-w-full"
                 />
                 <div className="mb-4 text-center">
-                    <p>You are purchasing ${amount} of DeadCoin to use in DeadCaster</p>
+                    <p>You are getting ${amount} of DeadCoin to use in DeadCaster</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <PaymentElement />
@@ -88,9 +87,6 @@ export function WrappedBuyDeadCoinModal({
                         </Button>
                     </div>
                 </form>
-                <p className="mt-2 text-sm text-gray-500">
-                    A 50 cent service fee will be deducted from the DEADCO transfer.
-                </p>
             </section>
         </>
     );

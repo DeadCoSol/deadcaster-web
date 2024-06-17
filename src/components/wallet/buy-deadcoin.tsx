@@ -8,7 +8,7 @@ import {WrappedBuyDeadCoinModal} from '@components/modal/WrappedBuyDeadCoinModal
 import { useState } from 'react';
 import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import {Appearance, loadStripe} from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -21,6 +21,29 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
     const { open, openModal, closeModal } = useModal();
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [amount, setAmount] = useState(0)
+
+    const appearance: Appearance = {
+        theme: 'night',
+        variables: {
+            fontFamily: 'Sohne, system-ui, sans-serif',
+            fontWeightNormal: '500',
+            borderRadius: '8px',
+            colorBackground: '#0A2540',
+            colorPrimary: '#EFC078',
+            accessibleColorOnColorPrimary: '#1A1B25',
+            colorText: 'white',
+            colorTextSecondary: 'white',
+            colorTextPlaceholder: '#ABB2BF',
+            tabIconColor: 'white',
+            logoColor: 'dark'
+        },
+        rules: {
+            '.Input': {
+                backgroundColor: '#212D63',
+                border: '1px solid var(--colorPrimary)'
+            }
+        }
+    };
 
     const handleOpenModal = async (amount: number) => {
         setAmount(amount);
@@ -46,13 +69,13 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                 closeModal={closeModal}
             >
                 {clientSecret && (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
                         <WrappedBuyDeadCoinModal id={user ? user.id : ''} name={user ? user.name : 'User Name Unknown'} closeModal={closeModal}  amount={amount}/>
                     </Elements>
                 )}
             </Modal>
-            <div className="flex items-center hidden">
-                <span>Buy DeadCoin:</span>
+            <div className="flex items-center">
+                <span>Get DeadCoin:</span>
                 <Button
                     className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
                      hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
