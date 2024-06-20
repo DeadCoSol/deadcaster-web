@@ -35,7 +35,7 @@ export function WrappedBuyDeadCoinModal({
         const { error: stripeError } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/handle-payment-success`,
+                return_url: `${window.location.origin}/wallets`,
             },
         });
 

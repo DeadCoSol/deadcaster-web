@@ -4,6 +4,8 @@ import { MusicPlayer } from '@components/aside/aside-music';
 import { Suggestions } from '@components/aside/suggestions';
 import { Placeholder } from '@components/common/placeholder';
 import type { ReactNode } from 'react';
+import {WalletDetails} from '@components/aside/wallet-details';
+import {PhantomDetails} from '@components/aside/phantom-details';
 
 export type LayoutProps = {
   children: ReactNode;
@@ -68,8 +70,8 @@ export function WalletLayout({ children }: LayoutProps): JSX.Element {
         <>
             {children}
             <Aside>
-                <Suggestions />
-                <MusicPlayer />
+                <WalletDetails />
+                <PhantomDetails />
             </Aside>
         </>
     );

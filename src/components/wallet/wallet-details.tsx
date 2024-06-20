@@ -10,6 +10,7 @@ import axios from 'axios';
 import {getToken} from '@lib/firebase/utils';
 import {useUser} from '@lib/context/user-context';
 import {toast} from 'react-hot-toast';
+import {useStripe} from '@stripe/react-stripe-js';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -24,17 +25,53 @@ function formatNumber(number: number): string {
 }
 
 export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
+    const stripe = useStripe();
     const { user } = useUser();
     const [privateKey, setPrivateKey] = useState<string | null>(null);
     const [mnemonic, setMnemonic] = useState<string | null>(null);
     const [showKey, setShowKey] = useState<boolean>(false);
-
+    const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
         if (wallet && wallet.publicKey) {
             fetchPrivateKey();
         }
     }, [wallet]);
+
+    useEffect(() => {
+        if (!stripe) {
+            return;
+        }
+
+        const clientSecret = new URLSearchParams(window.location.search).get(
+            "payment_intent_client_secret"
+        );
+
+        if (!clientSecret) {
+            return;
+        }
+
+        stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+            switch (paymentIntent?.status) {
+                case "succeeded":
+                    toast.success("Payment succeeded, thank you for your donation!")
+                    setMessage("Payment succeeded, thank you for your donation!");
+                    paymentTransaction(clientSecret);
+                    break;
+                case "processing":
+                    toast.loading("Your payment is processing.")
+                    setMessage("Your payment is processing.");
+                    break;
+                case "requires_payment_method":
+                    toast.error("Your payment was not successful, please try again.")
+                    setMessage("Your payment was not successful, please try again.");
+                    break;
+                default:
+                    setMessage("Something went wrong.");
+                    break;
+            }
+        });
+    }, [stripe]);
 
     const fetchPrivateKey = async () => {
         try {
@@ -45,6 +82,23 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                 setMnemonic(response.data.mnemonic);
             } else {
                 toast.error("error fetching wallet key and mnemonic");
+            }
+        } catch (error) {
+            console.error('Failed to fetch private key:', error);
+        }
+    };
+
+    const paymentTransaction = async (paymentSecret: string) => {
+        try {
+            const token = await getToken();
+            const response =
+                await axios.post('/api/handle-transaction', { userId: user?.id, token, paymentSecret });
+            if (response.data.success) {
+                setMessage(message+ " Your DeadCoin transfer is in progress.")
+                toast.success("DeadCoin transfer in progress.")
+            } else {
+                setMessage("We had an issue transferring your DeadCoin. Don't worry we've been notified and will manually process it.")
+                toast.error("Error transferring DeadCoin");
             }
         } catch (error) {
             console.error('Failed to fetch private key:', error);
@@ -66,6 +120,10 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
 
     return (
         <>
+        <div>
+            <div className="flex items-center">
+                {message ? message : ''}
+            </div>
             <Tabs tabs={['Account', 'NFTs', 'Wallet Details']}>
                 <div>
                     {tokens.map((token, index) => (
@@ -135,6 +193,7 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                     </div>
                 </div>
             </Tabs>
+        </div>
         </>
     );
 }
