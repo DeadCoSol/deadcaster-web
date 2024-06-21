@@ -52,3 +52,8 @@ export function trimAddress (address: string): string {
   const end = address.slice(-4);
   return `${start}...${end}`;
 };
+
+export function calculateDeadCoinAmount(dollarAmount: number, deadCoinPrice: number): string {
+  const amount = Math.round(dollarAmount / deadCoinPrice);
+  return amount.toLocaleString();
+}

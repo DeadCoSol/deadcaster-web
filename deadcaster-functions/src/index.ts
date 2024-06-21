@@ -158,12 +158,7 @@ export const processTransactionOnCreate = functions.runWith({
         const userRef = firestore.collection('users').doc(userId);
         const transactionRef = userRef.collection('transactions').doc(transactionId);
 
-        const { amount, paymentId } = transactionData;
-
-        // Get DeadCoin price (you should replace this with your actual price retrieval logic)
-        const deadCoinPrice = 0.0000132010225; // Example price, replace with actual
-
-        const deadCoinAmount = ((amount - amount * 0.039 - 0.40) / deadCoinPrice) * 10 ** 9;
+        const { deadCoAmount, amount, paymentId } = transactionData;
 
         try {
             const userDoc = await userRef.get();
@@ -178,12 +173,12 @@ export const processTransactionOnCreate = functions.runWith({
             // Create a transaction - TODO send DEADCO on Solana
 
             console.log(`Sending DEADCO to ${userData.name} with id (${userData.id}) for payment id (${paymentId}) 
-            current deadco price is ${deadCoinPrice} amount sending ${deadCoinAmount} to address ${owner.toString()}`)
+            sending ${deadCoAmount} to address ${owner.toString()} for the ${amount} processed`);
 
             // Update transaction status
             await transactionRef.update({
                 status: 'COMPLETE',
-                received: deadCoinAmount,
+                received: deadCoAmount,
                 processedAt: admin.firestore.FieldValue.serverTimestamp()
             });
 

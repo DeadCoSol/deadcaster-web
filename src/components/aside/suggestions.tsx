@@ -44,7 +44,7 @@ export function Suggestions(): JSX.Element {
           <h2 className='text-xl font-bold'>Who to follow</h2>
           {adminData && <UserCard {...adminData} />}
           {suggestionsData?.map((userData) => (
-            <UserCard {...userData} key={userData.id} />
+            <UserCard {...userData} key={'follow'+userData.id} />
           ))}
           <Link
             href='/people'

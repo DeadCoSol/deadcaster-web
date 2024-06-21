@@ -1,11 +1,9 @@
-import { UserName } from '../user/user-name';
 import Tabs from '../ui/tabs';
 import TokenRow from './token-row';
 import {FaCopy, FaEye, FaEyeSlash} from 'react-icons/fa';
 import type { User } from '@lib/types/user';
 import { trimAddress } from '@lib/utils';
 import React, { useEffect, useState } from 'react';
-import { getTokenBalance } from '@lib/solana';
 import axios from 'axios';
 import {getToken} from '@lib/firebase/utils';
 import {useUser} from '@lib/context/user-context';
@@ -38,6 +36,10 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         }
     }, [wallet]);
 
+    const deadCoAmount = new URLSearchParams(window.location.search).get(
+        "deadco"
+    );
+
     useEffect(() => {
         if (!stripe) {
             return;
@@ -54,17 +56,17 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             switch (paymentIntent?.status) {
                 case "succeeded":
-                    toast.success("Payment succeeded, thank you for your donation!")
-                    setMessage("Payment succeeded, thank you for your donation!");
-                    paymentTransaction(clientSecret);
+                    toast.success("Donation received, your DeadCoin is on the way!")
+                    setMessage("Donation succeeded, thank you!");
+                    paymentTransaction(clientSecret, paymentIntent.amount);
                     break;
                 case "processing":
-                    toast.loading("Your payment is processing.")
-                    setMessage("Your payment is processing.");
+                    toast.loading("Your Donation is processing.")
+                    setMessage("Your Donation is processing.");
                     break;
                 case "requires_payment_method":
-                    toast.error("Your payment was not successful, please try again.")
-                    setMessage("Your payment was not successful, please try again.");
+                    toast.error("Your Donation was not successful, please try again.")
+                    setMessage("Your Donation was not successful, please try again.");
                     break;
                 default:
                     setMessage("Something went wrong.");
@@ -88,13 +90,13 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         }
     };
 
-    const paymentTransaction = async (paymentSecret: string) => {
+    const paymentTransaction = async (paymentSecret: string, amount: number) => {
         try {
             const token = await getToken();
             const response =
-                await axios.post('/api/handle-transaction', { userId: user?.id, token, paymentSecret });
+                await axios.post('/api/handle-transaction', { userId: user?.id, amount, token, paymentSecret, deadCoAmount });
             if (response.data.success) {
-                setMessage(message+ " Your DeadCoin transfer is in progress.")
+                setMessage(" Your DeadCoin transfer is in progress.")
                 toast.success("DeadCoin transfer in progress.")
             } else {
                 setMessage("We had an issue transferring your DeadCoin. Don't worry we've been notified and will manually process it.")

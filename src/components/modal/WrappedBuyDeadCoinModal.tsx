@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { MainHeader } from '@components/home/main-header';
 import { Button } from '@components/ui/button';
 import { NextImage } from '@components/ui/next-image';
 import {useStripe, useElements, PaymentElement, AddressElement} from '@stripe/react-stripe-js';
 import { useDeadCoinPrice } from '@lib/hooks/useDeadCoinPrice';
 import type { User } from '@lib/types/user';
+import {calculateDeadCoinAmount} from '@lib/utils';
 
 export type BuyDeadCoinModalProps = Pick<User, 'id' | 'name'> & {
     closeModal: () => void;
@@ -22,6 +23,14 @@ export function WrappedBuyDeadCoinModal({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { price, loading: priceLoading, error: priceError } = useDeadCoinPrice();
+    const [deadCoAmount, setDeadCoAmount] = useState<string>("0")
+
+    useEffect(() => {
+        if (!loading) {
+            const deadCoinAmount = calculateDeadCoinAmount(amount, price!);
+            setDeadCoAmount(deadCoinAmount);
+        }
+    }, [price]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -35,7 +44,7 @@ export function WrappedBuyDeadCoinModal({
         const { error: stripeError } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/wallets`,
+                return_url: `${window.location.origin}/wallets?deadco=${deadCoAmount.replaceAll(",", "")}`,
             },
         });
 
@@ -44,8 +53,6 @@ export function WrappedBuyDeadCoinModal({
             setLoading(false);
         }
     };
-
-    const deadCoinAmount = price ? (amount / price) * (10 ** 9) : 0;
 
     // @ts-ignore
     return (
@@ -56,20 +63,16 @@ export function WrappedBuyDeadCoinModal({
                 iconName="XMarkIcon"
                 tip="Close"
                 className="absolute flex w-full items-center gap-6 rounded-tl-2xl"
-                title="Checkout"
+                title="Get DeadCoin"
                 action={closeModal}
             />
-            <section className="p-6 scroll">
-                <NextImage
-                    src="logo512.jpeg"
-                    alt="DeadCoin"
-                    width={500}
-                    height={170}
-                    className="mb-4 mx-auto max-w-full"
-                />
-                <div className="mb-4 text-center">
-                    <p>You are getting ${amount} of DeadCoin to use in DeadCaster</p>
+            <section className="p-6 scroll mt-12">
+                <div className="mb-4 text-center text-xl">
+                    <p>You are receiving <b>{deadCoAmount}</b> DeadCoin.</p>
                 </div>
+                <p className="mb-3 text-center text-light-secondary dark:text-dark-secondary">
+                    Your ${amount} charge will be from DEADCASTER.XYZ
+                </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <PaymentElement />
                     {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -82,7 +85,7 @@ export function WrappedBuyDeadCoinModal({
                             type="submit"
                             disabled={loading || !stripe}
                         >
-                            {loading ? 'Processing...' : 'Pay Now'}
+                            {loading ? 'Processing...' : 'Get DeadCoin'}
                         </Button>
                     </div>
                 </form>

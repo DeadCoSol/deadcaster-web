@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { FaCopy, FaPaperPlane, FaArrowDown } from 'react-icons/fa';
+import {FaCopy, FaExternalLinkAlt} from 'react-icons/fa';
 import {trimAddress} from '@lib/utils';
 import {getTokenBalance} from '@lib/solana';
+import Link from 'next/link';
 
 const DEADCOIN_MINT_ADDRESS = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
 
@@ -37,21 +38,38 @@ const TokenRow = ({ token }: TokenRowProps) => {
     }, []);
 
     return (
-        <div className="flex justify-between items-center p-2 border-b">
-            <div className="flex items-center w-1/3">
-                <img src={token.image} alt={token.name} className="w-8 h-8 mr-2 rounded-full" />
-                <div className="text-left">{token.name}</div>
+        <div>
+            <div className="flex justify-between items-center p-2 border-b">
+                <div className="flex items-center w-1/2">
+                    <img src={token.image} alt={token.name} className="w-8 h-8 mr-2 rounded-full" />
+                    <div className="text-left">{token.name}</div>
+                </div>
+                <div className="flex gap-10 w-1/3 justify-end"> {/* Adjusted gap to 4 for more spacing */}
+                    <span className="mr-2">Balance: {balance}</span>
+                </div>
             </div>
-            <div className="text-left w-1/3 flex items-center">
-                <span className="mr-2">{trimAddress(token.associatedAccount)}</span>
-                <FaCopy
-                    className="cursor-pointer text-gray-500 hover:text-gray-700"
-                    onClick={() => copyToClipboard(token.associatedAccount)}
-                    title="Copy address"
-                />
+            <div className="flex justify-between items-center p-2 border-b">
+                <div className="flex items-center w-1/2 ml-10">
+                    <div className="text-left text-light-secondary dark:text-dark-secondary">Public Address</div>
+                </div>
+                <div className="flex gap-2 w-1/3 justify-end">
+                    <span className="mr-2 text-light-secondary dark:text-dark-secondary">{trimAddress(token.associatedAccount)}</span>
+                    <FaCopy
+                        className="cursor-pointer text-gray-500 hover:text-gray-700 mt-1"
+                        onClick={() => copyToClipboard(token.associatedAccount)}
+                        title="Copy address"
+                    />
+                </div>
             </div>
-            <div className="flex gap-10 w-1/3 justify-end"> {/* Adjusted gap to 4 for more spacing */}
-                <span className="mr-2">Balance: {balance}</span>
+            <div className="flex justify-between items-center p-2 border-b">
+                <div className="flex items-center w-1/2 ml-10">
+                    <div className="text-left text-light-secondary dark:text-dark-secondary"></div>
+                </div>
+                <div className="flex gap-2 w-1/3 justify-end">
+                    <Link href={`https://solscan.io/account/${token.associatedAccount}`} target='_blank' className='flex'>
+                        View on Solscan &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
+                    </Link>
+                </div>
             </div>
         </div>
     );
