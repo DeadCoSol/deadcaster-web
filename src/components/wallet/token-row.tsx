@@ -65,7 +65,7 @@ const TokenRow = ({ token }: TokenRowProps) => {
                 <div className="flex items-center w-1/2 ml-10">
                     <div className="text-left text-light-secondary dark:text-dark-secondary"></div>
                 </div>
-                <div className="flex gap-2 w-1/3 justify-end">
+                <div className="flex gap-2 w-1/2 justify-end">
                     <Link href={`https://solscan.io/account/${token.associatedAccount}`} target='_blank' className='flex'>
                         View on Solscan &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
                     </Link>
