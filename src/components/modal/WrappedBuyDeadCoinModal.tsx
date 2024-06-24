@@ -25,9 +25,10 @@ export function WrappedBuyDeadCoinModal({
     const { price, loading: priceLoading, error: priceError } = useDeadCoinPrice();
     const [deadCoAmount, setDeadCoAmount] = useState<string>("0")
 
+    //we are charging a $1 transaction fee
     useEffect(() => {
         if (!loading) {
-            const deadCoinAmount = calculateDeadCoinAmount(amount, price!);
+            const deadCoinAmount = calculateDeadCoinAmount(amount - 1, price!);
             setDeadCoAmount(deadCoinAmount);
         }
     }, [price]);
@@ -71,7 +72,7 @@ export function WrappedBuyDeadCoinModal({
                     <p>You are receiving <b>{deadCoAmount}</b> DeadCoin.</p>
                 </div>
                 <p className="mb-3 text-center text-light-secondary dark:text-dark-secondary">
-                    Your ${amount} charge will be from DEADCASTER.XYZ
+                    Your ${amount} charge will be from DEADCASTER.XYZ, we charge a $1 service fee.
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <PaymentElement />

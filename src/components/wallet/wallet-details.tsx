@@ -2,13 +2,14 @@ import Tabs from '../ui/tabs';
 import TokenRow from './token-row';
 import {FaCopy, FaEye, FaEyeSlash} from 'react-icons/fa';
 import type { User } from '@lib/types/user';
-import { trimAddress } from '@lib/utils';
-import React, { useEffect, useState } from 'react';
+import { trimAddress, copyToClipboard } from '@lib/utils';
+import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import {getToken} from '@lib/firebase/utils';
 import {useUser} from '@lib/context/user-context';
 import {toast} from 'react-hot-toast';
 import {useStripe} from '@stripe/react-stripe-js';
+import {getTokenBalance} from '@lib/solana';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -30,11 +31,29 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
     const [showKey, setShowKey] = useState<boolean>(false);
     const [message, setMessage] = useState<string | null>(null);
 
+    const previousTxRef = useRef<string | undefined>(user?.lastWalletTransaction);
+    const isInitialRender = useRef(true);
+
+    useEffect(() => {
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+            // @ts-ignore
+            previousTxRef.current = user?.lastWalletTransaction; // Initialize previousTx on the first render
+            return;
+        }
+
+        if (user?.lastWalletTransaction !== previousTxRef.current) {
+            setMessage("Transaction success.")
+            // @ts-ignore
+            previousTxRef.current = user?.lastWalletTransaction;
+        }
+    }, [user?.lastWalletTransaction]);
+
     useEffect(() => {
         if (wallet && wallet.publicKey) {
             fetchPrivateKey();
         }
-    }, [wallet]);
+    }, [wallet, user]);
 
     const deadCoAmount = new URLSearchParams(window.location.search).get(
         "deadco"
@@ -103,18 +122,8 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                 toast.error("Error transferring DeadCoin");
             }
         } catch (error) {
-            console.error('Failed to fetch private key:', error);
+            console.error('Failed to send transaction:', error);
         }
-    };
-
-    const copyToClipboard = (address: string) => {
-        navigator.clipboard.writeText(address)
-            .then(() => {
-                alert('Copied to clipboard!');
-            })
-            .catch(err => {
-                console.error('Failed to copy: ', err);
-            });
     };
 
     const tokens = wallet?.tokens || [];
@@ -124,7 +133,7 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         <>
         <div>
             <div className="flex items-center">
-                {message ? message : ''}
+                {message}
             </div>
             <Tabs tabs={['Account', 'NFTs', 'Wallet Details']}>
                 <div>

@@ -6,6 +6,9 @@ import { UserFollowing } from './user-following';
 import { UserFollowStats } from './user-follow-stats';
 import type { IconName } from '@components/ui/hero-icon';
 import type { User } from '@lib/types/user';
+import {FaCopy} from 'react-icons/fa';
+import {copyToClipboard, trimAddress} from '@lib/utils';
+import React from 'react';
 
 type UserDetailsProps = Pick<
   User,
@@ -19,6 +22,7 @@ type UserDetailsProps = Pick<
   | 'createdAt'
   | 'following'
   | 'followers'
+  | 'wallet'
 >;
 
 type DetailIcon = [string | null, IconName];
@@ -33,7 +37,8 @@ export function UserDetails({
   verified,
   createdAt,
   following,
-  followers
+  followers,
+  wallet
 }: UserDetailsProps): JSX.Element {
   const detailIcons: Readonly<DetailIcon[]> = [
     [location, 'MapPinIcon'],
@@ -53,6 +58,15 @@ export function UserDetails({
         <div className='flex items-center gap-1 text-light-secondary dark:text-dark-secondary'>
           <p>@{username}</p>
           <UserFollowing userTargetId={id} />
+        </div>
+        <div className="flex items-center">
+          <p>DeadCoin Address:</p>
+          <FaCopy
+              className="cursor-pointer text-gray-500 hover:text-gray-700 ml-3"
+              onClick={() => copyToClipboard(wallet ? wallet.tokens[0].associatedAccount : 'unknown')}
+              title="Copy address"
+          />
+          <span className="mr-2 text-light-secondary dark:text-dark-secondary ml-2">{trimAddress(wallet ? wallet.tokens[0].associatedAccount : 'unknown')}</span>
         </div>
       </div>
       <div className='flex flex-col gap-2'>

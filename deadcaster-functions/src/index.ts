@@ -4,7 +4,7 @@ import * as logger from 'firebase-functions/logger';
 import * as crypto from 'crypto';
 import * as bs58 from 'bs58';
 import {Connection, Keypair, PublicKey} from '@solana/web3.js';
-import {createAssociatedTokenAccountIdempotent} from '@solana/spl-token';
+import {createAssociatedTokenAccountIdempotent, getOrCreateAssociatedTokenAccount, transfer} from '@solana/spl-token';
 import type {Tweet} from './types';
 import {bookmarkConverter, tweetConverter, userConverter} from './types';
 import {mnemonicToSeedSync, generateMnemonic} from 'bip39';
@@ -26,6 +26,10 @@ const secretKey = bs58.decode(secretKeyBase58);//deadco community wallet secret 
 
 const connection = new Connection(quickNodeUrl, 'confirmed');
 const keypair = Keypair.fromSecretKey(secretKey);
+
+//DeadCo
+const tokenMintAddress = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
+
 
 // Get encryption secret from environment variables
 const encryptionKey = crypto.createHash('sha256').update(functions.config().encryption.secret).digest('hex');
@@ -170,7 +174,31 @@ export const processTransactionOnCreate = functions.runWith({
 
             const owner = new PublicKey(userData.wallet.publicKey);
 
-            // Create a transaction - TODO send DEADCO on Solana
+            // Send DeadCo
+            let amountToSend = deadCoAmount * Math.pow(10, 9);  // Adjust for token decimals (9)
+            const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
+                connection,
+                keypair,
+                new PublicKey(tokenMintAddress),
+                keypair.publicKey
+            );
+
+            const toTokenAccount = await getOrCreateAssociatedTokenAccount(
+                connection,
+                keypair,
+                new PublicKey(tokenMintAddress),
+                owner
+            );
+
+            const solanaTx = await transfer(
+                connection,
+                keypair,
+                fromTokenAccount.address,
+                toTokenAccount.address,
+                keypair.publicKey,
+                amountToSend,
+                []
+            );
 
             console.log(`Sending DEADCO to ${userData.name} with id (${userData.id}) for payment id (${paymentId}) 
             sending ${deadCoAmount} to address ${owner.toString()} for the ${amount} processed`);
@@ -184,6 +212,10 @@ export const processTransactionOnCreate = functions.runWith({
 
             logger.info(`Transaction ${transactionId} processed for user ${userId}`);
 
+            //ping the user wallet to refresh
+            await userRef.update({
+                lastWalletTransaction: solanaTx.toString()
+            })
         } catch (error) {
             logger.error('Error processing transaction:', error);
             // @ts-ignore

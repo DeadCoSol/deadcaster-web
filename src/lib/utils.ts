@@ -53,6 +53,16 @@ export function trimAddress (address: string): string {
   return `${start}...${end}`;
 };
 
+export function copyToClipboard(address: string) {
+  navigator.clipboard.writeText(address)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+};
+
 export function calculateDeadCoinAmount(dollarAmount: number, deadCoinPrice: number): string {
   const amount = Math.round(dollarAmount / deadCoinPrice);
   return amount.toLocaleString();

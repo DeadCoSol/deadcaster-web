@@ -25,6 +25,7 @@ export type User = {
   wallet: Wallet | null;
   walletNotifications: boolean;
   secretViewed: boolean;
+  lastWalletTransaction: string | null;
 };
 
 export type EditableData = Extract<
