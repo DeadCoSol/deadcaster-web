@@ -6,6 +6,7 @@ import { Placeholder } from '@components/common/placeholder';
 import type { ReactNode } from 'react';
 import {WalletDetails} from '@components/aside/wallet-details';
 import {PhantomDetails} from '@components/aside/phantom-details';
+import {Bill} from '@components/aside/aside-bill';
 
 export type LayoutProps = {
   children: ReactNode;
@@ -25,7 +26,7 @@ export function HomeLayout({ children }: LayoutProps): JSX.Element {
       {children}
       <Aside>
         <MusicPlayer />
-        <Suggestions />
+        <Bill />
       </Aside>
     </>
   );

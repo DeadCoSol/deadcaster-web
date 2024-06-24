@@ -61,7 +61,7 @@ export function MusicPlayer(): JSX.Element {
         <section className="hover-animation rounded-2xl bg-main-sidebar-background">
             <motion.div className="inner:px-4 inner:py-3" {...variants}>
                 <h2 className="text-xl font-bold">
-                    <UserAvatar src='/assets/radio.png' alt='Fade' />
+                    <UserAvatar src='/steallie.png' alt='Fade' />
                     Streaming Now
                 </h2>
                 {playlist.length > 0 ? (
