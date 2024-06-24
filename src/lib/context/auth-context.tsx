@@ -98,7 +98,8 @@ export function AuthContextProvider({
           notifications: false,
           walletNotifications: false,
           wallet: null,
-          secretViewed: false
+          secretViewed: false,
+          lastWalletTransaction: null
         };
 
         const userStatsData: WithFieldValue<Stats> = {
