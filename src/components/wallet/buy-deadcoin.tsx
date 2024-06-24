@@ -74,32 +74,34 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                     </Elements>
                 )}
             </Modal>
-            <div className="flex items-center">
-                <span>Get DeadCoin:</span>
-                <Button
-                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                     hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                     dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
-                    onClick={() => handleOpenModal(5)}
-                >
-                    $5
-                </Button>
-                <Button
-                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                     hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                     dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
-                    onClick={() => handleOpenModal(10)}
-                >
-                    $10
-                </Button>
-                <Button
-                    className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                     hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                     dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
-                    onClick={() => handleOpenModal(20)}
-                >
-                    $20
-                </Button>
+            <div className="flex flex-col items-start mb-7">
+                <span className="mb-2">Get DeadCoin:</span>
+                <div className="flex items-center">
+                    <Button
+                        className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                        onClick={() => handleOpenModal(5)}
+                    >
+                        $5
+                    </Button>
+                    <Button
+                        className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                        onClick={() => handleOpenModal(10)}
+                    >
+                        $10
+                    </Button>
+                    <Button
+                        className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
+                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
+                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                        onClick={() => handleOpenModal(20)}
+                    >
+                        $20
+                    </Button>
+                </div>
             </div>
         </form>
     );

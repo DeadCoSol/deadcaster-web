@@ -115,8 +115,8 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
             const response =
                 await axios.post('/api/handle-transaction', { userId: user?.id, amount, token, paymentSecret, deadCoAmount });
             if (response.data.success) {
-                setMessage(" Your DeadCoin transfer is in progress.")
-                toast.success("DeadCoin transfer in progress.")
+                setMessage(" Your DeadCoin transfer is in progress. It can take up to 1 minute. Thank you.")
+                toast.success("DeadCoin transfer in progress. It can take up to 1 minute.")
             } else {
                 setMessage("We had an issue transferring your DeadCoin. Don't worry we've been notified and will manually process it.")
                 toast.error("Error transferring DeadCoin");
