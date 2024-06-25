@@ -44,7 +44,7 @@ app.prepare().then(() => {
                         "https://firebasestorage.googleapis.com",
                         "https://api.unisvg.com",
                     ],
-                    frameSrc: ["https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
+                    frameSrc: ["https://deadcaster.firebaseapp.com", "https://deadcasterdev.firebaseapp.com", "https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
                     objectSrc: ["'none'"],
                     upgradeInsecureRequests: [],
                 },
