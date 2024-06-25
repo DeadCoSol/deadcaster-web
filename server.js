@@ -29,6 +29,8 @@ app.prepare().then(() => {
                     imgSrc: ["'self'", "blob:", "data:", "https:"],
                     connectSrc: [
                         "'self'",
+                        "https://api.simplesvg.com",
+                        "https://api.iconify.design",
                         "https://deadcaster-web-deadcaster.vercel.app",
                         "https://*.jup.ag",
                         "https://*.google.com",
