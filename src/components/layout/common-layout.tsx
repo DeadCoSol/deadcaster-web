@@ -37,8 +37,8 @@ export function UserLayout({ children }: LayoutProps): JSX.Element {
     <>
       {children}
       <Aside>
-        <Suggestions />
         <MusicPlayer />
+        <Suggestions />
       </Aside>
     </>
   );

@@ -33,13 +33,13 @@ const navLinks: Readonly<NavLink[]> = [
     iconName: 'UserGroupIcon',
     canBeHidden: true
   },
-  {
-    href: '/explore',
-    linkName: 'Explore',
-    iconName: 'HashtagIcon',
-    disabled: true,
-    canBeHidden: true
-  },
+  // {
+  //   href: '/explore',
+  //   linkName: 'Explore',
+  //   iconName: 'HashtagIcon',
+  //   disabled: true,
+  //   canBeHidden: true
+  // },
 ];
 
 export function Sidebar(): JSX.Element {

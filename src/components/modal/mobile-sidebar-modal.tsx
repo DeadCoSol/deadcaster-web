@@ -23,12 +23,12 @@ const topNavLinks: Readonly<MobileNavLink[]> = [
     linkName: 'DeadCasters',
     iconName: 'UserGroupIcon',
   },
-  {
-    href: '/explore',
-    linkName: 'Explore',
-    iconName: 'HashtagIcon',
-    disabled: true,
-  },
+  // {
+  //   href: '/explore',
+  //   linkName: 'Explore',
+  //   iconName: 'HashtagIcon',
+  //   disabled: true,
+  // },
 ];
 
 const bottomNavLinks: Readonly<MobileNavLink[]> = [

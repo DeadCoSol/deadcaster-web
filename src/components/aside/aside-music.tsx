@@ -5,6 +5,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import React, { useEffect, useState } from "react";
 import {UserAvatar} from '@components/user/user-avatar';
+import {FaSpinner} from 'react-icons/fa';
 
 interface Song {
     src: string;
@@ -60,14 +61,22 @@ export function MusicPlayer(): JSX.Element {
     return (
         <section className="hover-animation rounded-2xl bg-main-sidebar-background">
             <motion.div className="inner:px-4 inner:py-3" {...variants}>
-                <h2 className="text-xl font-bold">
-                    <UserAvatar src='/steallie.png' alt='Fade' />
-                    Streaming Now
-                </h2>
+                <div className="flex justify-between items-center p-2">
+                    <div className="flex items-center w-1/5">
+                        <img src="/logo192.jpeg" alt="stream" className="w-14 h-14 rounded-full" />
+                    </div>
+                    <div className="flex gap-10 w-4/5 justify-left"> {/* Adjusted gap to 4 for more spacing */}
+                        <span className="text-xl font-bold">Stream Now</span>
+                    </div>
+                </div>
                 {playlist.length > 0 ? (
-                    <>
-                        <div className="text-light-primary dark:text-dark-primary">
-                            {playlist[currentTrack]?.title} {/* Display the current track's title */}
+                    <div className="mr-2">
+                        <div className="text-light-primary dark:text-dark-primary mb-1 text-xl font-bold">
+                            {playlist[currentTrack]?.title.split(",")[0] } {/* Display the current track's title */}
+                        </div>
+                        <div className="text-light-secondary dark:text-dark-secondary mb-2">
+                            {playlist[currentTrack]?.title.split(",")[1] +
+                                ' ('+ playlist[currentTrack]?.title.split(",")[2].trim() + ')'} {/* Display the current track's title */}
                         </div>
                         <AudioPlayer
                             src={playlist[currentTrack]?.src}
@@ -76,12 +85,12 @@ export function MusicPlayer(): JSX.Element {
                             onEnded={handleEnd}
                             onError={() => console.log("Play error")}
                         />
-                    </>
+                    </div>
                 ) : (
                     <Loading />
                 )}
                 <div className="text-light-primary dark:text-dark-primary">
-                    From our @DeadCaster Audius archive
+                    From the archive.
                 </div>
             </motion.div>
         </section>

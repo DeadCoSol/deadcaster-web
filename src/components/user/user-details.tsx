@@ -8,7 +8,8 @@ import type { IconName } from '@components/ui/hero-icon';
 import type { User } from '@lib/types/user';
 import {FaCopy} from 'react-icons/fa';
 import {copyToClipboard, trimAddress} from '@lib/utils';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {getTokenBalance} from '@lib/solana';
 
 type UserDetailsProps = Pick<
   User,
@@ -40,11 +41,22 @@ export function UserDetails({
   followers,
   wallet
 }: UserDetailsProps): JSX.Element {
+  const DEADCOIN_MINT_ADDRESS = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
+  const [balance, setBalance] = useState<number | null>(null);
+
   const detailIcons: Readonly<DetailIcon[]> = [
     [location, 'MapPinIcon'],
     [website, 'LinkIcon'],
     [`Joined ${formatDate(createdAt, 'joined')}`, 'CalendarDaysIcon']
   ];
+
+  useEffect(() => {
+    getTokenBalance(wallet?.tokens[0].associatedAccount!, DEADCOIN_MINT_ADDRESS)
+        .then(setBalance)
+        .catch((error) => {
+          console.error('Failed to fetch balance:', error);
+        });
+  }, []);
 
   return (
     <>
@@ -67,6 +79,10 @@ export function UserDetails({
               title="Copy address"
           />
           <span className="mr-2 text-light-secondary dark:text-dark-secondary ml-2">{trimAddress(wallet ? wallet.tokens[0].associatedAccount : 'unknown')}</span>
+        </div>
+        <div className="flex items-center">
+          <p>DeadCoin Balance:</p>
+          <span className="mr-2 text-light-secondary dark:text-dark-secondary ml-2">{balance}</span>
         </div>
       </div>
       <div className='flex flex-col gap-2'>
