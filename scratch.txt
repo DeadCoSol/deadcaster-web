@@ -1,0 +1,7 @@
+mkdir signin_helpers/ && cd signin_helpers
+wget https://deadcasterdev.firebaseapp.com/__/auth/handler
+wget https://deadcasterdev.firebaseapp.com/__/auth/handler.js
+wget https://deadcasterdev.firebaseapp.com/__/auth/experiments.js
+wget https://deadcasterdev.firebaseapp.com/__/auth/iframe
+wget https://deadcasterdev.firebaseapp.com/__/auth/iframe.js
+wget https://deadcasterdev.firebaseapp.com/__/auth/init.json
