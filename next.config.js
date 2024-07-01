@@ -19,19 +19,18 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    if (process.env.NODE_ENV === 'development') {
-      return [
-        {
-          source: "/__/auth/:path*",
-          destination: `https://deadcasterdev.firebaseapp.com/__/auth/:path*`,
-        },
-        {
-          source: "/__/firebase/:path*",
-          destination: `https://deadcasterdev.firebaseapp.com/__/firebase/:path*`,
-        },
-      ];
-    }
-    return [];
+    const authDomain = process.env.FIREBASE_AUTH_DOMAIN;
+
+    return [
+      {
+        source: "/__/auth/:path*",
+        destination: `https://`+authDomain+`/__/auth/:path*`,
+      },
+      {
+        source: "/__/firebase/:path*",
+        destination: `https://`+authDomain+`/__/firebase/:path*`,
+      },
+    ];
   },
 };
 
