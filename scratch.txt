@@ -1,31 +1,31 @@
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_URL -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_URL -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_USE_EMULATOR -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_USE_EMULATOR -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_API_KEY -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_API_KEY -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_AUTH_DOMAIN -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_AUTH_DOMAIN -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_PROJECT_ID -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_PROJECT_ID -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STORAGE_BUCKET -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STORAGE_BUCKET -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MESSAGING_SENDER_ID -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MESSAGING_SENDER_ID -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_APP_ID -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_APP_ID -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MEASUREMENT_ID -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MEASUREMENT_ID -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_QUICK_NODE_URL -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_QUICK_NODE_URL -b live
 
-firebase apphosting:secrets:grantaccess ENCRYPTION_SECRET -b deadcasterdev
+firebase apphosting:secrets:grantaccess ENCRYPTION_SECRET -b live
 
-firebase apphosting:secrets:grantaccess FIREBASE_SERVICE_ACCOUNT_KEY -b deadcasterdev
+firebase apphosting:secrets:grantaccess FIREBASE_SERVICE_ACCOUNT_KEY -b live
 
-firebase apphosting:secrets:grantaccess FIREBASE_DATABASE_URL -b deadcasterdev
+firebase apphosting:secrets:grantaccess FIREBASE_DATABASE_URL -b live
 
-firebase apphosting:secrets:grantaccess STRIPE_SECRET_KEY -b deadcasterdev
+firebase apphosting:secrets:grantaccess STRIPE_SECRET_KEY -b live
 
-firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY -b deadcasterdev
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY -b live
 
-firebase apphosting:secrets:grantaccess FIREBASE_AUTH_DOMAIN -b deadcasterdev
+firebase apphosting:secrets:grantaccess FIREBASE_AUTH_DOMAIN -b live
