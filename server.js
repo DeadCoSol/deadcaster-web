@@ -46,7 +46,7 @@ app.prepare().then(() => {
                         "https://firebasestorage.googleapis.com",
                         "https://api.unisvg.com",
                     ],
-                    frameSrc: ["https://deadcaster.firebaseapp.com", "https://deadcasterdev.firebaseapp.com", "https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
+                    frameSrc: ["https://deadcasterdev--deadcasterdev.us-central1.hosted.app", "https://localhost", "https://apis.google.com", "https://deadcaster.firebaseapp.com", "https://deadcasterdev.firebaseapp.com", "https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
                     objectSrc: ["'none'"],
                     upgradeInsecureRequests: [],
                 },
@@ -57,7 +57,7 @@ app.prepare().then(() => {
     if (dev) {
         createServer(httpsOptions, server).listen(443, err => {
             if (err) throw err;
-            console.log('> Ready on https://chris.deadcaster.xyz');
+            console.log('> Ready on https://localhost');
         });
     } else {
         server.listen(3000, err => {
