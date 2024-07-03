@@ -24,14 +24,14 @@ app.prepare().then(() => {
             contentSecurityPolicy: {
                 directives: {
                     defaultSrc: ["*"],
-                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcaster-web-deadcaster.vercel.app"],
-                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com https://deadcaster-web-deadcaster.vercel.app"],
+                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
+                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
                     imgSrc: ["'self'", "blob:", "data:", "https:"],
                     connectSrc: [
                         "'self'",
                         "https://api.simplesvg.com",
                         "https://api.iconify.design",
-                        "https://deadcaster-web-deadcaster.vercel.app",
+                        "https://deadcasterdev--deadcasterdev.us-central1.hosted.app",
                         "https://*.jup.ag",
                         "https://*.google.com",
                         "https://stripe.com",
@@ -46,7 +46,7 @@ app.prepare().then(() => {
                         "https://firebasestorage.googleapis.com",
                         "https://api.unisvg.com",
                     ],
-                    frameSrc: ["https://www.deadcaster.xyz", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app", "https://localhost", "https://apis.google.com", "https://deadcaster.firebaseapp.com", "https://deadcasterdev.firebaseapp.com", "https://deadcaster-web-deadcaster.vercel.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
+                    frameSrc: ["https://www.deadcaster.xyz", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app", "https://localhost", "https://apis.google.com", "https://deadcaster.firebaseapp.com", "https://deadcasterdev.firebaseapp.com", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro"],
                     objectSrc: ["'none'"],
                     upgradeInsecureRequests: [],
                 },

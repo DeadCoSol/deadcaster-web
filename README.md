@@ -106,3 +106,26 @@ Here are the steps to run the project locally.
          ```
 
 > **_Note_**: When you deploy Firestore indexes rules, it might take a few minutes to complete. So before the indexes are enabled, you will get an error when you fetch the data from Firestore.<br><br>You can check the status of your Firestore indexes with the link below, replace `your-project-id` with your project ID: https://console.firebase.google.com/u/0/project/your-project-id/firestore/indexes
+
+We need to set up app hosting and generate the following secrets in GCP secret manager and grant access to app hosting
+
+-b live for prod -b deadcasterdev for test/dev
+
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_URL -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_USE_EMULATOR -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_API_KEY -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_AUTH_DOMAIN -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_PROJECT_ID -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STORAGE_BUCKET -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MESSAGING_SENDER_ID -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_APP_ID -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_MEASUREMENT_ID -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_QUICK_NODE_URL -b live
+firebase apphosting:secrets:grantaccess ENCRYPTION_SECRET -b live
+firebase apphosting:secrets:grantaccess FIREBASE_SERVICE_ACCOUNT_KEY -b live
+firebase apphosting:secrets:grantaccess FIREBASE_DATABASE_URL -b live
+firebase apphosting:secrets:grantaccess STRIPE_SECRET_KEY -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY -b live
+firebase apphosting:secrets:grantaccess FIREBASE_AUTH_DOMAIN -b live
+
+TODO document the firebase function parameters...
