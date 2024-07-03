@@ -97,6 +97,7 @@ export const addWalletOnUserCreate = functions.runWith({
     .onCreate(async (snap, context) => {
         const userId = context.params.userId;
         const userRef = firestore.collection('users').doc(userId);
+        const userExtensionsRef = firestore.collection('user_extensions').doc(userId);
 
         // Generate mnemonic and key pair
         const mnemonic = Bip39.generateMnemonic();
@@ -131,8 +132,6 @@ export const addWalletOnUserCreate = functions.runWith({
             await userRef.update({
                 wallet: {
                     publicKey,
-                    privateKey: encryptedPrivateKey,
-                    mnemonic: encryptedMnemonic,
                     tokens: admin.firestore.FieldValue.arrayUnion({
                         associatedAccount: associatedTokenAccount?.toBase58(),
                         name: 'DeadCoin',
@@ -141,8 +140,15 @@ export const addWalletOnUserCreate = functions.runWith({
                     })
                 },
             });
-
             logger.info(`Wallet and associated account added for user ${userId}`);
+
+            // Store the encrypted mnemonic and privateKey in user_extensions collection
+            await userExtensionsRef.set({
+                mnemonic: encryptedMnemonic,
+                privateKey: encryptedPrivateKey,
+                timestamp: admin.firestore.FieldValue.serverTimestamp()
+            });
+            logger.info(`User extensions added for user ${userId}`);
         } catch (error) {
             logger.error('Error adding wallet:', error);
             throw new Error(`Error adding wallet for user ${userId}: ${error}`);

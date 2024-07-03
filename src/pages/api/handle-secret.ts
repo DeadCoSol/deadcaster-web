@@ -30,25 +30,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(403).json({ success: false, message: 'Unauthorized' });
             }
 
-            const userDocRef = adminDb.collection('users').doc(userId);
+            const userDocRef = adminDb.collection('user_extensions').doc(userId);
             const userDoc = await userDocRef.get();
 
             if (!userDoc.exists) {
-                return res.status(404).json({ success: false, message: 'User not found' });
+                return res.status(404).json({ success: false, message: 'User extensions not found' });
             }
 
             const userData = userDoc.data();
-            if (!userData || userData.walletViewed) {
-                return res.status(400).json({ success: false, message: 'Private key has already been viewed or wallet not found' });
+            if (!userData) {
+                return res.status(400).json({ success: false, message: 'Extensions not found' });
             }
 
-            const encryptedPrivateKey = userData.wallet.privateKey;
-            const encryptedMnemonic = userData.wallet.mnemonic;
+            const encryptedPrivateKey = userData.privateKey;
+            const encryptedMnemonic = userData.mnemonic;
             const decryptedPrivateKey = decrypt(encryptedPrivateKey, encryptionKey);
             const decryptedMnemonic = decrypt(encryptedMnemonic, encryptionKey);
 
             // Should we only let you view it once??
-            await userDocRef.update({ walletViewed: false });
+            // await userDocRef.update({ walletViewed: false });
 
             res.status(200).json({ success: true, privateKey: decryptedPrivateKey, mnemonic: decryptedMnemonic });
         } catch (error) {
