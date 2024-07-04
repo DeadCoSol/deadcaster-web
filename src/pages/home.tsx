@@ -26,10 +26,10 @@ export default function Home(): JSX.Element {
 
   return (
     <MainContainer>
-      <SEO title='Home / DeadCaster' />
+      <SEO title='Shakedown Street / DeadCaster' />
       <MainHeader
         useMobileSidebar
-        title='Home'
+        title='Shakedown Street'
         className='flex items-center justify-between'
       >
         <UpdateUsername />

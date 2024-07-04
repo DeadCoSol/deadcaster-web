@@ -24,8 +24,8 @@ export type NavLink = {
 const navLinks: Readonly<NavLink[]> = [
   {
     href: '/home',
-    linkName: 'Home',
-    iconName: 'HomeIcon'
+    linkName: 'Shakedown Street',
+    iconName: 'MapIcon'
   },
   {
     href: '/people',
