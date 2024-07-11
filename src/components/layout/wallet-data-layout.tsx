@@ -1,13 +1,9 @@
 import { useRouter } from 'next/router';
-import { query, where, limit } from 'firebase/firestore';
 import {UserContextProvider, useUser} from '@lib/context/user-context';
-import { useCollection } from '@lib/hooks/useCollection';
-import { usersCollection } from '@lib/firebase/collections';
 import { SEO } from '@components/common/seo';
 import { MainContainer } from '@components/home/main-container';
 import { MainHeader } from '@components/home/main-header';
 import type { LayoutProps } from './common-layout';
-import {UserHeader} from '@components/user/user-header';
 import {WalletHeader} from '@components/wallet/wallet-header';
 import {useAuth} from '@lib/context/auth-context';
 

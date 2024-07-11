@@ -1,0 +1,58 @@
+{
+  "program": {
+    "candyMachine": "5tVYHnLRjb5SjvafXmh28vG74pjXeuFmH4r9qbjKDCbW",
+    "candyGuard": "",
+    "candyMachineCreator": "9KsxK2T1ZA9aXC7sxQR8YmTPtq4dy2aQTQMVm7WKZhPB",
+    "collectionMint": "8e4GSZVi98aHjNBXs1Yhdvxpj2Ryw568HGr9wcHPAmTP"
+  },
+  "items": {
+    "-1": {
+      "name": "Pier 39",
+      "image_hash": "263d612c513d9e86490b0b6c58a4bccb68c2d68cd93fe8af945b9456e219ed74",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/collection.png",
+      "metadata_hash": "895a90f2237b49d252b4a95e8c03cfd852a923b3d783c0a221b0a94dbf0083a4",
+      "metadata_link": "https://arweave.net/tm0jf0F4-bXnEUSFALlZbPvxBvuERDGKzIw2jdC3zgE",
+      "onChain": true
+    },
+    "0": {
+      "name": "Jerry",
+      "image_hash": "c00acade11f4d972bb9e22ce9b8bc9db6868c6a5f11df656ef8c52dd9bef9593",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/0.png",
+      "metadata_hash": "d1a9e23e94112f04dcdbbefe312e5e972fb08f7eb7c284eac2ab64c23ede7147",
+      "metadata_link": "https://arweave.net/yIVqg07KIBspcIpt0Ba9lt9SR-twLckeZVqGK9HG-DA",
+      "onChain": true
+    },
+    "1": {
+      "name": "Bob",
+      "image_hash": "6da5aa93c6660f43e3dae04c8c904efbce49aa0198b21c387ff5ddca58067850",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/1.png",
+      "metadata_hash": "3f5322e30bc5d05a02e87280ddf64163a75bda22817d172072059a7dd58005c3",
+      "metadata_link": "https://arweave.net/z4h1D4jvgK81WFShpUS5DWCu45N8rDg8U7YTzi2s894",
+      "onChain": true
+    },
+    "2": {
+      "name": "Phil",
+      "image_hash": "2d6a33ef2b91d956e4934c73304ecec67e97d92afbc8e71d66f138b238e0ab61",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/2.png",
+      "metadata_hash": "92fad3d5d92c63a6258307b1020d1b663b98a6911b432ec12e4f3fa56b498073",
+      "metadata_link": "https://arweave.net/9z2O49SUuab4sIB457Kaj4hH1WsdqlpDnwAwBgPJah0",
+      "onChain": true
+    },
+    "3": {
+      "name": "Bill",
+      "image_hash": "dc26bcee7285355e705bd9e875afa09112956c76bed655e26d8da6e52b8c9f86",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/3.png",
+      "metadata_hash": "93ab0f4c5745ab615e5dfba8b1df74659c88a4c616e2b4cb2033134ceeb710e9",
+      "metadata_link": "https://arweave.net/P0RxF0Cq9Mbm2LIhx78giT54o2BBqycYlijCI7pCFho",
+      "onChain": true
+    },
+    "4": {
+      "name": "Mickey",
+      "image_hash": "f0d2da6031d19be8976a5b6539af1c1c3f2223f2f1ccc06c5797ebef39ee88a9",
+      "image_link": "https://deadcaster.xyz/nfts/pier39/4.png",
+      "metadata_hash": "61c33f7e22e63a2ffb1d2528f5efc797c4a171822ab40eee933ef444190481d4",
+      "metadata_link": "https://arweave.net/oZ5MJU4CBRSMzsqeYgdWnM0flwR6mFy-JYZOKZ7Ug8o",
+      "onChain": true
+    }
+  }
+}

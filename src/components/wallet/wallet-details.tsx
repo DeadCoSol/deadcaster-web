@@ -1,6 +1,6 @@
 import Tabs from '../ui/tabs';
 import TokenRow from './token-row';
-import {FaCopy, FaEye, FaEyeSlash} from 'react-icons/fa';
+import {FaCopy, FaExternalLinkAlt, FaEye, FaEyeSlash} from 'react-icons/fa';
 import type { User } from '@lib/types/user';
 import { trimAddress, copyToClipboard } from '@lib/utils';
 import React, {useEffect, useRef, useState} from 'react';
@@ -10,6 +10,12 @@ import {useUser} from '@lib/context/user-context';
 import {toast} from 'react-hot-toast';
 import {useStripe} from '@stripe/react-stripe-js';
 import {getTokenBalance} from '@lib/solana';
+import {BuyDeadCoin} from '@components/wallet/buy-deadcoin';
+import {Button} from '@components/ui/button';
+import {UserAvatar} from '@components/user/user-avatar';
+import Link from 'next/link';
+import {NextImage} from '@components/ui/next-image';
+import {useWindow} from '@lib/context/window-context';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -24,13 +30,11 @@ function formatNumber(number: number): string {
 }
 
 export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
+    const windowCtx =useWindow();
     const stripe = useStripe();
     const { user } = useUser();
-    const [privateKey, setPrivateKey] = useState<string | null>(null);
     const [mnemonic, setMnemonic] = useState<string | null>(null);
-    const [showKey, setShowKey] = useState<boolean>(false);
     const [message, setMessage] = useState<string | null>(null);
-
     const previousTxRef = useRef<string | undefined>(user?.lastWalletTransaction);
     const isInitialRender = useRef(true);
 
@@ -99,7 +103,6 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
             const token = await getToken();
             const response = await axios.post('/api/handle-secret', { userId: user?.id, token });
             if (response.data.success) {
-                setPrivateKey(response.data.privateKey);
                 setMnemonic(response.data.mnemonic);
             } else {
                 toast.error("error fetching wallet key and mnemonic");
@@ -126,8 +129,11 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         }
     };
 
+    const handleExport = async () => {
+        window.open('phantom://open', '_blank');
+    };
+
     const tokens = wallet?.tokens || [];
-    const nfts = wallet?.nfts || [];
 
     return (
         <>
@@ -135,73 +141,53 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
             <div className="flex items-center">
                 {message}
             </div>
-            <Tabs tabs={['Account', 'NFTs', 'Wallet Details']}>
+            <div className="mb-5">
+                DeadCaster has created a Wallet for you to use in our app. This is not an investment wallet.
+            </div>
+            <Tabs tabs={['Wallet', 'Wallet Keys', 'Get DeadCoin']}>
                 <div>
                     {tokens.map((token, index) => (
                         <TokenRow key={index} token={token} />
                     ))}
                 </div>
                 <div>
-                    No NFTs yet.
-                </div>
-                <div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex flex-wrap gap-x-3 gap-y-1">
-                            <div className="flex flex-col items-start">
-                                <span className="mr-2">Solana Wallet Public Address:</span>
-                                <div className="flex items-center">
-                                    <FaCopy
-                                        className="cursor-pointer text-gray-500 hover:text-gray-700"
-                                        onClick={() => copyToClipboard(wallet ? wallet.publicKey : 'unknown')}
-                                        title="Copy address"
-                                    />
-                                    <span className="mr-2 text-light-secondary dark:text-dark-secondary">{trimAddress(wallet ? wallet.publicKey : 'unknown')}</span>
-                                </div>
+                    <div className="flex flex-col gap-2 mt-5">
+                        <div>
+                            <div className="mb-1 border-t p-3">
+                                <NextImage
+                                    useSkeleton
+                                    imgClassName='rounded-full'
+                                    width={48}
+                                    height={48}
+                                    src='phantom.jpeg'
+                                    alt='Phantom'
+                                    key='PhantomWalletPage'
+                                />
+                                <Link href='https://phantom.app/' target='_blank' className='flex mt-2'>
+                                    Get Phantom Wallet &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
+                                </Link>
+                            </div>
+
+                            <div className="flex justify-between items-center p-3 border-t">
+                                To import your wallet into Phantom COPY your "Secret Phrase" by pushing the icon after
+                                the label below.  Open Phantom, add a new wallet and select Import from Secret Phrase.
                             </div>
                         </div>
-                        {showKey ? (
-                            <div className="mt-2 mb-3">
-                                <div className="mt-2">
-                                    <div className="flex items-center mb-3">
-                                        <span className="mr-2">Do NOT share this!</span>
-                                        <FaEyeSlash
-                                            className="cursor-pointer text-gray-500 hover:text-gray-700"
-                                            onClick={() => setShowKey(false)}
-                                            title="Hide private key"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex items-center mb-3">
-                                    <span className="mr-2 text-light-secondary dark:text-dark-secondary">Private Key - {trimAddress(privateKey ? privateKey : 'not available')}</span>
-                                    <FaCopy
-                                        className="cursor-pointer text-gray-500 hover:text-gray-700"
-                                        onClick={() => copyToClipboard(privateKey ? privateKey : 'not available')}
-                                        title="Copy private key"
-                                    />
-                                </div>
-                                <div className="flex items-center">
-                                    <span className="mr-2 text-light-secondary dark:text-dark-secondary">Secret Phrase - {trimAddress(mnemonic ? mnemonic : 'not available')}</span>
-                                    <FaCopy
-                                        className="cursor-pointer text-gray-500 hover:text-gray-700"
-                                        onClick={() => copyToClipboard(mnemonic ? mnemonic : 'not available')}
-                                        title="Copy private key"
-                                    />
-                                </div>
+                        <div className="mt-2 p-3">
+                            <div className="flex items-center">
+                                <span className="mr-2">Secret Phrase: </span>
+                                <FaCopy
+                                    className="cursor-pointer text-gray-500 hover:text-gray-700"
+                                    onClick={() => copyToClipboard(mnemonic ? mnemonic : 'not available')}
+                                    title="Copy private key"
+                                />
+                                <span className="ml-2 text-light-secondary dark:text-dark-secondary">{trimAddress(mnemonic ? mnemonic : 'not available')}</span>
                             </div>
-                        ) : (
-                            <div className="mt-2">
-                                <span>Private Keys:</span>
-                                <div className="flex items-center">
-                                    <span className="mr-2">****************</span>
-                                    <FaEye
-                                        className="cursor-pointer text-gray-500 hover:text-gray-700"
-                                        onClick={() => setShowKey(true)}
-                                        title="Show private key"
-                                    />
-                                </div>
-                            </div>
-                        )}
+                        </div>
                     </div>
+                </div>
+                <div>
+                    <BuyDeadCoin />
                 </div>
             </Tabs>
         </div>

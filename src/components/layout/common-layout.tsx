@@ -71,8 +71,18 @@ export function WalletLayout({ children }: LayoutProps): JSX.Element {
         <>
             {children}
             <Aside>
-                <WalletDetails />
                 <PhantomDetails />
+            </Aside>
+        </>
+    );
+}
+
+export function CollectLayout({ children }: LayoutProps): JSX.Element {
+    return (
+        <>
+            {children}
+            <Aside>
+                <MusicPlayer />
             </Aside>
         </>
     );

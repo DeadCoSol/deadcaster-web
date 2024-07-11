@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { variants } from './aside-trends';
 import {UserAvatar} from '@components/user/user-avatar';
 import React from 'react';
-import {FaExternalLinkAlt, FaIcons} from 'react-icons/fa';
+import {FaExternalLinkAlt} from 'react-icons/fa';
 
 export function PhantomDetails(): JSX.Element {
 
@@ -13,12 +13,12 @@ export function PhantomDetails(): JSX.Element {
                 <h2 className='text-xl font-bold'>
                         <UserAvatar src='phantom.jpeg' alt='Phantom' />
                         <Link href='https://phantom.app/' target='_blank' className='flex'>
-                            Phantom Wallet &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
+                            Get Phantom Wallet &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
                         </Link>
                 </h2>
                 <div className='mb-3'>
                     Phantom is an easy to use Wallet and has a lot of documentation to help you navigate the complex
-                    world of Crypto Currency. You can (if you want) use Phantom to connect to your DeadCoin wallet and
+                    world of Crypto Currency. You NEED to use Phantom to connect to your DeadCoin wallet and
                     transfer DeadCoin in or out.
                 </div>
             </motion.div>

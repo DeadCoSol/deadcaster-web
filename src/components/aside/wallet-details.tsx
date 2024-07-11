@@ -2,8 +2,21 @@ import { motion } from 'framer-motion';
 import { variants } from './aside-trends';
 import {UserAvatar} from '@components/user/user-avatar';
 import React from 'react';
+import {getProvider} from '@lib/solana-utils';
+import {Button} from '@components/ui/button';
 
 export function WalletDetails(): JSX.Element {
+
+    const provider = getProvider();
+
+    const handleConnect = async() => {
+        try {
+            const resp = await provider?.connect();
+            console.log(resp?.publicKey.toString());
+        } catch (err) {
+            console.log("we had an issue connecting to Phantom ", err);
+        }
+    }
 
     return (
         <section className='hover-animation rounded-2xl bg-main-sidebar-background'>
@@ -13,17 +26,15 @@ export function WalletDetails(): JSX.Element {
                     Your wallet
                 </h2>
                 <div>
-                    This is your Crypto Wallet details for your DeadCaster account which allows you to:
-                    <ul style={{ listStyleType: 'disc' }} className='ml-3 mt-2'>
-                        <li>View your DeadCoin balance</li>
-                        <li>View NFTs you have claimed</li>
-                        <li>View your DeadCaster transactions</li>
-                        <li>View details to import into another wallet</li>
-                    </ul>
-                    <br/>
-                    <p className="mb-3 text-light-secondary dark:text-dark-secondary">
-                        The keys for your wallet are in the "Wallet Details" tab on this page.
-                    </p>
+                    <Button
+                        className='accent-tab absolute right-4 -translate-y-[72px] bg-main-accent text-lg font-bold text-white
+                       outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12'
+                        onClick={handleConnect}
+                    >
+                        Connect to Phantom
+                    </Button>
+
                 </div>
             </motion.div>
         </section>

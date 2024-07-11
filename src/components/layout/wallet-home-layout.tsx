@@ -8,7 +8,6 @@ import { UserHomeAvatar } from '@components/user/user-home-avatar';
 import { Loading } from '@components/ui/loading';
 import { variants } from '@components/user/user-header';
 import type { LayoutProps } from './common-layout';
-import {BuyDeadCoin} from '@components/wallet/buy-deadcoin';
 import {WalletDetails} from '@components/wallet/wallet-details';
 
 export function WalletHomeLayout({ children }: LayoutProps): JSX.Element {
@@ -61,7 +60,6 @@ export function WalletHomeLayout({ children }: LayoutProps): JSX.Element {
             <div className='relative flex flex-col gap-3 px-4 py-3'>
               <div className='flex justify-between'>
                 <UserHomeAvatar profileData={profileData} key={"WalletHomeAvatarLower"}/>
-                  <BuyDeadCoin />
               </div>
               <WalletDetails {...userData} key={"WalletDetails"}/>
             </div>

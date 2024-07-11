@@ -180,10 +180,15 @@ export function MobileSidebarModal({
             linkName='Profile'
           />
           <MobileSidebarLink
-              href={`/wallets`}
+              href={`/wallet`}
               iconName='WalletIcon'
               linkName='My Wallet'
               hasNotifications={user?.walletNotifications}
+          />
+          <MobileSidebarLink
+              href={`/collect`}
+              iconName='CircleStackIcon'
+              linkName='Collectibles'
           />
           <MobileSidebarLink
               href={`/notifications`}

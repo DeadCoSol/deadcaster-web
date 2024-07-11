@@ -1,13 +1,13 @@
-import {ProtectedLayout, UserLayout, WalletLayout} from '@components/layout/common-layout';
+import {CollectLayout, ProtectedLayout, WalletLayout} from '@components/layout/common-layout';
 import {MainLayout} from '@components/layout/main-layout';
 import type {ReactElement, ReactNode} from 'react';
-import {WalletHomeLayout} from '@components/layout/wallet-home-layout';
 import {useUser} from '@lib/context/user-context';
 import {StatsEmpty} from '@components/tweet/stats-empty';
-import {WalletDataLayout} from '@components/layout/wallet-data-layout';
 import StripeProvider from '@components/stripe/StripeProvider';
+import {CollectHomeLayout} from '@components/layout/collect-home-layout';
+import {CollectDataLayout} from '@components/layout/collect-data-layout';
 
-export default function Wallets(): JSX.Element {
+export default function Collect(): JSX.Element {
     const {user} = useUser();
 
     return (
@@ -24,17 +24,17 @@ export default function Wallets(): JSX.Element {
     );
 }
 
-Wallets.getLayout = (page: ReactElement): ReactNode => (
+Collect.getLayout = (page: ReactElement): ReactNode => (
     <ProtectedLayout>
         <MainLayout>
             <StripeProvider>
-                <WalletLayout>
-                    <WalletDataLayout>
-                        <WalletHomeLayout>
+                <CollectLayout>
+                    <CollectDataLayout>
+                        <CollectHomeLayout>
                             {page}
-                        </WalletHomeLayout>
-                    </WalletDataLayout>
-                </WalletLayout>
+                        </CollectHomeLayout>
+                    </CollectDataLayout>
+                </CollectLayout>
             </StripeProvider>
         </MainLayout>
     </ProtectedLayout>

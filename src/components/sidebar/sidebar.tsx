@@ -93,10 +93,15 @@ export function Sidebar(): JSX.Element {
               iconName='UserIcon'
             />
             <SidebarLink
-                href={`/wallets`}
+                href={`/wallet`}
                 linkName='My Wallet'
                 iconName='WalletIcon'
                 walletNotifications={user?.walletNotifications}
+            />
+            <SidebarLink
+                href={`/collect`}
+                linkName='Collectibles'
+                iconName='CircleStackIcon'
             />
             <SidebarLink
                 href={`/notifications`}

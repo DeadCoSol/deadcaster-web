@@ -3,7 +3,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
-      return request.auth.uid == 'w0ZQdTzYveaArIURIxy0z7bdS7I2';
+      return request.auth.uid == 'RpX3ckJG1PXM6MH6gcF9XYwF9jf1';
     }
 
     function isAuthorized(userId) {
@@ -17,7 +17,14 @@ service cloud.firestore {
     function isValidImages(images) {
       return (images is list && images.size() <= 4) || images == null;
     }
-    
+
+    // Match documents in the 'user_extensions' collection
+    match /user_extensions/{document=**} {
+      allow read, write: if request.auth != null &&
+                          (request.auth.token.email == "firebase-adminsdk-1nthq@deadcaster.iam.gserviceaccount.com" ||
+                           request.auth.token.admin == true);
+    }
+
     match /tweets/{tweetId} {
       allow read, update: if request.auth != null;
       allow create: if isAuthorized(request.resource.data.createdBy)
@@ -27,7 +34,10 @@ service cloud.firestore {
     }
 
     match /users/{document=**} {
-      allow read, write: if request.auth != null;
+      allow read: if request.auth != null;
+      allow create: if isAuthorized(request.resource.data.createdBy)
+      allow update: if isAuthorized(request.resource.data.createdBy);
+      allow delete: if isAuthorized(resource.data.createdBy);
     }
   }
 }

@@ -75,31 +75,39 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
                 )}
             </Modal>
             <div className="flex flex-col items-start mb-7">
-                <span className="mb-2">Get DeadCoin:</span>
+                <span className="mb-7 mt-5">Get DeadCoin using your Credit Card, ApplePay, or Google Pay.</span>
                 <div className="flex items-center">
                     <Button
-                        className='dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
-                        onClick={() => handleOpenModal(5)}
-                    >
-                        $5
-                    </Button>
-                    <Button
-                        className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                        className='accent-tab absolute right-4 -translate-y-[72px] bg-main-accent text-lg font-bold text-white
+                       outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 mr-2'
                         onClick={() => handleOpenModal(10)}
                     >
                         $10
                     </Button>
                     <Button
-                        className='ml-2 dark-bg-tab self-start border border-light-line-reply px-4 py-1.5 font-bold
-                         hover:bg-light-primary/10 active:bg-light-primary/20 dark:border-light-secondary
-                         dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
+                        className='accent-tab absolute right-4 -translate-y-[72px] bg-main-accent text-lg font-bold text-white
+                       outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 mr-2 ml-2'
                         onClick={() => handleOpenModal(20)}
                     >
                         $20
+                    </Button>
+                    <Button
+                        className='accent-tab absolute right-4 -translate-y-[72px] bg-main-accent text-lg font-bold text-white
+                       outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 mr-2 ml-2'
+                        onClick={() => handleOpenModal(50)}
+                    >
+                        $50
+                    </Button>
+                    <Button
+                        className='accent-tab absolute right-4 -translate-y-[72px] bg-main-accent text-lg font-bold text-white
+                       outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 ml-2'
+                        onClick={() => handleOpenModal(100)}
+                    >
+                        $100
                     </Button>
                 </div>
             </div>
