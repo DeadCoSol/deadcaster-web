@@ -1,6 +1,6 @@
 import { Connection } from '@solana/web3.js';
 
-import { TLog } from '../types';
+import { TLog } from './types';
 
 const POLLING_INTERVAL = 1000; // one second
 const MAX_POLLS = 30;

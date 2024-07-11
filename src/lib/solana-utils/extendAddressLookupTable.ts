@@ -7,7 +7,7 @@ import {
   VersionedTransaction,
 } from '@solana/web3.js';
 
-import { PhantomProvider } from '../types';
+import { PhantomProvider } from './types';
 import { signAndSendTransaction } from '.';
 
 /**
