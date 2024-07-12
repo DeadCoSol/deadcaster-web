@@ -1,14 +1,14 @@
 {
   "program": {
-    "candyMachine": "5tVYHnLRjb5SjvafXmh28vG74pjXeuFmH4r9qbjKDCbW",
+    "candyMachine": "BzMxkUePzzpTkwwVKqkoxAz3DNVuAWFmVii1hFvtXxnJ",
     "candyGuard": "",
-    "candyMachineCreator": "9KsxK2T1ZA9aXC7sxQR8YmTPtq4dy2aQTQMVm7WKZhPB",
+    "candyMachineCreator": "4V5C49WxN6EZ1BcfaDVegmxGMFRf7uhDRYCeEpGU3ec7",
     "collectionMint": "8e4GSZVi98aHjNBXs1Yhdvxpj2Ryw568HGr9wcHPAmTP"
   },
   "items": {
     "-1": {
       "name": "Pier 39",
-      "image_hash": "263d612c513d9e86490b0b6c58a4bccb68c2d68cd93fe8af945b9456e219ed74",
+      "image_hash": "b700d77a7e262a048c3eb11a37b80e56342a1505f5ef3f6853f6134698f94f11",
       "image_link": "https://deadcaster.xyz/nfts/pier39/collection.png",
       "metadata_hash": "895a90f2237b49d252b4a95e8c03cfd852a923b3d783c0a221b0a94dbf0083a4",
       "metadata_link": "https://arweave.net/tm0jf0F4-bXnEUSFALlZbPvxBvuERDGKzIw2jdC3zgE",
