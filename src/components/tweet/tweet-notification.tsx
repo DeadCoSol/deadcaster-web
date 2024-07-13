@@ -59,11 +59,11 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                 <div className='grid grid-cols-[.1fr,.9fr] gap-x-3 gap-y-1'>
                     <div className='flex flex-col items-center gap-2'>
                         {!reply && (
-                            <UserAvatar src='/assets/shakespeare.png' alt='Fade' />
+                            <UserAvatar src='/assets/jerry.png' alt='Fade' />
                         )}
 
                         {reply && (
-                            <UserAvatar src='/assets/skull-comment.png' alt='Comment' />
+                            <UserAvatar src='/assets/bob.png' alt='Comment' />
                         )}
                     </div>
                     <div className='flex flex-col items-start gap-2'>
