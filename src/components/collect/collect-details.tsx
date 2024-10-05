@@ -311,17 +311,18 @@ export function CollectDetails({ wallet }: UserDetailsProps): JSX.Element {
                                         <p className="text-gray-500 mt-2">{item.description}</p>
                                         <div className="mt-4">
                                             <ul className="flex flex-wrap -m-1">
-                                                {item.attributes.map((trait, index) => (
-                                                    <li
-                                                        key={index}
-                                                        className="border px-2 py-0.5 rounded m-1"
-                                                    >
-                                                        <div className="text-xs text-gray-400 font-medium">
-                                                            {trait.trait_type}
-                                                        </div>
-                                                        <div className="text-sm">{trait.value}</div>
-                                                    </li>
-                                                ))}
+                                                {item.attributes?.length > 0 ? (
+                                                    item.attributes.map((trait, index) => (
+                                                        <li key={index} className="border px-2 py-0.5 rounded m-1">
+                                                            <div className="text-xs text-gray-400 font-medium">
+                                                                {trait.trait_type}
+                                                            </div>
+                                                            <div className="text-sm">{trait.value}</div>
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <li className="text-gray-500">No attributes available</li>
+                                                )}
                                             </ul>
                                         </div>
                                     </div>
