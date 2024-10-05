@@ -128,4 +128,16 @@ firebase apphosting:secrets:grantaccess STRIPE_SECRET_KEY -b live
 firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY -b live
 firebase apphosting:secrets:grantaccess FIREBASE_AUTH_DOMAIN -b live
 
-TODO document the firebase function parameters...
+firebase functions:config:get
+{
+"encryption": {
+"secret": "4d6f6e6b..."
+},
+"mint": {
+"address": "r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh"
+},
+"solana": {
+"quicknode_url": "https://patient-crimson-isle.solana-mainnet.quiknode.pro/b7189bde4439da909ac75f99811289c684e78e0b/",
+"secret_key": "h9Ue9..."
+}
+}

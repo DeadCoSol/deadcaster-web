@@ -1,1 +1,4 @@
-
+export MY_WALLET_NAME='Skully'
+export MY_WALLET_CLASS_NAME='Skully'
+export MY_WALLET_VARIABLE_NAME='skully'
+export MY_WALLET_PACKAGE_NAME='skully'

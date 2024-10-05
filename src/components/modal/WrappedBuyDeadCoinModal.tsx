@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { MainHeader } from '@components/home/main-header';
 import { Button } from '@components/ui/button';
-import { NextImage } from '@components/ui/next-image';
 import {useStripe, useElements, PaymentElement, AddressElement} from '@stripe/react-stripe-js';
 import { useDeadCoinPrice } from '@lib/hooks/useDeadCoinPrice';
 import type { User } from '@lib/types/user';

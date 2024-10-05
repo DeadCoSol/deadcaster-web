@@ -1,0 +1,39 @@
+{
+  "tokenStandard": "pnft",
+  "number": 27,
+  "symbol": "P39",
+  "sellerFeeBasisPoints": 550,
+  "prefixName" : "",
+  "isMutable": true,
+  "isSequential": false,
+  "collection": "Pier 39",
+  "creators": [
+    {
+      "address": "EuPhD5QqhQnzj1rWr9icjeQgBAcTwXojMrmKMWyQWhjz",
+      "share": 100
+    }
+  ],
+  "uploadMethod": "bundlr",
+  "ruleSet": "eBJLFYPxJmMGKuFwpDWkzxZeUrad92kZRC5BJLpzyT9",
+  "awsConfig": null,
+  "sdriveApiKey": null,
+  "nftStorageAuthToken": null,
+  "shdwStorageAccount": null,
+  "pinataConfig": null,
+  "hiddenSettings": null,
+  "guards": {
+    "default": {
+      "botTax": {
+        "value": 0.01,
+        "lastInstruction": true
+      },
+      "tokenPayment": {
+        "amount": 1000000000000000,
+        "mint": "r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh",
+        "destinationAta": "Bda1AJST9jMuJdce5sYEPdWWHKAxgF2mwvaf4mD5iiiw"
+      }
+    },
+    "groups": []
+  },
+  "maxEditionSupply": null
+}

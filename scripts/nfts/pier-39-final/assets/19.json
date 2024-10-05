@@ -1,0 +1,13 @@
+{
+  "name": "Phil",
+  "symbol": "P39",
+  "external_url": "https://deadcaster.xyz",
+  "description": "Phil down by Pier 39",
+  "image": "19.png",
+  "attributes": [{"trait_type": "Location", "value": "San Francisco, Pier 39"},
+    {"trait_type": "Background", "value": "Yellow"}],
+  "properties": {"files": [{"uri": "19.png", "type": "image/png"}]},
+  "category": "image",
+  "creators": [{"address": "DCSHq24tqzXeNkDssn1LTmiUbo8LoZZSuSbzrttZTYqp", "share":  100}],
+  "collection": {"name": "Pier 39", "family": "DeadCaster"}
+}

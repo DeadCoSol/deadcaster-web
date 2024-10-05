@@ -19,13 +19,18 @@ import {
   userBookmarksCollection
 } from '@lib/firebase/collections';
 import { getRandomId, getRandomInt } from '@lib/random';
-import { checkUsernameAvailability } from '@lib/firebase/utils';
+import {checkUsernameAvailability, getToken} from '@lib/firebase/utils';
 import type { ReactNode } from 'react';
 import type { User as AuthUser } from 'firebase/auth';
 import type { WithFieldValue } from 'firebase/firestore';
 import type { User } from '@lib/types/user';
 import type { Bookmark } from '@lib/types/bookmark';
 import type { Stats } from '@lib/types/stats';
+import axios from 'axios';
+import * as bip39 from 'bip39';
+import * as ed from 'ed25519-hd-key';
+import {Keypair} from '@solana/web3.js';
+import {UnsafeBurnerWalletAdapter} from '@solana/wallet-adapter-wallets';
 
 
 type AuthContext = {

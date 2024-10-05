@@ -18,8 +18,8 @@ export function PhantomDetails(): JSX.Element {
                 </h2>
                 <div className='mb-3'>
                     Phantom is an easy to use Wallet and has a lot of documentation to help you navigate the complex
-                    world of Crypto Currency. You NEED to use Phantom to connect to your DeadCoin wallet and
-                    transfer DeadCoin in or out.
+                    world of Crypto Currency. You'll NEED to use Phantom to connect to your DeadCoin wallet to buy
+                    collectibles and tip content creators.
                 </div>
             </motion.div>
         </section>
