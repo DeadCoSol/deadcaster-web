@@ -9,13 +9,9 @@ import {getToken} from '@lib/firebase/utils';
 import {useUser} from '@lib/context/user-context';
 import {toast} from 'react-hot-toast';
 import {useStripe} from '@stripe/react-stripe-js';
-import {getTokenBalance} from '@lib/solana';
 import {BuyDeadCoin} from '@components/wallet/buy-deadcoin';
-import {Button} from '@components/ui/button';
-import {UserAvatar} from '@components/user/user-avatar';
 import Link from 'next/link';
 import {NextImage} from '@components/ui/next-image';
-import {useWindow} from '@lib/context/window-context';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -30,7 +26,6 @@ function formatNumber(number: number): string {
 }
 
 export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
-    const windowCtx =useWindow();
     const stripe = useStripe();
     const { user } = useUser();
     const [mnemonic, setMnemonic] = useState<string | null>(null);
@@ -103,7 +98,7 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
             const token = await getToken();
             const response = await axios.post('/api/handle-secret', { userId: user?.id, token });
             if (response.data.success) {
-                setMnemonic(response.data.mnemonic);
+                setMnemonic(response.data.mnemonic)
             } else {
                 toast.error("error fetching wallet key and mnemonic");
             }
@@ -129,10 +124,6 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
         }
     };
 
-    const handleExport = async () => {
-        window.open('phantom://open', '_blank');
-    };
-
     const tokens = wallet?.tokens || [];
 
     return (
@@ -142,9 +133,15 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                 {message}
             </div>
             <div className="mb-5">
-                DeadCaster has created a Wallet for you to use in our app. This is not an investment wallet.
+                Your DeadCaster wallet holds tokens you can use to buy collectibles and tip content creators.  Click
+                the Buy DeadCoin link to get started.  We use the Solana network to secure and store your tokens.
             </div>
-            <Tabs tabs={['Wallet', 'Wallet Keys', 'Get DeadCoin']}>
+            <div className="flex gap-2 mb-5">
+                <Link href={`https://www.solaneyes.com/address/${wallet?.publicKey}`} target='_blank' className='flex'>
+                    View your wallet on Solaneyes &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
+                </Link>
+            </div>
+            <Tabs tabs={['Tokens', 'Connect to Phantom', 'Buy DeadCoin']}>
                 <div>
                     {tokens.map((token, index) => (
                         <TokenRow key={index} token={token} />

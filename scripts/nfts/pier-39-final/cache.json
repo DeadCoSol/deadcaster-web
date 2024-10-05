@@ -1,0 +1,234 @@
+{
+  "program": {
+    "candyMachine": "9DMvuqwh84vWo8p16BN7Sssm9nZbEYjxrdteBUTWMiG9",
+    "candyGuard": "3i8Fmn16AAU5i9rJri7E2Zk9qtkzVDL9SfLSNoPonvR1",
+    "candyMachineCreator": "HEG7ZDgzxSUKXMYoMnpoicdCvuej41tNf2TYGeeuvPVD",
+    "collectionMint": "4PSRf7MhfMRtTDBj3Zdjiy8Yv2H2Ssz4YtQ7C5P7jVbM"
+  },
+  "items": {
+    "-1": {
+      "name": "Pier 39 Test",
+      "image_hash": "1500608d8b9e12cc820f34784ceb5e9c45ca29c5d4da492f5eae697a90d65707",
+      "image_link": "https://gateway.irys.xyz/FVUjJA8j8Rs4ZZufzZtyG1JpJEFYw69AkDxwHv9oLqjd?ext=png",
+      "metadata_hash": "5eaad1e2181a1f664fb518c3ca67bac3f2a97f9e32b5d786f9d8588b77061395",
+      "metadata_link": "https://gateway.irys.xyz/DFQkT2ZCKySGxwVhgHTotExhHUdG1zuMGDrgwFMXK8Ek",
+      "onChain": true
+    },
+    "0": {
+      "name": "Jerry",
+      "image_hash": "c00acade11f4d972bb9e22ce9b8bc9db6868c6a5f11df656ef8c52dd9bef9593",
+      "image_link": "https://gateway.irys.xyz/HbyWhmZjcMEnM3j2gkofdUebzWjb1KE52NqtHw4Tm9ab?ext=png",
+      "metadata_hash": "586437d8962e45f96a24f30b8eb28364217af0f3cec7705a22c2b0bdb485d98b",
+      "metadata_link": "https://gateway.irys.xyz/DSTKdbE6ixFp2GApYrMvyhiJVLVsr8xNyGid4HibwHt5",
+      "onChain": true
+    },
+    "1": {
+      "name": "Bob (80s)",
+      "image_hash": "e417947e273cd6816ee66a4bcb78b02d1f43cc865b303a78f61900a9c0ab3432",
+      "image_link": "https://gateway.irys.xyz/CAjeAPTzrqREEmQsQ5HBJz9yEtSm6XpcyWpMH4x9hWUb?ext=png",
+      "metadata_hash": "2251a651bcb4cfd85ac74e49c364a4cfe83ecb1259191ad4edac3353e99349e1",
+      "metadata_link": "https://gateway.irys.xyz/9EFJmCWbWdYqoAghEAyaXB5c5P19rcLEGWmd1xJ1MTND",
+      "onChain": true
+    },
+    "2": {
+      "name": "Bob",
+      "image_hash": "6da5aa93c6660f43e3dae04c8c904efbce49aa0198b21c387ff5ddca58067850",
+      "image_link": "https://gateway.irys.xyz/GRy2jvt8cJgarEeYzuLKn6DauU6A2K3EVQa4L6ML6NsR?ext=png",
+      "metadata_hash": "06342ac0250eabceb06b55284bc6f8ae540250e8e5a29f20d76d73bbfd2c287f",
+      "metadata_link": "https://gateway.irys.xyz/BisYouWhiGwX6BtUiBKr8wP5JnxvZbWxmQPomf7dR9Ha",
+      "onChain": true
+    },
+    "3": {
+      "name": "Phil",
+      "image_hash": "2d6a33ef2b91d956e4934c73304ecec67e97d92afbc8e71d66f138b238e0ab61",
+      "image_link": "https://gateway.irys.xyz/71g4ZMU8n8ChHtq8BtreneruD3zVfnFuVxQJeE18wU1w?ext=png",
+      "metadata_hash": "d111be08f68cd067921dba3c78c62e626e773438f1c0b140e5d3c310671120b2",
+      "metadata_link": "https://gateway.irys.xyz/HoompGboDUU1yPwWM5Gz6E56LVsDj3snP5HDU4hQ9TnX",
+      "onChain": true
+    },
+    "4": {
+      "name": "Mickey",
+      "image_hash": "f0d2da6031d19be8976a5b6539af1c1c3f2223f2f1ccc06c5797ebef39ee88a9",
+      "image_link": "https://gateway.irys.xyz/2QW1VwyXFs1vmSbZB9cw3g79Zp7RmYmjiQKrAS2veMbf?ext=png",
+      "metadata_hash": "a0416fb2c1cd33755b25d0d26d16a861951e89272de41fdf774bba369cb026bd",
+      "metadata_link": "https://gateway.irys.xyz/EGvjXEYfecxUNSjw8mefjXUTzU2T9K4BxFhXmZjrJb32",
+      "onChain": true
+    },
+    "5": {
+      "name": "Bill",
+      "image_hash": "dc26bcee7285355e705bd9e875afa09112956c76bed655e26d8da6e52b8c9f86",
+      "image_link": "https://gateway.irys.xyz/Frr8CdJUqSmUSsMD53zhFCqNL7mtdz7FzXt8SmQpZ17N?ext=png",
+      "metadata_hash": "d0a0d8454ee245ee21db8693841630e2c252472d46eb6168561e97c548f23465",
+      "metadata_link": "https://gateway.irys.xyz/BrMD36et9q3rYjxQJ5bGbDwtJtcGwiixKTvUer7c7n2p",
+      "onChain": true
+    },
+    "6": {
+      "name": "Pigpen",
+      "image_hash": "3b91bd71a9089e5fe508be2c621e75780483606748187dff230dd36c7ecf668d",
+      "image_link": "https://gateway.irys.xyz/FsFpoybd2XXNz8T1BDpPEevow6hev992B2CJFDTpe4jK?ext=png",
+      "metadata_hash": "4adf11f2ee8221b7930a4ee4a8a6592f11bd7b482d79a1a91808b84c8297cc16",
+      "metadata_link": "https://gateway.irys.xyz/3uhSR8mFnvQrK5vNc5kTGDvzx8Dttr82JaYyDDB2bGTr",
+      "onChain": true
+    },
+    "7": {
+      "name": "John",
+      "image_hash": "852a2c83bbd061346c212f16f5b3448383f2c94be8838e136f2bcbc82d30cebe",
+      "image_link": "https://gateway.irys.xyz/Ao66YYHUD29Y8Rg5gx1naGQwESNAg7yqo3gBBaFK26Cv?ext=png",
+      "metadata_hash": "32add3a6a12ed970b514535f8eb36f7fa8097b2e66eddfcae2d5a839af98e2fb",
+      "metadata_link": "https://gateway.irys.xyz/7apMEuUEoezf8fnTHxZitQRwVASWmLzX6fvLFJBwAivh",
+      "onChain": true
+    },
+    "8": {
+      "name": "Jerry",
+      "image_hash": "19af24c6cad1f5a9a46dd179a87d816905b6704f3e075e8f6d271aed63e19684",
+      "image_link": "https://gateway.irys.xyz/3EZzy2mQ9ckQL6ZhFnQUPnz7Z3eSSRJmj8d61F5hUtBj?ext=png",
+      "metadata_hash": "25bbb23cada87299afbf38391b15bc3e6c42c8375c1ad2b2ecc395ad53a9e55f",
+      "metadata_link": "https://gateway.irys.xyz/CXsQLqE1fqardFLNk581PZ22N33nRoxPa32uQUHaEoC5",
+      "onChain": true
+    },
+    "9": {
+      "name": "Bob (80s)",
+      "image_hash": "918fa4c0e9e86a8543d49929413c04934922c53ebba6e4673fe2020eae476afb",
+      "image_link": "https://gateway.irys.xyz/FnemrkHHB14eAwgYURZmSjDMNs86DZT3AtX34EYUCbJX?ext=png",
+      "metadata_hash": "90ff3f23437f3c81fac69cfdd0dc20f5cabc1c5bc40069b4ededa756640e017c",
+      "metadata_link": "https://gateway.irys.xyz/HoNX73J3r6hh2ZKsTuLZWSSrfzpYkEZJfbdSZ2b2P7qa",
+      "onChain": true
+    },
+    "10": {
+      "name": "Bob",
+      "image_hash": "d4d051f3ce8002267757049636a6fa906468a79d223dbba460ddb094568989e5",
+      "image_link": "https://gateway.irys.xyz/GCSdejYVpXxsU3A6zd8WMojCpT66epMmFiJv1rXoN6kw?ext=png",
+      "metadata_hash": "0645e038fa1756719c2eb805085ae9f340830865d2ea6af6d6d6ad96a8e3f1f4",
+      "metadata_link": "https://gateway.irys.xyz/JAEEfYEu7xFkU6XufPfnhLhzM96Tc9XDruV4D9fkkF1C",
+      "onChain": true
+    },
+    "11": {
+      "name": "Phil",
+      "image_hash": "9ed8f1ab6e7ec337264358829b6600e696acb980b6c23e9fdac63ed98a86fd94",
+      "image_link": "https://gateway.irys.xyz/DuUvGaLY8MmsqFFxKcwDGEk5ikUGjEzddNi6ZKZDdZp4?ext=png",
+      "metadata_hash": "9123aa34059313965ac7e20a4d8ba80adc701a6780501bc087370fb27ef7c10a",
+      "metadata_link": "https://gateway.irys.xyz/HfNkpzwtXHkv93uHo16aoynVfsLz4J3su46CEMCCjFBy",
+      "onChain": true
+    },
+    "12": {
+      "name": "Mickey",
+      "image_hash": "64cecc9d7397ed06a1f70f14f07b08e08710547d079da626081c3850164259f2",
+      "image_link": "https://gateway.irys.xyz/9jXsYiePem527iAy3GHYhkC4NQTE3yUat1CrDNJ16Zyz?ext=png",
+      "metadata_hash": "2cc5b56d3d193243769bdb9d2db20a90be6cbe97cfe6eb79c69a35ef29602ef9",
+      "metadata_link": "https://gateway.irys.xyz/GcJyGdo2FyNdZtWwXLetBUfgET2YL3724LWebDghtp1t",
+      "onChain": true
+    },
+    "13": {
+      "name": "Bill",
+      "image_hash": "1290948587f60c028c4865ea90a8717f5484bba2c6051be44cbd5631527bd219",
+      "image_link": "https://gateway.irys.xyz/5398TFzDYU1wKwnfTRiYpHiVSAGkXjfHZeXuaHyF5DnL?ext=png",
+      "metadata_hash": "04e990981ebf7baf4319a64438d10b03272989995b56fc1194a217b1f56a7987",
+      "metadata_link": "https://gateway.irys.xyz/phkJa24WbmkixFXA6mVz3vFTCJj5boYJXHqS1VuReAs",
+      "onChain": true
+    },
+    "14": {
+      "name": "Pigpen",
+      "image_hash": "7d33612a7cdca01aa73a98403ecaa4ca1b5a4c81b030d9a52dfe722bf5e2ea48",
+      "image_link": "https://gateway.irys.xyz/4zMiuHktwFDzN9YZAtUCAQ28BW4FRjhxrGzMATVfriMp?ext=png",
+      "metadata_hash": "e28f65136e5206ee7f747273e5d7fd0b042c436ce49129e91fe0665ca1e84560",
+      "metadata_link": "https://gateway.irys.xyz/9tzzLdW7wbKLkfMnZ4WVE8dzgqB9YmGWAJKK1PaaYkX3",
+      "onChain": true
+    },
+    "15": {
+      "name": "John",
+      "image_hash": "eac5049686f209a221c00e28147807b9c2c93c9d1b29d401020442bb10b639a6",
+      "image_link": "https://gateway.irys.xyz/W7a8ngdkGrCYymaiDtKUQm2gAUtgq4wfdoXY6X55z6m?ext=png",
+      "metadata_hash": "2d5422ce793bbc0f35dae903bb5c23a5f781eeeb520c12e9c9e1ac4a7524db91",
+      "metadata_link": "https://gateway.irys.xyz/3ngz8N3HhB3KfWLD3cmHPntuh9TQQzwCarvwxWUGHYwi",
+      "onChain": true
+    },
+    "16": {
+      "name": "Jerry",
+      "image_hash": "4e826de86d6eecaf881ccade398e6d1880d0d0d3f97bc4057d2157c51db404df",
+      "image_link": "https://gateway.irys.xyz/7zwCYoTHm2V5c7F3wsxPJhuR8Zv5Bz6y7izvL8obb98?ext=png",
+      "metadata_hash": "f72a1716b115bfa0f84a022de2c79e980427b42517cefe504e34342a9c775e02",
+      "metadata_link": "https://gateway.irys.xyz/FGFVj7SLufeQPAJ8HvZgabQGfLN98hS9bD8RsuNvWVws",
+      "onChain": true
+    },
+    "17": {
+      "name": "Bob (80s)",
+      "image_hash": "49b81e9c05ced3c04459df6150a608f88adbd1d55417882deb6eb25aefc75b29",
+      "image_link": "https://gateway.irys.xyz/A3G5UbTzQG8W7MLFKejiUfgkVcfZmE8pcfCC5k8RcJCU?ext=png",
+      "metadata_hash": "97453f2490842111381386c0020a72c4e6784ef3828d33553be0e2ade11411e0",
+      "metadata_link": "https://gateway.irys.xyz/4yMecw2i8RiBrjqkzCA18euPdBA4ktzFde3hLon4ZDKo",
+      "onChain": true
+    },
+    "18": {
+      "name": "Bob",
+      "image_hash": "1c9fa8cc87bdc3f4b1cce5b4fc93c979183b39a6e23f5a42c39fa9493780fb1c",
+      "image_link": "https://gateway.irys.xyz/Cwif6LxpR6mWTTP4DoMRdzTQ8DGZeYk3s7LYBhapMEK7?ext=png",
+      "metadata_hash": "fa55e872e32f6604b6f4b2c5824b048140823d7f79e3b33ab6cf3be5e4f14196",
+      "metadata_link": "https://gateway.irys.xyz/EybuN6aErJxtcd8XBNiPyTM1USJAH7QsLV3UPFZPkhwn",
+      "onChain": true
+    },
+    "19": {
+      "name": "Phil",
+      "image_hash": "65720d374117998762c7341c680adfc516e8ced04202ffbbc97955504931895f",
+      "image_link": "https://gateway.irys.xyz/9YdMz4qRt96JkrALw8uioZvkCFCjgjshtgpL28WfQ2nn?ext=png",
+      "metadata_hash": "58e0ac9ff8ccd31769862bb29a2791cefacb304b24d42b1ce906deb518e4fc6a",
+      "metadata_link": "https://gateway.irys.xyz/BGRetsqNvvi2UqtVi8viJGMcmNMtFXke1XQacDapw414",
+      "onChain": true
+    },
+    "20": {
+      "name": "Mickey",
+      "image_hash": "b2a7f03954760572b136d6d0307ea65875712e86ad7ae658c1b7599b7c6681bc",
+      "image_link": "https://gateway.irys.xyz/AU9DH2pB3XCe154nsU6DfL98HYszmji4j2VBZw5qxcBU?ext=png",
+      "metadata_hash": "94db0517c0e310b180965254232cd9a127e388504591cc2032de06545c3b357a",
+      "metadata_link": "https://gateway.irys.xyz/D1SWkVj3yqu3KEBbtwBtCdM5htUdnamZM3GQEnskd35Y",
+      "onChain": true
+    },
+    "21": {
+      "name": "Bill",
+      "image_hash": "f30727b337bee20ab042018ddf0c872caf5ab56cc0fe87b7483221dca5a63aa0",
+      "image_link": "https://gateway.irys.xyz/6xtiPqo2cRLfn7N1jT3gdmZwqDFhBWvEZuLzQRJULGs?ext=png",
+      "metadata_hash": "c9689dde1bc93d68a7113178905df7aac66ac5de635e4cf227b1e48c4c93fab3",
+      "metadata_link": "https://gateway.irys.xyz/vkv7CBE6potQ3ZpStJbG3E9TfJ1ummciJz9VcYjZVkR",
+      "onChain": true
+    },
+    "22": {
+      "name": "Pigpen",
+      "image_hash": "3fab247ea6f83daf5cfbf4df43294898dad6a740026f09dc299e5379f4844a87",
+      "image_link": "https://gateway.irys.xyz/Zud8M2KmGfsNY6wUVq73wrnz2EcbMNfCjiJxqnEmHvE?ext=png",
+      "metadata_hash": "de6f68b02b6c15310e1384d927d7d1d15dcd9572f2cfff2f5165033208cb259a",
+      "metadata_link": "https://gateway.irys.xyz/BJAeWoJ69fk7WSedJFa8DvhEFaNYKYGQt4tkFHDrW2dR",
+      "onChain": true
+    },
+    "23": {
+      "name": "John",
+      "image_hash": "50e859387d5b7ee7c03633e3ee564ab8f2ff39fb6a6dc83c7291e2bf6c23a9a5",
+      "image_link": "https://gateway.irys.xyz/DhKWyXyVGeFbsnJTnQqWPyL5KPYGoCwEG3RB44UxSqg9?ext=png",
+      "metadata_hash": "6354da38fed18acd891463d66d323c7e7568cc06bea351b57c91c158df3c4c41",
+      "metadata_link": "https://gateway.irys.xyz/6y4M8c8CW6fjWzxtQAF5bPfimanhPb9j9BhLrBWhLKWm",
+      "onChain": true
+    },
+    "24": {
+      "name": "Brent",
+      "image_hash": "c037fd5030b9ded28f1eede053d4edd633ca6f5f4228e764a60f63811e226e96",
+      "image_link": "https://gateway.irys.xyz/7h8p5eaBpHW2XdsWWw34GSxZTo8KPzN32C4MqBrD64aL?ext=png",
+      "metadata_hash": "766421c51affcbab236da7eff8f045a86a7b7908db609af9038fba53d6eedbe8",
+      "metadata_link": "https://gateway.irys.xyz/8dmyN3ytVXw8AyoYZdvtkneoiaWh1JLrubWXG8m74gqD",
+      "onChain": true
+    },
+    "25": {
+      "name": "Brent",
+      "image_hash": "eb58c61902da4efbbdd7fa5146968bae1f824cfd15716544f8dec2fb228cd967",
+      "image_link": "https://gateway.irys.xyz/2XwsphZt2tDGwKka9vjpEDLsycmjupV67SCc6koJqW4C?ext=png",
+      "metadata_hash": "607e803e6b5a1f20fb670b5114f0b4aa2b5120fc1e05eae8290bfc3922e52939",
+      "metadata_link": "https://gateway.irys.xyz/C9PpWegxa4jhMLfd6K7WqC317HnM9R4VwHjcTtccEDUN",
+      "onChain": true
+    },
+    "26": {
+      "name": "Brent",
+      "image_hash": "122226f3fb6127ab606cad75af6cc7bd9732e9c64b865508a77553971c70e4bc",
+      "image_link": "https://gateway.irys.xyz/ErVNj8nxNuGHvAhikrycQ58YVg2ciYxDnF8yLGTq1PxG?ext=png",
+      "metadata_hash": "43c2a24c3514a4f35aeb1a6a9cb1786196fd2c4fa555d29ceb8bbbbe91e2a6a2",
+      "metadata_link": "https://gateway.irys.xyz/iN9NqY5HJShUSRnHpL41n6eWJaL4KNWF2JhpewLpAUJ",
+      "onChain": true
+    }
+  }
+}

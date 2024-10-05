@@ -24,11 +24,14 @@ app.prepare().then(() => {
             contentSecurityPolicy: {
                 directives: {
                     defaultSrc: ["*"],
-                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
-                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.google.com", "https://*.stripe.com https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
+                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://fonts.googleapis.com", "https://*.google.com", "https://*.stripe.com", "https://*.quiknode.pro", "https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
+                    styleSrc: ["'self'", "'unsafe-inline'", "https://*.googleapis.com", "https://*.google.com", "https://*.stripe.com https://deadcasterdev--deadcasterdev.us-central1.hosted.app"],
                     imgSrc: ["'self'", "blob:", "data:", "https:"],
                     connectSrc: [
                         "'self'",
+                        "https://*.irys.xyz",
+                        "https://arweave.net",
+                        "https://*.arweave.net",
                         "https://api.simplesvg.com",
                         "https://api.iconify.design",
                         "https://deadcasterdev--deadcasterdev.us-central1.hosted.app",

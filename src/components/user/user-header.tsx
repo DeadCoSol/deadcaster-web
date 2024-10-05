@@ -76,7 +76,7 @@ export function UserHeader(): JSX.Element {
               : isInTweetPage
               ? totalTweets
                 ? `${totalTweets} ${`Fade${isPlural(totalTweets)}`}`
-                : 'No Tweet'
+                : 'No Fades'
               : currentPage === 'media'
               ? totalPhotos
                 ? `${totalPhotos} Photo${isPlural(totalPhotos)} & GIF${isPlural(

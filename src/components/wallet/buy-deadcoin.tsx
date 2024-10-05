@@ -76,11 +76,11 @@ export function BuyDeadCoin({ hide }: BuyProps): JSX.Element {
             </Modal>
 
             <div className="mb-7">
-                <div>
+                <div className='flex flex-col gap-8'>
                     <Button
                         className='accent-tab bg-main-accent text-lg font-bold text-white
                        outline-none transition hover:brightness-90 active:brightness-75 xs:static xs:translate-y-0
-                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 mr-2'
+                       xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12 mr-2 ml-2'
                         onClick={() => handleOpenModal(10)}
                     >
                         $10

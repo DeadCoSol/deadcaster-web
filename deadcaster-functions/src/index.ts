@@ -9,6 +9,18 @@ import type {Tweet} from './types';
 import {bookmarkConverter, tweetConverter, userConverter} from './types';
 import {mnemonicToSeedSync, generateMnemonic} from 'bip39';
 import {derivePath} from 'ed25519-hd-key';
+import {createUmi} from '@metaplex-foundation/umi-bundle-defaults';
+import {fetchCandyMachine, mintV2, mplCandyMachine, safeFetchCandyGuard} from '@metaplex-foundation/mpl-candy-machine';
+import {mplTokenMetadata} from '@metaplex-foundation/mpl-token-metadata';
+import {
+    createSignerFromKeypair,
+    generateSigner, isSome,
+    publicKey,
+    signerIdentity,
+    signerPayer, some, transactionBuilder
+} from '@metaplex-foundation/umi';
+import {setComputeUnitLimit, transferTokens} from '@metaplex-foundation/mpl-toolbox';
+import {encode} from 'bs58';
 
 const Bip39 = {mnemonicToSeedSync,generateMnemonic};
 
@@ -28,7 +40,7 @@ const connection = new Connection(quickNodeUrl, 'confirmed');
 const keypair = Keypair.fromSecretKey(secretKey);
 
 //DeadCo
-const tokenMintAddress = 'r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh';
+const tokenMintAddress = functions.config().mint.address;
 
 
 // Get encryption secret from environment variables
@@ -88,6 +100,19 @@ const encrypt = (text: string, key: string) => {
     return iv.toString('hex') + ':' + encrypted.toString('hex');
 };
 
+const decrypt = (text: string, key: string) => {
+    const textParts = text.split(':');
+    // @ts-ignore
+    const iv = Buffer.from(textParts.shift(), 'hex');
+    const encryptedText = Buffer.from(textParts.join(':'), 'hex');
+    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    console.log(`Decrypting successful`)
+
+    return decrypted.toString();
+};
+
 // Cloud Function to add wallet on user creation
 export const addWalletOnUserCreate = functions.runWith({
     timeoutSeconds: 540,
@@ -106,7 +131,7 @@ export const addWalletOnUserCreate = functions.runWith({
         const encryptedMnemonic = encrypt(mnemonic, encryptionKey);
 
         // Deadco pays for the creation of the account
-        const deadcoMint = new PublicKey('r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh');
+        const deadcoMint = new PublicKey(tokenMintAddress);
         const payer = keypair;
         const owner = new PublicKey(publicKey); // The new wallet we created for the user
 
@@ -154,6 +179,152 @@ export const addWalletOnUserCreate = functions.runWith({
             throw new Error(`Error adding wallet for user ${userId}: ${error}`);
         }
     });
+
+// Cloud Function to process minting
+export const processMintingFromCandyMachineOnCreate = functions.runWith({
+    timeoutSeconds: 540,
+    failurePolicy: true,
+}).firestore
+    .document('users/{userId}/mints/{mintId}')
+    .onCreate(async (snap, context) => {
+        const umi = createUmi(quickNodeUrl)
+            .use(mplCandyMachine())
+            .use(mplTokenMetadata());
+
+        //the currently added mint request for the user
+        const mintData = snap.data();
+        const { candy_machine_id } = mintData;
+        //user data
+        const userId = context.params.userId;
+        const userRef = firestore.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+        const userData = userDoc.data();
+        //user_extensions
+        const userExtDocRef = firestore.collection('user_extensions').doc(userId);
+        const userExtDoc = await userExtDocRef.get();
+        const userExtData = userExtDoc.data();
+
+        //retrieve mnemonic
+        const encryptedMnemonic = userExtData!.mnemonic;
+        const mnemonic = decrypt(encryptedMnemonic, encryptionKey);
+        const seed = Bip39.mnemonicToSeedSync(mnemonic);
+        // Derive the key pair using the path for Solana
+        const derivationPath = "m/44'/501'/0'/0'"; // Standard derivation path for Solana
+        const derivedSeed = derivePath(derivationPath, seed.toString('hex')).key;
+
+        const deadCoinToken = userData!.wallet.tokens.find((token: { name: string; }) => token.name === "DeadCoin");
+        const associatedTokenAccount = deadCoinToken.associatedAccount;
+
+        try {
+
+            if (!userData || !userData.wallet || !userData.wallet.publicKey) {
+                console.log('User wallet not found');
+                //we are done...
+                return;
+            }
+
+            //MINTING LOGIC
+            const candyMachinePublicKey = publicKey(candy_machine_id);
+            const candyMachine = await fetchCandyMachine(umi, candyMachinePublicKey);
+            const candyGuard = await safeFetchCandyGuard(
+                umi,
+                candyMachine.mintAuthority,
+            );
+
+            console.log(`Minting from candy machine ${candy_machine_id} for user ${userId}`)
+
+            // Convert the private keys from string to Uint8Array
+            const userKeypair = umi.eddsa.createKeypairFromSeed(derivedSeed)
+            const treasuryKeypair = umi.eddsa.createKeypairFromSecretKey(secretKey)
+
+            //signers
+            umi.use(signerIdentity(createSignerFromKeypair(umi, userKeypair), true));
+            umi.use(signerPayer(createSignerFromKeypair(umi, treasuryKeypair)));
+
+            // Mint from the Candy Machine.
+            const nftMint = generateSigner(umi);
+
+            const tokenPaymentOption = candyGuard!.guards.tokenPayment;
+
+            if (!isSome(tokenPaymentOption)) {
+                console.error('Expected tokenPayment to be Some but got None');
+                return;
+            }
+
+            const tokenPayment = tokenPaymentOption.value;
+
+            const mintPrice = tokenPayment.amount; // Assuming amount is in lamports (smallest unit)
+            const transferFee = mintPrice * BigInt(3) / BigInt(100); // 3% transfer fee
+
+            const deadCoAccount = await getOrCreateAssociatedTokenAccount(
+                connection,
+                keypair,
+                new PublicKey(tokenMintAddress),
+                keypair.publicKey
+            );
+
+            // @ts-ignore
+            const transactionMint = transactionBuilder()
+                .add(setComputeUnitLimit(umi, {units: 800000}))
+                .add(
+                    mintV2(umi, {
+                        tokenStandard: candyMachine.tokenStandard,
+                        candyMachine: candyMachine.publicKey,
+                        candyGuard: candyGuard?.publicKey,
+                        nftMint,
+                        collectionMint: candyMachine.collectionMint,
+                        collectionUpdateAuthority: candyMachine.authority,
+                        mintArgs: {
+                            tokenPayment: some({
+                                mint: tokenPayment.mint,
+                                destinationAta: tokenPayment.destinationAta,
+                            })
+                        }
+                    })
+                );
+
+            const { signature } = await transactionMint.sendAndConfirm(umi, {
+                confirm: { commitment: "confirmed" },
+            });
+
+            const txid = encode(signature);
+            console.log("Mint Success {}", txid)
+
+            //TODO Update mintDoc set the processed and react on the UI
+            await snap.ref.update({
+                status: 'COMPLETE' //PROCESSING, ERROR, COMPLETE
+            })
+
+            //ping the user wallet to refresh
+            await userRef.update({
+                lastWalletTransaction: txid
+            })
+
+            const transactionFee = transactionBuilder()
+                .add(
+                    transferTokens(umi, {
+                        source: associatedTokenAccount,
+                        destination: publicKey(deadCoAccount.address),
+                        authority: createSignerFromKeypair(umi, userKeypair),
+                        amount: transferFee,
+                    })
+                );
+            const signatureFee = await transactionFee.sendAndConfirm(umi, {
+                confirm: { commitment: "confirmed" },
+            });
+            const feeTxId = encode(signatureFee.signature);
+            console.log("Fee Success {}", feeTxId);
+
+        } catch (error){
+            await snap.ref.update({
+                status: 'ERROR' //PROCESSING, ERROR, COMPLETE
+            })
+
+            throw new Error(`Error minting ${error}`)
+        }
+});
+
+
 
 // Cloud Function to process transaction on transaction creation
 export const processTransactionOnCreate = functions.runWith({

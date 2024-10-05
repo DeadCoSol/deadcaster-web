@@ -1,0 +1,13 @@
+{
+  "name": "John",
+  "symbol": "P39",
+  "external_url": "https://deadcaster.xyz",
+  "description": "John down by Pier 39",
+  "image": "7.png",
+  "attributes": [{"trait_type": "Location", "value": "San Francisco, Pier 39"},
+    {"trait_type": "Background", "value": "Blue"}],
+  "properties": {"files": [{"uri": "7.png", "type": "image/png"}]},
+  "category": "image",
+  "creators": [{"address": "DCSHq24tqzXeNkDssn1LTmiUbo8LoZZSuSbzrttZTYqp", "share":  100}],
+  "collection": {"name": "Pier 39", "family": "DeadCaster"}
+}
