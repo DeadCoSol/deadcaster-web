@@ -556,6 +556,8 @@ export const tipCreators = functions.firestore
         const { deadCoAmount, tweetId, userId } = tipData;
 
         try {
+            const umi = createUmi(quickNodeUrl);
+
             // Fetch the tweet to get the creator
             const tweetRef = firestore.collection('tweets').doc(tweetId);
             const tweetDoc = await tweetRef.get();
@@ -567,52 +569,64 @@ export const tipCreators = functions.firestore
             }
 
             // Fetch the creator's wallet details
-            const tipperRef = firestore.collection('users').doc(userId);
-            const tipperDoc = await tipperRef.get();
-            const tipperData = tipperDoc.data();
-            const tipperWallet = tipperData?.wallet?.publicKey;
+            const userExtDocRef = firestore.collection('user_extensions').doc(userId);
+            const userExtDoc = await userExtDocRef.get();
+            const userExtData = userExtDoc.data();
 
-            // Fetch the creator's wallet details
+            //retrieve mnemonic
+            const encryptedMnemonic = userExtData!.mnemonic;
+            const mnemonic = decrypt(encryptedMnemonic, encryptionKey);
+            const seed = Bip39.mnemonicToSeedSync(mnemonic);
+            // Derive the key pair using the path for Solana
+            const derivationPath = "m/44'/501'/0'/0'"; // Standard derivation path for Solana
+            const derivedSeed = derivePath(derivationPath, seed.toString('hex')).key;
+
+            // Fetch the creator's public key
             const creatorRef = firestore.collection('users').doc(createdBy);
             const creatorDoc = await creatorRef.get();
             const creatorData = creatorDoc.data();
-            const creatorWallet = creatorData?.wallet?.publicKey;
+            const creatorWallet = creatorData!.wallet.tokens.find((token: { name: string; }) => token.name === "DeadCoin").associatedAccount;
+
+            // Fetch the tippers wallet public key
+            const tipperRef = firestore.collection('users').doc(userId);
+            const tipperDoc = await tipperRef.get();
+            const tipperData = tipperDoc.data();
+            const tipperWallet = tipperData!.wallet.tokens.find((token: { name: string; }) => token.name === "DeadCoin").associatedAccount;
+
+            // Convert the private keys from string to Uint8Array
+            const userKeypair = umi.eddsa.createKeypairFromSeed(derivedSeed)
+            const treasuryKeypair = umi.eddsa.createKeypairFromSecretKey(secretKey)
+
+            //signers
+            umi.use(signerIdentity(createSignerFromKeypair(umi, userKeypair), true));
+            umi.use(signerPayer(createSignerFromKeypair(umi, treasuryKeypair)));
 
             if (!creatorWallet) {
                 console.error(`No wallet found for creator ${createdBy}`);
                 return;
             }
 
-            // Setup transaction
-            const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
-                connection,
-                keypair,
-                new PublicKey(tokenMintAddress),
-                new PublicKey(tipperWallet)
-            );
-            const toTokenAccount = await getOrCreateAssociatedTokenAccount(
-                connection,
-                keypair,
-                new PublicKey(tokenMintAddress),
-                new PublicKey(creatorWallet)
-            );
-
             // Send the tip amount
             const amountToSend = deadCoAmount * Math.pow(10, 9); // Adjust for token decimals if needed
-            const transaction = await transfer(
-                connection,
-                keypair,
-                fromTokenAccount.address,
-                toTokenAccount.address,
-                keypair.publicKey,
-                amountToSend,
-                []
-            );
+            const tipTx = transactionBuilder()
+                .add(
+                    transferTokens(umi, {
+                        source: tipperWallet,
+                        destination: creatorWallet,
+                        authority: createSignerFromKeypair(umi, userKeypair),
+                        amount: amountToSend,
+                    })
+                );
+            const signature = await tipTx.sendAndConfirm(umi, {
+                confirm: { commitment: "confirmed" },
+            });
+            const tipTxId = encode(signature.signature);
+            console.log("Tip Success {}", tipTxId);
 
             // Log and update the tip transaction
             await snap.ref.update({
                 status: 'COMPLETE',
-                transactionId: transaction
+                transactionId: tipTxId
             });
             console.log(`${userId} tipped ${deadCoAmount} to ${createdBy} for tweet ${tweetId}`);
 

@@ -60,14 +60,6 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                 onClick={delayScroll(200)}
             >
                 <div className='grid grid-cols-[.1fr,.9fr] gap-x-3 gap-y-1'>
-                    <div className='flex flex-col items-center gap-2'>
-                        {!reply && (
-                            <UserAvatar src='/assets/jerry.png' alt='Fade' />
-                        )}
-                        {reply && (
-                            <UserAvatar src='/assets/bob.png' alt='Comment' />
-                        )}
-                    </div>
                     <div className='flex flex-col items-start gap-2'>
                         <UserAvatar src={photoURL} alt={name} username={username} />
                         <UserName
@@ -90,15 +82,6 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                         {text && (
                             <p className='whitespace-pre-line break-words'>{text}</p>
                         )}
-                        <div className='mt-1 flex flex-col gap-2'>
-                            {images && (
-                                <ImagePreview
-                                    tweet
-                                    imagesPreview={images}
-                                    previewCount={images.length}
-                                />
-                            )}
-                        </div>
                     </div>
                 </div>
             </Link>
