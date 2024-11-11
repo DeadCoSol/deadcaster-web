@@ -12,7 +12,7 @@ import type { User } from '@lib/types/user';
 export type TweetNotificationProps = Tweet & {
     user: User;
     parentTweet?: boolean;
-    notificationType?: string; // Add a notification type to identify tipping
+    type?: string; // Add a notification type to identify tipping
 };
 
 export const variants: Variants = {
@@ -29,7 +29,7 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
         parent,
         parentTweet,
         user: tweetUserData,
-        notificationType
+        type
     } = tweetNotification;
 
     const { name, username, verified, photoURL } = tweetUserData;
@@ -37,7 +37,7 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
     const tweetLink = `/fade/${tweetId}`;
     const reply = !!parent;
 
-    const isTipNotification = notificationType?.startsWith("TIP_");
+    const isTipNotification = type?.startsWith("TIP_");
 
     return (
         <motion.article
