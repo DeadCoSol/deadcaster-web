@@ -2,11 +2,16 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import cn from 'clsx';
-import { manageRetweet, manageLike } from '@lib/firebase/utils';
+import {manageRetweet, manageLike, getToken} from '@lib/firebase/utils';
 import { ViewTweetStats } from '@components/view/view-tweet-stats';
 import { TweetOption } from './tweet-option';
 import { TweetShare } from './tweet-share';
 import type { Tweet } from '@lib/types/tweet';
+import {useModal} from '@lib/hooks/useModal';
+import {Modal} from '@components/modal/modal';
+import {TweetTipModal} from '@components/modal/tweet-tip-modal';
+import axios from 'axios';
+import {toast} from 'react-hot-toast';
 
 type TweetStatsProps = Pick<
   Tweet,
@@ -17,7 +22,7 @@ type TweetStatsProps = Pick<
   isOwner: boolean;
   tweetId: string;
   viewTweet?: boolean;
-  openModal?: () => void;
+  openReplyModal?: () => void;
 };
 
 export function TweetStats({
@@ -29,7 +34,7 @@ export function TweetStats({
   viewTweet,
   userRetweets,
   userReplies: totalReplies,
-  openModal
+  openReplyModal
 }: TweetStatsProps): JSX.Element {
   const totalLikes = userLikes.length;
   const totalTweets = userRetweets.length;
@@ -48,6 +53,8 @@ export function TweetStats({
       currentTweets: totalTweets
     });
   }, [totalReplies, totalLikes, totalTweets]);
+
+  const { open, openModal, closeModal } = useModal();
 
   const replyMove = useMemo(
     () => (totalReplies > currentReplies ? -25 : 25),
@@ -84,6 +91,14 @@ export function TweetStats({
           isStatsVisible={isStatsVisible}
         />
       )}
+      <Modal
+          className='flex items-start justify-center'
+          modalClassName='bg-main-background rounded-2xl max-w-xl w-full mt-8 overflow-hidden'
+          open={open}
+          closeModal={closeModal}
+      >
+        <TweetTipModal closeModal={closeModal} tweetId={tweetId} userId={userId}/>
+      </Modal>
       <div
         className={cn(
           'flex text-light-secondary inner:outline-none dark:text-dark-secondary',
@@ -99,7 +114,7 @@ export function TweetStats({
           stats={currentReplies}
           iconName='ChatBubbleOvalLeftIcon'
           viewTweet={viewTweet}
-          onClick={openModal}
+          onClick={openReplyModal}
           disabled={reply}
         />
         <TweetOption
@@ -138,17 +153,16 @@ export function TweetStats({
             tweetId
           )}
         />
-        <TweetShare userId={userId} tweetId={tweetId} viewTweet={viewTweet} />
-        {isOwner && (
-          <TweetOption
-            className='hover:text-accent-blue focus-visible:text-accent-blue'
-            iconClassName='group-hover:bg-accent-blue/10 group-active:bg-accent-blue/20 
-                           group-focus-visible:bg-accent-blue/10 group-focus-visible:ring-accent-blue/80'
-            tip='Analytics'
-            iconName='ChartPieIcon'
-            disabled
-          />
-        )}
+        <TweetOption
+            className='text-accent-green'
+            iconClassName='group-hover:bg-accent-blue/10 group-active:bg-accent-blue/20
+                         group-focus-visible:bg-accent-blue/10 group-focus-visible:ring-accent-blue/80'
+            tip='Tip Creator'
+            iconName='CurrencyDollarIcon'
+            onClick={openModal}
+            disabled={reply}
+        />
+
       </div>
     </>
   );

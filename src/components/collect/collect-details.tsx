@@ -43,10 +43,10 @@ export function CollectDetails({ wallet }: UserDetailsProps): JSX.Element {
     const router = useRouter();
     const { mintFrom } = router.query; // Get the mintFrom parameter from the URL
 
-    // These are the DeadCaster NFT collections
-    const collections = [
-        { candyMachineId: '7c1RLh5m4YB2BgPYhzU7VACnfdQXobUJBE1vNdjSQSUb' },
-    ];
+    // These are the DeadCaster NFT collections - stored in a secret
+    const collections = JSON.parse(process.env.NEXT_PUBLIC_CANDY_MACHINE_IDS!).map((id: any) => ({
+        candyMachineId: id
+    }));
 
 
     const [balance, setBalance] = useState<number | null>(null);
@@ -129,7 +129,7 @@ export function CollectDetails({ wallet }: UserDetailsProps): JSX.Element {
         const fetchCollectionData = async () => {
             try {
                 const data = await Promise.all(
-                    collections.map(async (collection) => {
+                    collections.map(async (collection: { candyMachineId: any; }) => {
                         const candyMachine = await fetchCandyMachine(
                             umi,
                             publicKey(collection.candyMachineId)
@@ -256,20 +256,30 @@ export function CollectDetails({ wallet }: UserDetailsProps): JSX.Element {
                     {balance !== null && balance < mintPriceValue && (
                         <div>
                             <p className="text-red-500 mt-2">Insufficient DeadCoin balance to mint.</p>
+                            <div className="mt-6 flex justify-end space-x-4">
+                                <Button
+                                    onClick={() => (window.location.href = '/wallet?tab=buy')}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white"
+                                >
+                                    Buy DeadCoin
+                                </Button>
+                            </div>
                         </div>
                     )}
+                    {balance !== null && balance >= mintPriceValue && (
                     <div className="mt-6 flex justify-end space-x-4">
                         <Button onClick={() => setIsConfirmationModalOpen(false)} className="bg-gray-500 hover:bg-gray-700 text-white">
                             Cancel
                         </Button>
                         <Button
                             onClick={handleMint}
-                            disabled={isMinting || (balance !== null && balance < mintPriceValue)}
+                            disabled={isMinting || (balance < mintPriceValue)}
                             className="bg-blue-500 hover:bg-blue-700 text-white"
                         >
                             {isMinting ? 'Minting...' : 'Confirm'}
                         </Button>
                     </div>
+                    )}
                 </div>
             </Modal>
 

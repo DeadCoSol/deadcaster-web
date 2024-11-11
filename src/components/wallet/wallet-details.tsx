@@ -12,6 +12,7 @@ import {useStripe} from '@stripe/react-stripe-js';
 import {BuyDeadCoin} from '@components/wallet/buy-deadcoin';
 import Link from 'next/link';
 import {NextImage} from '@components/ui/next-image';
+import { useRouter } from 'next/router';
 
 type UserDetailsProps = Pick<User, 'name' | 'wallet' | 'createdAt'>;
 
@@ -26,12 +27,15 @@ function formatNumber(number: number): string {
 }
 
 export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Element {
+    const router = useRouter();
     const stripe = useStripe();
     const { user } = useUser();
     const [mnemonic, setMnemonic] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const previousTxRef = useRef<string | undefined>(user?.lastWalletTransaction);
     const isInitialRender = useRef(true);
+    const { tab } = router.query;
+    const tabIndex = tab === 'buy' ? 2 : tab === 'connect' ? 1 : 0; // 0 for 'Tokens', 1 for 'Connect to Phantom', 2 for 'Buy DeadCoin'
 
     useEffect(() => {
         if (isInitialRender.current) {
@@ -141,7 +145,7 @@ export function WalletDetails({ wallet, createdAt }: UserDetailsProps): JSX.Elem
                     View your wallet on Solaneyes &nbsp; <FaExternalLinkAlt className='mt-0.5'/>
                 </Link>
             </div>
-            <Tabs tabs={['Tokens', 'Connect to Phantom', 'Buy DeadCoin']}>
+            <Tabs tabs={['Tokens', 'Connect to Phantom', 'Buy DeadCoin']} initialTab={tabIndex}>
                 <div>
                     {tokens.map((token, index) => (
                         <TokenRow key={index} token={token} />

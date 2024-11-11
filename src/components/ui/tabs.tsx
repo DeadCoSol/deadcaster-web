@@ -1,12 +1,17 @@
-import {useState, ReactNode} from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 
 type TabsProps = {
     tabs: string[];
     children: ReactNode[];
+    initialTab?: number; // Optional initial tab index
 };
 
-const Tabs = ({tabs, children}: TabsProps) => {
-    const [activeTab, setActiveTab] = useState(0);
+const Tabs = ({ tabs, children, initialTab = 0 }: TabsProps) => {
+    const [activeTab, setActiveTab] = useState(initialTab);
+
+    useEffect(() => {
+        setActiveTab(initialTab); // Set the initial tab from the prop when the component mounts
+    }, [initialTab]);
 
     return (
         <div>

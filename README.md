@@ -108,6 +108,7 @@ Here are the steps to run the project locally.
 > **_Note_**: When you deploy Firestore indexes rules, it might take a few minutes to complete. So before the indexes are enabled, you will get an error when you fetch the data from Firestore.<br><br>You can check the status of your Firestore indexes with the link below, replace `your-project-id` with your project ID: https://console.firebase.google.com/u/0/project/your-project-id/firestore/indexes
 
 We need to set up app hosting and generate the following secrets in GCP secret manager and grant access to app hosting
+firebase functions:secrets:set NEXT_PUBLIC_CANDY_MACHINE_IDS --data='["9DMvuqwh84vWo8p16BN7Sssm9nZbEYjxrdteBUTWMiG9"]'
 
 -b live for prod -b deadcasterdev for test/dev
 
@@ -127,6 +128,7 @@ firebase apphosting:secrets:grantaccess FIREBASE_DATABASE_URL -b live
 firebase apphosting:secrets:grantaccess STRIPE_SECRET_KEY -b live
 firebase apphosting:secrets:grantaccess NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY -b live
 firebase apphosting:secrets:grantaccess FIREBASE_AUTH_DOMAIN -b live
+firebase apphosting:secrets:grantaccess NEXT_PUBLIC_CANDY_MACHINE_IDS -b live
 
 firebase functions:config:get
 {

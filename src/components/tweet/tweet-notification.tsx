@@ -12,6 +12,7 @@ import type { User } from '@lib/types/user';
 export type TweetNotificationProps = Tweet & {
     user: User;
     parentTweet?: boolean;
+    notificationType?: string; // Add a notification type to identify tipping
 };
 
 export const variants: Variants = {
@@ -27,14 +28,16 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
         images,
         parent,
         parentTweet,
-        user: tweetUserData
+        user: tweetUserData,
+        notificationType
     } = tweetNotification;
 
-    const {name, username, verified, photoURL } = tweetUserData;
+    const { name, username, verified, photoURL } = tweetUserData;
 
     const tweetLink = `/fade/${tweetId}`;
-
     const reply = !!parent;
+
+    const isTipNotification = notificationType?.startsWith("TIP_");
 
     return (
         <motion.article
@@ -48,20 +51,19 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                 scroll={!reply}
                 className={cn(
                     `accent-tab hover-card relative flex flex-col 
-           gap-y-4 px-4 py-3 outline-none duration-200`,
+                    gap-y-4 px-4 py-3 outline-none duration-200`,
                     parentTweet
                         ? 'mt-0.5 pt-2.5 pb-0'
                         : 'border-b border-light-border dark:border-dark-border'
                 )}
                 draggable={false}
-                onClick={delayScroll(200)}>
-
+                onClick={delayScroll(200)}
+            >
                 <div className='grid grid-cols-[.1fr,.9fr] gap-x-3 gap-y-1'>
                     <div className='flex flex-col items-center gap-2'>
                         {!reply && (
                             <UserAvatar src='/assets/jerry.png' alt='Fade' />
                         )}
-
                         {reply && (
                             <UserAvatar src='/assets/bob.png' alt='Comment' />
                         )}
@@ -69,15 +71,21 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                     <div className='flex flex-col items-start gap-2'>
                         <UserAvatar src={photoURL} alt={name} username={username} />
                         <UserName
-                            name={!reply ? `${name} recently faded.` : `${name} recently commented.`}
+                            name={
+                                isTipNotification
+                                    ? `${name} was tipped by you!`
+                                    : !reply
+                                        ? `${name} recently faded.`
+                                        : `${name} recently commented.`
+                            }
                             username={username}
                             verified={verified}
                             className='text-light-primary dark:text-dark-primary'
                         />
                         <div className='flex justify-between gap-2 text-light-secondary dark:text-dark-secondary'>
-                            <div className='flex gap-1 truncate xs:overflow-visible xs:whitespace-normal'>
-
-                            </div>
+                            {isTipNotification && (
+                                <p>You tipped ${name} for this tweet!</p>
+                            )}
                         </div>
                         {text && (
                             <p className='whitespace-pre-line break-words'>{text}</p>
@@ -93,7 +101,6 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                         </div>
                     </div>
                 </div>
-
             </Link>
         </motion.article>
     );

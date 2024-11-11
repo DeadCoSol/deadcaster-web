@@ -18,6 +18,7 @@ import { Input } from '@components/input/input';
 import type { RefObject } from 'react';
 import type { User } from '@lib/types/user';
 import type { Tweet } from '@lib/types/tweet';
+import {TweetTipModal} from '@components/modal/tweet-tip-modal';
 
 type ViewTweetProps = Tweet & {
   user: User;
@@ -43,7 +44,7 @@ export function ViewTweet(tweet: ViewTweetProps): JSX.Element {
 
   const { user } = useAuth();
 
-  const { open, openModal, closeModal } = useModal();
+  const { open: isReplyModalOpen, openModal: openReplyModal, closeModal: closeReplyModal } = useModal();
 
   const tweetLink = `/fade/${tweetId}`;
 
@@ -70,11 +71,12 @@ export function ViewTweet(tweet: ViewTweetProps): JSX.Element {
       <Modal
         className='flex items-start justify-center'
         modalClassName='bg-main-background rounded-2xl max-w-xl w-full mt-8 overflow-hidden'
-        open={open}
-        closeModal={closeModal}
+        open={isReplyModalOpen}
+        closeModal={closeReplyModal}
       >
-        <TweetReplyModal tweet={tweet} closeModal={closeModal} />
+        <TweetReplyModal tweet={tweet} closeModal={closeReplyModal} />
       </Modal>
+
       <div className='flex flex-col gap-2'>
         {reply && (
           <div className='flex w-12 items-center justify-center'>
@@ -150,7 +152,7 @@ export function ViewTweet(tweet: ViewTweetProps): JSX.Element {
             userLikes={userLikes}
             userRetweets={userRetweets}
             userReplies={userReplies}
-            openModal={openModal}
+            openReplyModal={openReplyModal}
           />
         </div>
         <Input reply parent={{ id: tweetId, username: username }} />

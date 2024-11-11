@@ -36,7 +36,7 @@ export function ViewTweetStats({
 }: viewTweetStats): JSX.Element {
   const [statsType, setStatsType] = useState<StatsType | null>(null);
 
-  const { open, openModal, closeModal } = useModal();
+    const { open, openModal, closeModal } = useModal();
 
   const { data, loading } = useArrayDocument(
     statsType ? (statsType === 'likes' ? userLikes : userRetweets) : [],

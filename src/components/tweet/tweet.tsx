@@ -196,7 +196,7 @@ export function Tweet(tweet: TweetProps): JSX.Element {
                   userLikes={userLikes}
                   userReplies={userReplies}
                   userRetweets={userRetweets}
-                  openModal={!parent ? openModal : undefined}
+                  openReplyModal={!parent ? openModal : undefined}
                 />
               )}
             </div>

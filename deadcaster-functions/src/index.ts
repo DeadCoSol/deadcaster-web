@@ -547,3 +547,79 @@ async function fetchUserById(userId: string) {
         throw error;
     }
 }
+
+// Cloud Function to tip creators
+export const tipCreators = functions.firestore
+    .document('users/{userId}/tips/{tipId}')
+    .onCreate(async (snap, context) => {
+        const tipData = snap.data();
+        const { deadCoAmount, tweetId, userId } = tipData;
+
+        try {
+            // Fetch the tweet to get the creator
+            const tweetRef = firestore.collection('tweets').doc(tweetId);
+            const tweetDoc = await tweetRef.get();
+            const { createdBy } = tweetDoc.data() || {};
+
+            if (!createdBy) {
+                console.error(`Creator not found for tweet ${tweetId}`);
+                return;
+            }
+
+            // Fetch the creator's wallet details
+            const tipperRef = firestore.collection('users').doc(userId);
+            const tipperDoc = await tipperRef.get();
+            const tipperData = tipperDoc.data();
+            const tipperWallet = tipperData?.wallet?.publicKey;
+
+            // Fetch the creator's wallet details
+            const creatorRef = firestore.collection('users').doc(createdBy);
+            const creatorDoc = await creatorRef.get();
+            const creatorData = creatorDoc.data();
+            const creatorWallet = creatorData?.wallet?.publicKey;
+
+            if (!creatorWallet) {
+                console.error(`No wallet found for creator ${createdBy}`);
+                return;
+            }
+
+            // Setup transaction
+            const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
+                connection,
+                keypair,
+                new PublicKey(tokenMintAddress),
+                new PublicKey(tipperWallet)
+            );
+            const toTokenAccount = await getOrCreateAssociatedTokenAccount(
+                connection,
+                keypair,
+                new PublicKey(tokenMintAddress),
+                new PublicKey(creatorWallet)
+            );
+
+            // Send the tip amount
+            const amountToSend = deadCoAmount * Math.pow(10, 9); // Adjust for token decimals if needed
+            const transaction = await transfer(
+                connection,
+                keypair,
+                fromTokenAccount.address,
+                toTokenAccount.address,
+                keypair.publicKey,
+                amountToSend,
+                []
+            );
+
+            // Log and update the tip transaction
+            await snap.ref.update({
+                status: 'COMPLETE',
+                transactionId: transaction
+            });
+            console.log(`${userId} tipped ${deadCoAmount} to ${createdBy} for tweet ${tweetId}`);
+
+            createNotification(userId, tweetId, `TIP_${deadCoAmount}`);
+
+        } catch (error) {
+            console.error(`Error tipping creator for tweet ${tweetId}:`, error);
+            throw new Error(`Error tipping creator: ${error}`);
+        }
+    });
