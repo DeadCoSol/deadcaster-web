@@ -74,7 +74,7 @@ export function TweetNotification(tweetNotification: TweetNotificationProps): JS
                             verified={verified}
                             className='text-light-primary dark:text-dark-primary'
                         />
-                        <div className='flex justify-between gap-2 text-light-secondary dark:text-dark-secondary'>
+                        <div className='flex justify-between gap-2'>
                             {isTipNotification && (
                                 <p>You tipped ${name} for this tweet!</p>
                             )}
