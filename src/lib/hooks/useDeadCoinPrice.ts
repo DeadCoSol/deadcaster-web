@@ -8,7 +8,7 @@ export function useDeadCoinPrice() {
     useEffect(() => {
         const fetchPrice = async () => {
             try {
-                const response = await fetch('https://price.jup.ag/v6/price?ids=DEADCO');
+                const response = await fetch('https://api.jup.ag/price/v2?ids=r8EXVDnCDeiw1xxbUSU7MNbLfbG1tmWTvigjvWNCiqh');
                 const data = await response.json();
                 const deadCoinPrice = data.data.DEADCO.price;
                 setPrice(deadCoinPrice);
