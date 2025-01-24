@@ -50,4 +50,5 @@ env:
 
   - variable: NEXT_PUBLIC_CANDY_MACHINE_IDS
     secret: NEXT_PUBLIC_CANDY_MACHINE_IDS
+    version: 2
 
